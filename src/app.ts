@@ -1,6 +1,6 @@
 import express from 'express'
 import logger from 'morgan'
-import { HttpError } from './lib/errors'
+import { createError } from './lib/errors'
 import errorHandler from './error-handler'
 
 var app = express();
@@ -16,7 +16,7 @@ app.use(express.json());
  * 404 Handler
  */
 app.use(function(req, res, next) {
-  next(new HttpError(404));
+  next(createError(404));
 });
 
 /**
