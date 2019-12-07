@@ -7,10 +7,7 @@ import env from '../environment'
  */
 export default function rejectHttp() {
   return function (req: exp.Request, res: exp.Response, next: exp.NextFunction) {
-    // Get the protocol for this request.
-    const protocol = req.header('x-forwarded-proto')
-
-    if (typeof protocol === 'string' && protocol !== 'https' && !env.ALLOW_UNSECURE) {
+    if (!req.secure && !env.ALLOW_UNSECURE) {
       return next(createError(404, 'use https'))
     }
 
