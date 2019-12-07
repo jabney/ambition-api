@@ -3,7 +3,9 @@ import { IToken } from './token.interface'
 
 const { ObjectId } = SchemaTypes
 
-export interface ITokenModel extends IToken, Document {}
+export interface ITokenDocument extends IToken, Document {}
+
+type TokenModel = mongoose.Model<ITokenDocument> & { /* tokenSchema.statics */}
 
 export const tokenSchema = new Schema({
   // The owner of the token.
@@ -14,4 +16,4 @@ export const tokenSchema = new Schema({
   expiresAt: { $type: Number, required: true },
 })
 
-export const Token = mongoose.model<ITokenModel>('Token', tokenSchema)
+export const Token = <TokenModel>mongoose.model<ITokenDocument>('Token', tokenSchema)
