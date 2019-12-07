@@ -10,7 +10,6 @@ export default function rejectHttp(): RequestHandler {
     if (!req.secure && !env.ALLOW_UNSECURE) {
       return next(createError(404, 'use https'))
     }
-
     next()
   }
 }
