@@ -2,16 +2,16 @@ import { JSONError } from './json-error'
 
 export class HttpError extends Error {
   public status: number
-  public error: string|null
+  public wrapped: string|null
 
-  constructor(status=500, message='internal server error', error: string|null = null) {
+  constructor(status=500, message='internal server error', stack: string|null = null) {
     super(message)
     this.status = status
-    this.error = error
+    this.wrapped = stack
   }
 
   toJSON(): JSONError {
-    const { status, message, error } = this
+    const { status, message } = this
     return { status, message }
   }
 }
