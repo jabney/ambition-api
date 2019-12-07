@@ -1,12 +1,14 @@
 import express from 'express'
-import logger from 'morgan'
 import { createError } from './lib/errors'
 import errorHandler from './error-handler'
+import { mongooseConnect } from './config/mongoose'
+import configureApp from './config/configureApp'
 
-var app = express();
+// Connect to MongoDB.
+mongooseConnect()
 
-app.use(logger('dev'));
-app.use(express.json());
+// Create the app instance.
+const app = configureApp(express())
 
 /**
  * API Routes
