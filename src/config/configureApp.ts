@@ -1,5 +1,6 @@
 import express, { Application } from 'express'
 import logger from 'morgan'
+import rejectHttp from '../middleware/reject-http'
 
 /**
  * Set up application middleware and misc.
@@ -7,7 +8,7 @@ import logger from 'morgan'
 function configureApp(app: Application) {
   app.set('x-powered-by', null)
   app.use(logger('dev'));
-  app.use(express.json());
+  app.use(express.json({ limit: '1kb'}));
 
   return app
 }
