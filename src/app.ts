@@ -2,7 +2,7 @@ import express from 'express'
 import { createError } from './lib/errors'
 import errorHandler from './error-handler'
 import { mongooseConnect } from './config/mongoose'
-import configureApp from './config/configureApp'
+import configureApp from './config/app'
 
 // Connect to MongoDB.
 mongooseConnect()
