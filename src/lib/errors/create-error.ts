@@ -1,6 +1,7 @@
 import { HttpError } from './http-error'
+import { getStatusText } from 'http-status-codes'
 
-function createError(...args: any[]) {
+export function createError(...args: any[]) {
   let status: number|null = null
   let message: string|null = null
   let stack: string|null|undefined = null
@@ -40,7 +41,7 @@ function createError(...args: any[]) {
   }
 
   status = status == null ? 500 : status
-  message = message == null ? 'unknown error' : message
+  message = message == null ? getStatusText(status) : message
 
   return new HttpError(status, message, stack)
 }
