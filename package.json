@@ -1,0 +1,27 @@
+{
+  "name": "server",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "db": "mongod --dbpath=./db",
+    "start": "node ./lib/server",
+    "server": "source .env && npm run build && npm run start",
+    "tunnel": "source .env && ngrok http $PORT",
+    "watch": "nodemon -e ts --watch src --watch .env --exec 'npm run server'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.5",
+    "@types/express": "^4.17.2",
+    "@types/morgan": "^1.7.37",
+    "@types/node": "^12.12.14",
+    "ngrok": "^3.2.5",
+    "nodemon": "^2.0.1",
+    "typescript": "^3.7.3"
+  }
+}
