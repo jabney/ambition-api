@@ -1,19 +1,25 @@
 import { HttpError } from './http-error'
 import { getStatusText } from 'http-status-codes'
 
+/**
+ * Flexibly create an HttpError.
+ */
 export function createError(...args: any[]) {
   let status: number|null = null
   let message: string|null = null
   let stack: string|null|undefined = null
 
+  // Loop through arguments.
   for (let i = 0; i < args.length; i++) {
     const arg = args[i]
 
+    // If error type, set the stack.
     if (arg instanceof Error) {
       stack = arg.stack
       continue
     }
 
+    // Check for numbers and strings for setting status and message.
     switch (typeof arg) {
       case 'number':
         status = arg
@@ -23,6 +29,11 @@ export function createError(...args: any[]) {
         continue
     }
 
+    /**
+     * Plain object types.
+     */
+
+    // Check for presence of a status code.
     if (status == null) {
       const { status: _status, code, statusCode } = arg
       const s = _status || code || statusCode
@@ -32,6 +43,7 @@ export function createError(...args: any[]) {
       }
     }
 
+    // Check for the presence of a message.
     if (message == null) {
       const { message: _message } = arg
       if (typeof _message === 'string') {
@@ -40,6 +52,7 @@ export function createError(...args: any[]) {
     }
   }
 
+  // Set fallback defaults.
   status = status == null ? 500 : status
   message = message == null ? getStatusText(status) : message
 
