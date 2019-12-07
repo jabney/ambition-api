@@ -14,6 +14,8 @@ const JWT_ISSUER = getOrThrow('JTW_ISSUER')
 const JWT_AUDIENCE = getOrThrow('JWT_AUDIENCE')
 const JWT_EXPIRES_IN_DAYS = integerize(process.env.JWT_EXPIRES_IN_DAYS, 7)
 
+const PASSWORD_COST_FACTOR = integerize(process.env.PASSWORD_COST_FACTOR, 10)
+
 export default Object.freeze({
   /**
    * Don't reject non-https requests.
@@ -43,4 +45,8 @@ export default Object.freeze({
    * Time until token expires.
    */
   JWT_EXPIRES_IN_DAYS,
+  /**
+   * Cost factor for password hashing.
+   */
+  PASSWORD_COST_FACTOR,
 })
