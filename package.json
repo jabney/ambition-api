@@ -17,6 +17,7 @@
     "@types/mongoose": "^5.5.32",
     "bcrypt": "^3.0.7",
     "express": "^4.16.4",
+    "express-validator": "^6.3.0",
     "http-status-codes": "^1.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.14",
