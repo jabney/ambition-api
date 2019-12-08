@@ -1,9 +1,13 @@
-import mongoose, { Document, Schema, SchemaTypes } from 'mongoose'
+import mongoose, { Document, Schema, Types, SchemaTypes } from 'mongoose'
 import { IToken } from './token.interface'
 
 const { ObjectId } = SchemaTypes
 
-export interface ITokenDocument extends IToken, Document {/* tokenSchema.methods */}
+export interface ITokenDocument extends IToken, Document {
+  _id: Types.ObjectId
+
+  /* tokenSchema.methods */
+}
 
 type TokenModel = mongoose.Model<ITokenDocument> & {/* tokenSchema.statics */}
 
