@@ -1,25 +1,7 @@
 import { RequestHandler } from 'express'
 import { Token } from '../models/token.model'
 import { User } from '../models/user.model'
-import * as tokens from '../lib/tokens'
 import { createError } from '../lib/errors'
-
-/**
- * Create a token and save it to the db.
- */
-async function createToken(userId: string): Promise<string> {
-  const token = await tokens.sign(userId)
-
-  const {
-    jti: _id,
-    iat: issuedAt,
-    exp: expiresAt,
-  } = tokens.decode(token)
-
-  const tokenDoc = new Token({ _id, userId, issuedAt, expiresAt })
-  await tokenDoc.save()
-  return token
-}
 
 /**
  *
@@ -35,7 +17,7 @@ export const signup: RequestHandler = async (req, res, next) => {
     const user = new User({ email, passwordInfo: { password } })
     await user.save()
 
-    const token = await createToken(user._id.toHexString())
+    const token = await Token.createToken(user._id)
     res.json({ token })
 
   } catch (e) {
@@ -67,7 +49,7 @@ export const signin: RequestHandler = async (req, res, next) => {
       return next(createError(404, 'user not found'))
     }
 
-    const token = await createToken(user._id.toHexString())
+    const token = await Token.createToken(user._id)
 
     res.json({ token })
 
