@@ -7,7 +7,7 @@ import { getStatusText } from 'http-status-codes'
 export function createError(...args: any[]) {
   let status: number|null = null
   let message: string|null = null
-  let stack: string|null|undefined = null
+  let error: any
 
   // Loop through arguments.
   for (let i = 0; i < args.length; i++) {
@@ -23,7 +23,7 @@ export function createError(...args: any[]) {
 
     // If error type, set the stack.
     if (arg instanceof Error) {
-      stack = arg.stack
+      error = arg
       continue
     }
 
@@ -64,7 +64,7 @@ export function createError(...args: any[]) {
   status = status == null ? 500 : status
   message = message == null ? getStatusText(status) : message
 
-  return new HttpError(status, message, stack)
+  return new HttpError(status, message, error)
 }
 
 export default createError

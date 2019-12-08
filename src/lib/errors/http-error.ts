@@ -3,13 +3,13 @@ import { JSONError } from './json-error'
 export class HttpError extends Error {
   public name: string
   public status: number
-  public wrapped: string|null
+  public wrapped: any
 
-  constructor(status=500, message='internal server error', stack: string|null = null) {
+  constructor(status=500, message='internal server error', error?: string) {
     super(message)
     this.name = 'HttpError'
     this.status = status
-    this.wrapped = stack
+    this.wrapped = error
   }
 
   toJSON(): JSONError {
