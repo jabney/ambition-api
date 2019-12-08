@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express'
 import { createError } from '../lib/errors'
 import env from '../environment'
+import getBearer from '../lib/get-bearer'
 
 /**
  * Require an api key to be set in request header.
@@ -12,8 +13,7 @@ export const apiKey: RequestHandler = (req, res, next): void => {
    * the apiKey header.
    */
   if (typeof API_KEY === 'string' && API_KEY.length > 0) {
-    const authorization = req.get('authorization') || ''
-    const authKey = authorization.replace(/Bearer +/i, '')
+    const authKey = getBearer(req)
 
     if (API_KEY !== authKey) {
       return next(createError(401, 'invalid api key'))

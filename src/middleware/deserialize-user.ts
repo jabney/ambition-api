@@ -4,8 +4,7 @@ import { createError } from '../lib/errors'
 import { User, IUserDocument } from '../models/user.model'
 import { Token, ITokenDocument } from '../models/token.model'
 import * as tokens from '../lib/tokens'
-
-const { ObjectId } = Types
+import getBearer from '../lib/get-bearer'
 
 declare global {
   namespace Express {
@@ -36,8 +35,7 @@ export default function deserializeUser(
 ): RequestHandler {
 
   return async (req, res, next) => {
-    const auth = req.get('authorization') || ''
-    const token = auth.replace(/Bearer +/i, '').trim()
+    const token = getBearer(req)
 
     if (!token) {
       if (optional) {
