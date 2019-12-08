@@ -34,6 +34,7 @@ export default function deserializeUser(
   optional: boolean = false,
   userFields: string|object|null = defaultFields,
 ): RequestHandler {
+
   return async (req, res, next) => {
     const auth = req.get('authorization') || ''
     const token = auth.replace(/Bearer +/i, '').trim()
@@ -63,13 +64,22 @@ export default function deserializeUser(
     const userDoc = await User.findById(userId, userFields)
 
     if (userDoc == null) {
-      return next(createError(401))
+      if (optional) {
+        return next()
+      } else {
+        return next(createError(401))
+      }
     }
 
-    const tokenDoc = await Token.findOne({ userId: new ObjectId(userId) })
+    const { jti: tokenId } = decoded
+    const tokenDoc = await Token.findById(tokenId)
 
     if (tokenDoc == null) {
-      return next(createError(401))
+      if (optional) {
+        return next()
+      } else {
+        return next(createError(401))
+      }
     }
 
     req.token = tokenDoc
