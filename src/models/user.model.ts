@@ -7,15 +7,11 @@ import * as tokens from '../lib/tokens'
 
 export interface IUserDocument extends IUser, Document {
   _id: Types.ObjectId
-  accessToken: () => Promise<string>
-  verifyToken: (token: string) => Promise<boolean>
   hasRole: (role: string) => boolean
   verifyPassword: (password: string) => Promise<boolean>
 }
 
-type UserModel = mongoose.Model<IUserDocument> & {
-  decodeToken: (token: string) => Promise<tokens.IToken>
-}
+type UserModel = mongoose.Model<IUserDocument> & {/* userSchema.statics */}
 
 /**
  * Define the schema for a user's password info object.
@@ -64,37 +60,17 @@ userSchema.methods.verifyPassword = function (this: IUserDocument, password: str
 }
 
 /**
- * Decode a token WITHOUT verifying it.
- */
-userSchema.statics.decodeToken = function (this: UserModel, token: string) {
-  return tokens.decode(token)
-}
-
-/**
- * Create an access token for this user.
- */
-userSchema.methods.accessToken = function (this: IUserDocument) {
-  return tokens.sign(this._id.toHexString())
-}
-
-/**
- * Verify that an access token is valid.
- */
-userSchema.methods.verifyToken = async function (this: IUserDocument, token: string) {
-  try {
-    const decoded = await tokens.verify(token)
-    // Sanity check that the token subject matches this user's id.
-    return decoded.sub === this._id.toHexString()
-  } catch (e) {
-    return false
-  }
-}
-
-/**
  * Return true if the user has the given role.
  */
 userSchema.methods.hasRole = function (this: IUserDocument, role: string) {
   return this.roles.includes(role)
 }
+
+// /**
+//  *
+//  */
+// userSchema.statics.example = function (this: UserModel) {
+//
+// }
 
 export const User = <UserModel>mongoose.model<IUserDocument>('User', userSchema)
