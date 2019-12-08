@@ -68,11 +68,12 @@ userSchema.methods.accessToken = function (this: IUserDocument) {
 }
 
 /**
- *
+ * Verify that an access token is valid.
  */
 userSchema.methods.verifyToken = async function (this: IUserDocument, token: string) {
   try {
     const decoded = await tokens.verify(token)
+    // Sanity check that the token subject matches this user's id.
     return decoded.sub === this._id.toHexString()
   } catch (e) {
     return false
