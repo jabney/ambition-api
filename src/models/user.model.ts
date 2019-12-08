@@ -9,6 +9,7 @@ export interface IUserDocument extends IUser, Document {
   _id: Types.ObjectId
   accessToken: () => Promise<string>
   verifyToken: (token: string) => Promise<boolean>
+  hasRole: (role: string) => boolean
 }
 
 type UserModel = mongoose.Model<IUserDocument> & {
@@ -78,6 +79,13 @@ userSchema.methods.verifyToken = async function (this: IUserDocument, token: str
   } catch (e) {
     return false
   }
+}
+
+/**
+ * Return true if the user has the given role.
+ */
+userSchema.methods.hasRole = function (this: IUserDocument, role: string) {
+  return this.roles.includes(role)
 }
 
 export const User = <UserModel>mongoose.model<IUserDocument>('User', userSchema)
