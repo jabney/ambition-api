@@ -10,6 +10,7 @@ export interface IUserDocument extends IUser, Document {
   accessToken: () => Promise<string>
   verifyToken: (token: string) => Promise<boolean>
   hasRole: (role: string) => boolean
+  verifyPassword: (password: string) => Promise<boolean>
 }
 
 type UserModel = mongoose.Model<IUserDocument> & {
@@ -54,6 +55,15 @@ userSchema.pre('save', async function (this: IUserDocument, next) {
 
   next()
 })
+
+/**
+ * Verify that the given password matches the stored one.
+ */
+userSchema.methods.verifyPassword = async function (this: IUserDocument, password: string) {
+    const cost = env.PASSWORD_COST_FACTOR
+    const hash = await bcrypt.hash(password, cost)
+    return hash === this.passwordInfo.password
+}
 
 /**
  * Decode a token WITHOUT verifying it.
