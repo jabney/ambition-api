@@ -13,6 +13,14 @@ export function createError(...args: any[]) {
   for (let i = 0; i < args.length; i++) {
     const arg = args[i]
 
+    // If any arg is an HttpError, return it outright.
+    if (arg instanceof HttpError) {
+      if (args.length > 1) {
+        console.warn(`<createError> arg ${i} is an HttpError. All other args ignored.`)
+      }
+      return arg
+    }
+
     // If error type, set the stack.
     if (arg instanceof Error) {
       stack = arg.stack
