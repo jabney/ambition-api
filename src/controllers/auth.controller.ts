@@ -25,8 +25,28 @@ async function createToken(userId: string): Promise<string> {
 /**
  *
  */
-export const signup: RequestHandler = (req, res, next) => {
-  res.json({ data: 'signup' })
+export const signup: RequestHandler = async (req, res, next) => {
+  const { email, password } = req.body
+
+  if (!email || !password) {
+    return next(createError(400, 'email and password required'))
+  }
+
+  try {
+    const user = new User({ email, passwordInfo: { password } })
+    await user.save()
+
+    const token = await createToken(user._id.toHexString())
+    res.json({ token })
+
+  } catch (e) {
+    // Handle duplicate key error.
+    if (e.name === 'MongoError' && e.code === 11000) {
+      return next(createError(409, 'user already exists'))
+    }
+
+    return next(createError(e))
+  }
 }
 
 /**
