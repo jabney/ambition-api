@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema, Types, SchemaTypes } from 'mongoose'
+import mongoose, { Document, Schema, Types } from 'mongoose'
 import { IUser } from './user.interface'
 import schemaOptions from '../config/schema-options'
 import env from '../environment'
@@ -22,7 +22,7 @@ type UserModel = mongoose.Model<IUserDocument> & {
 const passwordInfoSchema = new Schema({
   password: { $type: String, required: true },
   updatedAt: { $type: Date, default: Date.now },
-}, schemaOptions())
+}, schemaOptions({ _id: false }))
 
 /**
  * Define the schema for a user record.
