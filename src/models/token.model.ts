@@ -3,9 +3,9 @@ import { IToken } from './token.interface'
 
 const { ObjectId } = SchemaTypes
 
-export interface ITokenDocument extends IToken, Document { /* tokenSchema.methods */}
+export interface ITokenDocument extends IToken, Document {/* tokenSchema.methods */}
 
-type TokenModel = mongoose.Model<ITokenDocument> & { /* tokenSchema.statics */}
+type TokenModel = mongoose.Model<ITokenDocument> & {/* tokenSchema.statics */}
 
 export const tokenSchema = new Schema({
   // The owner of the token.
