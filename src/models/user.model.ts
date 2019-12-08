@@ -32,6 +32,7 @@ export const userSchema = new Schema({
   first: String,
   last: String,
   roles: [String],
+  grants: [String],
   passwordInfo: { $type: passwordInfoSchema, required: true },
 }, schemaOptions())
 
