@@ -59,10 +59,8 @@ userSchema.pre('save', async function (this: IUserDocument, next) {
 /**
  * Verify that the given password matches the stored one.
  */
-userSchema.methods.verifyPassword = async function (this: IUserDocument, password: string) {
-    const cost = env.PASSWORD_COST_FACTOR
-    const hash = await bcrypt.hash(password, cost)
-    return hash === this.passwordInfo.password
+userSchema.methods.verifyPassword = function (this: IUserDocument, password: string) {
+    return bcrypt.compare(password, this.passwordInfo.password)
 }
 
 /**
