@@ -11,11 +11,12 @@ async function createToken(userId: string): Promise<string> {
   const token = await tokens.sign(userId)
 
   const {
+    jti: _id,
     iat: issuedAt,
     exp: expiresAt,
   } = tokens.decode(token)
 
-  const tokenDoc = new Token({ userId, issuedAt, expiresAt })
+  const tokenDoc = new Token({ _id, userId, issuedAt, expiresAt })
   await tokenDoc.save()
   return token
 }
