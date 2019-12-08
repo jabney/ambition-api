@@ -1,13 +1,19 @@
-import mongoose, { Document, Schema, SchemaTypes } from 'mongoose'
+import mongoose, { Document, Schema, Types, SchemaTypes } from 'mongoose'
 import { IUser } from './user.interface'
 import schemaOptions from '../config/schema-options'
 import env from '../environment'
 import bcrypt from 'bcrypt'
 import * as tokens from '../lib/tokens'
 
-export interface IUserDocument extends IUser, Document {}
+export interface IUserDocument extends IUser, Document {
+  _id: Types.ObjectId
+  accessToken: () => Promise<string>
+  verifyToken: (token: string) => Promise<boolean>
+}
 
-type UserModel = mongoose.Model<IUserDocument> & { /* userSchema.statics */}
+type UserModel = mongoose.Model<IUserDocument> & {
+  decodeToken: (token: string) => Promise<tokens.IToken>
+}
 
 /**
  * Define the schema for a user's password info object.
@@ -46,5 +52,31 @@ userSchema.pre('save', async function (this: IUserDocument, next) {
 
   next()
 })
+
+/**
+ * Decode a token WITHOUT verifying it.
+ */
+userSchema.statics.decodeToken = function (this: UserModel, token: string) {
+  return tokens.decode(token)
+}
+
+/**
+ * Create an access token for this user.
+ */
+userSchema.methods.accessToken = function (this: IUserDocument) {
+  return tokens.sign(this._id.toHexString())
+}
+
+/**
+ *
+ */
+userSchema.methods.verifyToken = async function (this: IUserDocument, token: string) {
+  try {
+    const decoded = await tokens.verify(token)
+    return decoded.sub === this._id.toHexString()
+  } catch (e) {
+    return false
+  }
+}
 
 export const User = <UserModel>mongoose.model<IUserDocument>('User', userSchema)
