@@ -11,6 +11,7 @@ export interface ITokenDocument extends IToken, Document {
 type TokenModel = mongoose.Model<ITokenDocument> & {/* tokenSchema.statics */}
 
 export const tokenSchema = new Schema({
+  _id: { $type: Schema.Types.ObjectId, required: true },
   // The owner of the token.
   userId: { $type: Schema.Types.ObjectId, required: true },
   // The time the token was issued.
