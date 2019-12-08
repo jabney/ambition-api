@@ -35,7 +35,7 @@ export const userSchema = new Schema({
   roles: { $type: [String], enum: ['admin'] },
   grants: { $type: [String], enum: ['track-location'] },
   passwordInfo: { $type: passwordInfoSchema, required: true },
-}, schemaOptions())
+}, schemaOptions({ timestamps: true }))
 
 // Unique email.
 userSchema.index({ email: 1 }, { unique: true })
