@@ -31,8 +31,8 @@ export const userSchema = new Schema({
   email: { $type: String, required: true },
   first: String,
   last: String,
-  roles: [String],
-  grants: [String],
+  roles: { $type: [String], enum: ['admin'] },
+  grants: { $type: [String], enum: ['track-location'] },
   passwordInfo: { $type: passwordInfoSchema, required: true },
 }, schemaOptions())
 
