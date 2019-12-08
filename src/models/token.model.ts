@@ -19,4 +19,6 @@ export const tokenSchema = new Schema({
   expiresAt: { $type: Number, required: true },
 }, schemaOptions())
 
+tokenSchema.index({ userId: 1 })
+
 export const Token = <TokenModel>mongoose.model<ITokenDocument>('Token', tokenSchema)
