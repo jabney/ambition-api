@@ -16,7 +16,7 @@ declare global {
   }
 }
 
-export const defaultFields = Object.freeze(['email', 'roles', 'grants'])
+export const defaultFields = 'email roles grants'
 
 /**
  * Validate a token and use it to deserialize a user from the db. Both a
@@ -24,18 +24,15 @@ export const defaultFields = Object.freeze(['email', 'roles', 'grants'])
  * and `req.user` unless the `optional` flag is `true`.
  *
  * @param optional a token is not required to fulfill this request
- * @param userFields a list of fields to return for the user. See
- * `defaultFields` export for defaults.
+ * @param userFields a space-delimited list of fields to return for the user.
+ * This is a mongoose fields projection value.
  *
  * If `optional` is specified, don't fail the request if the token is
  * invalid or not provided.
- *
- * If `null` or an empty array is passed for `userFields`, all fields
- * will be returned for the user record.
  */
 export default function deserializeUser(
   optional: boolean = false,
-  userFields: ReadonlyArray<string>|null = defaultFields,
+  userFields: string|object|null = defaultFields,
 ): RequestHandler {
   return async (req, res, next) => {
     const auth = req.get('authorization') || ''
@@ -63,8 +60,7 @@ export default function deserializeUser(
     }
 
     const { sub: userId } = decoded
-    const fields = userFields || []
-    const userDoc = await User.findById(userId, fields.join(' '))
+    const userDoc = await User.findById(userId, userFields)
 
     if (userDoc == null) {
       return next(createError(401))
