@@ -1,5 +1,8 @@
+import util from 'util'
 import { connect as _connect, ConnectionOptions } from 'mongoose'
 import { MongoError } from 'mongodb'
+
+const debug = util.debuglog('ambition:app')
 
 /**
  * Options to avoid deprecation warnings.
@@ -26,7 +29,7 @@ export const connect = (onConnectOrError: ConnectCallback) => {
 export function mongooseConnect() {
   connect((err) => {
     if (err) { return console.error('MongoDB Error:', err) }
-    console.log('MongoDB connected via Mongoose Connect')
+    debug('MongoDB connected via Mongoose Connect')
   })
 }
 
