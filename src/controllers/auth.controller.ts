@@ -20,8 +20,6 @@ async function createToken(userId: string): Promise<string> {
   return token
 }
 
-// createToken('5dec56e4e903e327da7fe5c9').then(token => console.log(token))
-
 /**
  *
  */
@@ -54,8 +52,10 @@ export const signup: RequestHandler = async (req, res, next) => {
  */
 export const signin: RequestHandler = async (req, res, next) => {
   const { email, password } = req.body
-
   try {
+    // If there is an existing valid token, remove it.
+    if (req.token) { req.token.remove() }
+
     const user = await User.findOne({ email })
 
     if (user == null) {
