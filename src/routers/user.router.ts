@@ -11,6 +11,6 @@ const deserializeMin = deserializeUser('_id')
 router.route('/')
   .get(deserializeProfile, fetch)
   .patch(deserializeMin, updateValidator, update)
-  .delete(tokenRequired, remove)
+  .delete(deserializeMin, remove)
 
 export default router
