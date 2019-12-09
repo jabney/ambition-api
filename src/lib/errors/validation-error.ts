@@ -12,6 +12,12 @@ export class ValidationError extends HttpError {
 
     this.errors = () => errors.map(e => `${e.param}: ${e.msg}`)
   }
+
+  toJSON() {
+    const json = super.toJSON()
+    json.errors = this.errors()
+    return json
+  }
 }
 
 export default ValidationError
