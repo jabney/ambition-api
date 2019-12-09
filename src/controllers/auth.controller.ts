@@ -35,6 +35,7 @@ export const signup: RequestHandler = async (req, res, next) => {
  */
 export const signin: RequestHandler = async (req, res, next) => {
   const { email, password } = req.body
+
   try {
     // If there is an existing valid token, remove it.
     if (req.token) { req.token.remove() }
@@ -61,13 +62,28 @@ export const signin: RequestHandler = async (req, res, next) => {
 /**
  *
  */
-export const signout: RequestHandler = (req, res, next) => {
-  res.json({ data: 'signout' })
+export const signout: RequestHandler = async (req, res, next) => {
+  try {
+    await req.token.remove()
+
+    res.json({ data: 'token revoked' })
+
+  } catch (e) {
+    return next(createError(e))
+  }
 }
 
 /**
  *
  */
-export const signoutAll: RequestHandler = (req, res, next) => {
-  res.json({ data: 'signoutAll' })
+export const signoutAll: RequestHandler = async (req, res, next) => {
+  try {
+    const { userId } = req.token
+    await Token.deleteMany({ userId })
+
+    res.json({ data: 'all tokens revoked' })
+
+  } catch (e) {
+    return next(createError(e))
+  }
 }
