@@ -16,7 +16,13 @@ export const update: RequestHandler = async (req, res, next) => {
   const fields = req.body
 
   try {
-    await user.update(fields)
+    await user.updateOne(fields)
+
+    if (fields.password) {
+      user.passwordInfo = { password: fields.password }
+      await user.save()
+    }
+
     res.json({ data: 'user updated' })
 
   } catch (e) {
