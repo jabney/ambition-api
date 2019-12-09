@@ -2,21 +2,17 @@ import validationErrors from '../middleware/validation-errors'
 import defs from './definitions'
 
 export const signupValidator = [
-  defs.body.required.email,
-  defs.body.required.password,
-
-  /**
-   * Optional fields.
-   */
-  defs.body.optional.first,
-  defs.body.optional.last,
+  defs.body.email,
+  defs.body.password,
+  defs.body.first.optional(),
+  defs.body.last.optional(),
 
   validationErrors,
 ]
 
 export const signinValidator = [
-  defs.body.required.email,
-  defs.body.required.password,
+  defs.body.email,
+  defs.body.password,
 
   validationErrors,
 ]

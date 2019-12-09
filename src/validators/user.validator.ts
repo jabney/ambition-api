@@ -5,10 +5,10 @@ export const updateValidator = [
   /**
    * Optional fields.
    */
-  defs.body.optional.email,
-  defs.body.optional.password,
-  defs.body.optional.first,
-  defs.body.optional.last,
+  defs.body.email.optional(),
+  defs.body.password.optional(),
+  defs.body.first.optional(),
+  defs.body.last.optional(),
 
   validationErrors,
 ]

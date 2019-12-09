@@ -25,16 +25,10 @@ const last = (loc: Location) => location[loc]('last')
 
 export default {
   body: {
-    required: {
-      email: email('body'),
-      password: password('body'),
-    },
-    optional: {
-      email: email('body').optional(),
-      password: password('body').optional(),
-      first: first('body').optional(),
-      last: last('body').optional(),
-    },
+    email: email('body'),
+    password: password('body'),
+    first: first('body'),
+    last: last('body'),
   },
 
   query: {
