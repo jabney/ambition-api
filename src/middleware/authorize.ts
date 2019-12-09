@@ -93,7 +93,7 @@ export function authorize(
 
 export default authorize
 
-export const tokenRequired = authorize.bind(null, true, false)
-export const tokenOptional = authorize.bind(null, false, false)
+export const tokenRequired = authorize(true, false)
+export const tokenOptional = authorize(false, false)
 
 export const deserializeUser = authorize.bind(null, true)
