@@ -9,19 +9,19 @@
  *     id: 1234,
  *     first: 'Jimmy',
  *     last: 'Jimmerton',
- *     someOtherField: {...}
+ *     unknownField: {...} // this will be removed.
  *   }
  * }
  *
  * // ...
  *
  * // Specify which fields to copy to the new body object.
- * router.post('/signin', sanitize(['email', 'password']), handler)
+ * router.post('/signin', sanitize(['id', 'email', 'password']), handler)
  *
  * // or
  *
  * // Specify fields with one or more sanitizers.
- * router.post('/signin', sanitize([{ first: 'toString', last: ['toString', '...'] }), handler)
+ * router.post('/signin', sanitize(['id', { first: 'toString', last: ['toString', '...'] }), handler)
  *
  * // ...
  *
@@ -38,16 +38,26 @@ type KeyVals<T=any> = {[key: string]: T}
 type SanitizeName = 'toString'|'trim'|'toInt'|'toNum'|'noEmpty'|'noNull'
 
 /**
+ * A sanitizer function.
+ */
+type SanitizeFn = (arg: any) => any
+
+/**
+ * A sanitizer name or a function.
+ */
+type Sanitizer = SanitizeName|SanitizeFn
+
+/**
  * Call a function with the given value if the value is defined.
  */
-function callIfDefined(value: any, fn: (arg: any) => any) {
+function callIfDefined(value: any, fn: SanitizeFn) {
   return value === undefined ? value : fn(value)
 }
 
 /**
  * Value sanitizers by name.
  */
-const sanitizers: {[K in SanitizeName]: (arg: any) => any} = {
+const sanitizers: {[K in SanitizeName]: SanitizeFn} = {
   toString: (arg: any) => callIfDefined(arg, v => v.toString()),
   trim: (arg: any) => callIfDefined(arg, v => v.trim()),
   toInt: (arg: string) => callIfDefined(arg, v => parseInt(v)),
@@ -62,9 +72,11 @@ const sanitizers: {[K in SanitizeName]: (arg: any) => any} = {
 const sanitizerError = () => { throw new Error(`"${name}" is not a valid sanitizer`)}
 
 /**
- * Get a sanitizer by name.
+ * Get a sanitizer by name or return value if it's a function.
  */
-const getSanitizer = (name: SanitizeName) => sanitizers[name] || sanitizerError
+const getSanitizer = (value: Sanitizer) => {
+  return typeof value === 'function' ? value : (sanitizers[value] || sanitizerError)
+}
 
 /**
  * Sanitize request body, query, or params.
@@ -73,7 +85,7 @@ type SanitizeType = 'body'|'query'|'params'
 /**
  * A map of { field => sanitizer_by_name }
  */
-type SanitizeSpec = {[field: string]: SanitizeName|SanitizeName[]}
+type SanitizeSpec = {[field: string]: Sanitizer|Sanitizer[]}
 /**
  * Fields may be strings or objects containing one or more key/value pairs.
  */
