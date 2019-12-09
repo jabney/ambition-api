@@ -8,5 +8,5 @@ export interface IUser {
   roles: string[]
   grants: string[]
 
-  passwordInfo: { password: string, updatedAt: Date }
+  passwordInfo: { password: string, updatedAt?: Date }
 }
