@@ -5,6 +5,7 @@ import { mongooseConnect } from './config/mongoose'
 import configureApp from './config/app'
 
 import authRouter from './routers/auth.router'
+import userRouter from './routers/user.router'
 
 // Connect to MongoDB.
 mongooseConnect()
@@ -15,8 +16,8 @@ const app = configureApp(express())
 /**
  * API Routes
  */
-
 app.use('/auth', authRouter)
+app.use('/user', userRouter)
 
 /**
  * 404 Handler
