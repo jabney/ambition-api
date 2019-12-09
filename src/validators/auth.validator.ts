@@ -1,41 +1,22 @@
-import { body } from 'express-validator'
 import validationErrors from '../middleware/validation-errors'
+import defs from './definitions'
 
 export const signupValidator = [
-  body('email')
-    .isEmail()
-    .withMessage('must be a valid email'),
-
-  body('password')
-    .isString().withMessage('must be a string')
-    .isLength({ min: 1, max: 72 }).withMessage('must be between 1 and 72 characters'),
+  defs.body.required.email,
+  defs.body.required.password,
 
   /**
    * Optional fields.
    */
-
-  body('first')
-    .optional()
-    .isString().withMessage('must be a string')
-    .isLength({ min: 1, max: 64 }).withMessage('must be between 1 and 64 characters'),
-
-  body('last')
-    .optional()
-    .isString().withMessage('must be a string')
-    .isLength({ min: 1, max: 64 }).withMessage('must be between 1 and 64 characters'),
+  defs.body.optional.first,
+  defs.body.optional.last,
 
   validationErrors,
 ]
 
 export const signinValidator = [
-  body('email')
-    .isEmail()
-    .withMessage('must be a valid email'),
-
-  body('password')
-    .isString().withMessage('must be a string')
-    .isLength({ min: 1, max: 72 })
-    .withMessage('must be between 1 and 72 characters'),
+  defs.body.required.email,
+  defs.body.required.password,
 
   validationErrors,
 ]
