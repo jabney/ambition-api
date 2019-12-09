@@ -5,6 +5,9 @@ import {
   getOrThrow,
 } from './lib/env-helpers'
 
+const PRODUCTION = booleanize(process.env.NODE_ENV, 'production')
+const DEVELOPMENT = !PRODUCTION
+
 const ALLOW_UNSECURE = booleanize(process.env.ALLOW_UNSECURE)
 const TRUST_PROXY = integerize(process.env.TRUST_PROXY, 0)
 const API_KEY = process.env.API_KEY
@@ -17,6 +20,8 @@ const JWT_EXPIRES_IN_DAYS = integerize(process.env.JWT_EXPIRES_IN_DAYS, 7)
 const PASSWORD_COST_FACTOR = integerize(process.env.PASSWORD_COST_FACTOR, 10)
 
 export default Object.freeze({
+  DEVELOPMENT,
+  PRODUCTION,
   /**
    * Don't reject non-https requests.
    */
