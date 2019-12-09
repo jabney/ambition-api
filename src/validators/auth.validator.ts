@@ -6,9 +6,14 @@ export const signupValidator = [
   body('email')
     .isEmail()
     .withMessage('must be a valid email'),
+
   body('password')
     .isString().withMessage('must be a string')
     .isLength({ min: 1, max: 72 }).withMessage('must be between 1 and 72 characters'),
+
+  /**
+   * Optional fields.
+   */
 
   body('first')
     .optional()
@@ -29,6 +34,7 @@ export const signinValidator = [
   body('email')
     .isEmail()
     .withMessage('must be a valid email'),
+
   body('password')
     .isString().withMessage('must be a string')
     .isLength({ min: 1, max: 72 })
