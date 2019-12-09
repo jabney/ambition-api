@@ -29,7 +29,7 @@ export const defaultFields = 'email roles grants'
  * If `optional` is specified, don't fail the request if the token is
  * invalid or not provided.
  */
-export default function deserializeUser(
+export function deserializeUser(
   optional: boolean = false,
   userFields: string|object|null = defaultFields,
 ): RequestHandler {
@@ -86,6 +86,8 @@ export default function deserializeUser(
     next()
   }
 }
+
+export default deserializeUser
 
 export const tokenRequired = deserializeUser.bind(null, false)
 export const tokenOptional = deserializeUser.bind(null, true)
