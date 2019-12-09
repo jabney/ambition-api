@@ -7,14 +7,11 @@ import { createError } from '../lib/errors'
  *
  */
 export const signup: RequestHandler = async (req, res, next) => {
-  const { email, password } = req.body
-
-  if (!email || !password) {
-    return next(createError(400, 'email and password required'))
-  }
+  const info = req.body
 
   try {
-    const user = new User({ email, passwordInfo: { password } })
+    const { password } = info
+    const user = new User({ ...info, passwordInfo: { password } })
     await user.save()
 
     const token = await Token.createToken(user._id)
