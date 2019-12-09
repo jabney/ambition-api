@@ -19,14 +19,14 @@ export const defaultFields = 'email roles grants'
 /**
  * Validate a token and use it to deserialize a user from the db. Both a
  * token and a user will be added to the `Request` object as `req.token`
- * and `req.user` unless the `optional` flag is `true`.
+ * and `req.user`; however for cases where the token is not required, the
+ * token may not be present on the request. If `user` is `false`, the user
+ * will not be on the request object.
  *
- * @param tokenRequired a token is not required to fulfill this request
- * @param user a space-delimited list of fields to return for the user.
- * This is a mongoose fields projection value.
- *
- * If `optional` is specified, don't fail the request if the token is
- * invalid or not provided.
+ * @param tokenRequired a token is required to fulfill this request.
+ * @param user if a string or an object, consider this argument to be a
+ * mongoose projection. If `null`, return all fields for the user. If `false`,
+ * don't deserialize the user on the request object.
  */
 export function authorize(
   tokenRequired: boolean = false,
@@ -72,7 +72,7 @@ export function authorize(
 
     const { sub: userId } = decoded
     const projection = user === false ? '_id' : user
-    const lean = user !== false
+    const lean = user === false
     const userDoc = await User.findById(userId, projection, { lean })
 
     /**
@@ -93,5 +93,5 @@ export function authorize(
 
 export default authorize
 
-export const tokenRequired = authorize.bind(null, false)
-export const tokenOptional = authorize.bind(null, true)
+export const tokenRequired = authorize.bind(null, true, false)
+export const tokenOptional = authorize.bind(null, false, false)
