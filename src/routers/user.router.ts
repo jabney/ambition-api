@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { fetch, update, remove } from '../controllers/user.controller'
-import { deserializeUser, tokenRequired } from '../middleware/authorize'
+import { deserializeUser } from '../middleware/authorize'
 import { updateValidator } from '../validators/user.validator'
 
 const router = Router()
