@@ -1,7 +1,6 @@
 import mongoose, { Document, Schema, Types } from 'mongoose'
 import { IConfig } from './config.interface'
 import schemaOptions from '../config/schema-options'
-import env from '../environment'
 
 export interface IConfigDocument extends IConfig, Document {
   _id: Types.ObjectId
