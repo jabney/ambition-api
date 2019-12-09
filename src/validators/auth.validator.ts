@@ -1,6 +1,5 @@
 import { body } from 'express-validator'
 import validationErrors from '../middleware/validation-errors'
-import { sanitize } from '../lib/sanitize'
 
 export const signupValidator = [
   body('email')
@@ -26,8 +25,6 @@ export const signupValidator = [
     .isLength({ min: 1, max: 64 }).withMessage('must be between 1 and 64 characters'),
 
   validationErrors,
-
-  sanitize('body', ['email', 'password', 'first', 'last']),
 ]
 
 export const signinValidator = [
