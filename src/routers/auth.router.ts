@@ -1,24 +1,21 @@
 import { Router } from 'express'
 import { apiKey } from '../middleware/api-key'
 import { signup, signin, signout, signoutAll } from '../controllers/auth.controller'
-import { tokenOptional, tokenRequired } from '../middleware/deserialize-user'
+import { tokenOptional, tokenRequired } from '../middleware/authorize'
 import { signupValidator, signinValidator } from '../validators/auth.validator'
 
 const router = Router()
-
-const optionalToken = tokenOptional('_id')
-const requiredToken = tokenRequired('_id')
 
 router.route('/signup')
   .post(apiKey, signupValidator, signup)
 
 router.route('/signin')
-  .post(apiKey, optionalToken, signinValidator, signin)
+  .post(apiKey, tokenOptional, signinValidator, signin)
 
 router.route('/signout')
-  .get(requiredToken, signout)
+  .get(tokenRequired, signout)
 
 router.route('/signout/all')
-  .get(requiredToken, signoutAll)
+  .get(tokenRequired, signoutAll)
 
 export default router
