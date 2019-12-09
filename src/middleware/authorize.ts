@@ -20,7 +20,7 @@ export const defaultFields = 'email roles grants'
  * Validate a token and use it to deserialize a user from the db. Both a
  * token and a user will be added to the `Request` object as `req.token`
  * and `req.user`; however for cases where the token is not required, the
- * token may not be present on the request. If `user` is `false`, the user
+ * token will not be present on the request. If `user` is `false`, the user
  * will not be on the request object.
  *
  * @param tokenRequired a token is required to fulfill this request.
