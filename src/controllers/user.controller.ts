@@ -1,5 +1,6 @@
 import { RequestHandler } from 'express'
 import { createError } from '../lib/errors'
+import { Token } from '../models/token.model'
 
 /**
  *
@@ -35,7 +36,10 @@ export const update: RequestHandler = async (req, res, next) => {
  */
 export const remove: RequestHandler = async (req, res, next) => {
   try {
+    const { _id: userId } = req.user
+    await Token.deleteMany({ userId })
     await req.user.remove()
+
     res.json({ data: 'user data deleted '})
 
   } catch (e) {
