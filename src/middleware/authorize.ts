@@ -1,4 +1,3 @@
-import { Types } from 'mongoose'
 import { RequestHandler } from 'express'
 import { createError } from '../lib/errors'
 import { User, IUserDocument } from '../models/user.model'
@@ -22,26 +21,26 @@ export const defaultFields = 'email roles grants'
  * token and a user will be added to the `Request` object as `req.token`
  * and `req.user` unless the `optional` flag is `true`.
  *
- * @param optional a token is not required to fulfill this request
- * @param userFields a space-delimited list of fields to return for the user.
+ * @param tokenRequired a token is not required to fulfill this request
+ * @param user a space-delimited list of fields to return for the user.
  * This is a mongoose fields projection value.
  *
  * If `optional` is specified, don't fail the request if the token is
  * invalid or not provided.
  */
-export function deserializeUser(
-  optional: boolean = false,
-  userFields: string|object|null = defaultFields,
+export function authorize(
+  tokenRequired: boolean = false,
+  user: string|object|null|false = defaultFields,
 ): RequestHandler {
 
   return async (req, res, next) => {
     const token = getBearer(req)
 
     if (!token) {
-      if (optional) {
-        return next()
-      } else {
+      if (tokenRequired) {
         return next(createError(401))
+      } else {
+        return next()
       }
     }
 
@@ -51,21 +50,10 @@ export function deserializeUser(
       // Check that the token is valid.
       decoded = await tokens.verify(token)
     } catch (e) {
-      if (optional) {
-        return next()
-      } else {
+      if (tokenRequired) {
         return next(createError(401))
-      }
-    }
-
-    const { sub: userId } = decoded
-    const userDoc = await User.findById(userId, userFields)
-
-    if (userDoc == null) {
-      if (optional) {
-        return next()
       } else {
-        return next(createError(401))
+        return next()
       }
     }
 
@@ -73,21 +61,37 @@ export function deserializeUser(
     const tokenDoc = await Token.findById(tokenId)
 
     if (tokenDoc == null) {
-      if (optional) {
-        return next()
-      } else {
+      if (tokenRequired) {
         return next(createError(401))
+      } else {
+        return next()
       }
     }
 
     req.token = tokenDoc
-    req.user = userDoc
+
+    const { sub: userId } = decoded
+    const projection = user === false ? '_id' : user
+    const lean = user !== false
+    const userDoc = await User.findById(userId, projection, { lean })
+
+    /**
+     * If there is no user associated with the token, then
+     * consider the token as invalid.
+     */
+    if (userDoc == null) {
+      return next(createError(401))
+    }
+
+    if (user !== false) {
+      req.user = userDoc
+    }
 
     next()
   }
 }
 
-export default deserializeUser
+export default authorize
 
-export const tokenRequired = deserializeUser.bind(null, false)
-export const tokenOptional = deserializeUser.bind(null, true)
+export const tokenRequired = authorize.bind(null, false)
+export const tokenOptional = authorize.bind(null, true)
