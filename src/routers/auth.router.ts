@@ -4,10 +4,10 @@ import { signup, signin, signout, signoutAll } from '../controllers/auth.control
 import { tokenOptional, tokenRequired } from '../middleware/deserialize-user'
 import { signupValidator, signinValidator } from '../validators/auth.validator'
 
+const router = Router()
+
 const optionalToken = tokenOptional('_id')
 const requiredToken = tokenRequired('_id')
-
-const router = Router()
 
 router.route('/signup')
   .post(apiKey, signupValidator, signup)
