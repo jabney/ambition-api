@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { fetch, remove, update, fetchGrants } from '../controllers/user.controller'
+import { fetchUser, deleteUser, updateUser, fetchGrants } from '../controllers/user.controller'
 import { deserializeUser, tokenRequired } from '../middleware/authorize'
 import { updateValidator } from '../validators/user.validator'
 
@@ -9,9 +9,9 @@ const deserializeProfile = deserializeUser('email first last grants roles')
 const deserializeMin = deserializeUser('_id')
 
 router.route('/')
-  .get(deserializeProfile, fetch)
-  .patch(deserializeMin, updateValidator, update)
-  .delete(deserializeMin, remove)
+  .get(deserializeProfile, fetchUser)
+  .patch(deserializeMin, updateValidator, updateUser)
+  .delete(deserializeMin, deleteUser)
 
 router.route('/grants')
   .get(tokenRequired, fetchGrants)

@@ -6,14 +6,14 @@ import { grantList } from '../config/grants'
 /**
  *
  */
-export const fetch: RequestHandler = async (req, res, next) => {
+export const fetchUser: RequestHandler = async (req, res, next) => {
   res.json({ user: req.user })
 }
 
 /**
  *
  */
-export const update: RequestHandler = async (req, res, next) => {
+export const updateUser: RequestHandler = async (req, res, next) => {
   const user = req.user
   const fields = req.body
 
@@ -41,7 +41,7 @@ export const update: RequestHandler = async (req, res, next) => {
 /**
  *
  */
-export const remove: RequestHandler = async (req, res, next) => {
+export const deleteUser: RequestHandler = async (req, res, next) => {
   try {
     const { _id: userId } = req.user
     await Token.deleteMany({ userId })
