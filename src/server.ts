@@ -1,4 +1,3 @@
-/* tslint:disable */
 /**
  *
  * Module dependencies.
@@ -14,8 +13,8 @@ const debug = util.debuglog('ambition:server')
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '3000')
-app.set('port', port)
+const PORT = normalizePort(process.env.PORT || '3000')
+app.set('port', PORT)
 
 /**
  * Create HTTP server.
@@ -27,7 +26,7 @@ const server = http.createServer(app)
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port)
+server.listen(PORT)
 server.on('error', onError)
 server.on('listening', onListening)
 
@@ -35,7 +34,7 @@ server.on('listening', onListening)
  * Normalize a port into a number, string, or false.
  */
 function normalizePort(value: number|string) {
-  let port = parseInt(value as string, 10)
+  const port = parseInt(value as string, 10)
 
   if (isNaN(port)) {
     // named pipe
@@ -58,9 +57,9 @@ function onError(error: any) {
     throw error
   }
 
-  let bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port
+  const bind = typeof PORT === 'string'
+    ? 'Pipe ' + PORT
+    : 'Port ' + PORT
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
