@@ -5,6 +5,7 @@
   "scripts": {
     "build": "tsc",
     "db": "mongod --dbpath=./db",
+    "lint": "tslint --project .",
     "start": "node ./lib/server",
     "server": "source .env && npm run build && npm run start",
     "tunnel": "source .env && ngrok http $PORT",
