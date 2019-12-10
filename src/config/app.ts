@@ -1,7 +1,7 @@
 import express, { Application } from 'express'
 import logger from 'morgan'
+import env from '../environment'
 import rejectHttp from '../middleware/reject-http'
-import env from '../environment';
 
 /**
  * Set up application middleware and misc.
@@ -14,8 +14,8 @@ function configureApp(app: Application) {
     app.set('trust proxy', env.TRUST_PROXY)
   }
 
-  app.use(logger('dev'));
-  app.use(express.json({ limit: '1kb'}));
+  app.use(logger('dev'))
+  app.use(express.json({ limit: '1kb'}))
 
   app.use(rejectHttp())
 

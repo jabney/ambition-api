@@ -1,11 +1,11 @@
-import { body, query, param, ValidationChain } from 'express-validator'
+import { body, param, query, ValidationChain } from 'express-validator'
 
 type Location = 'body'|'query'|'param'
 
 const location: {[K in Location]: (field: string) => ValidationChain} = {
   body,
-  query,
   param,
+  query,
 }
 
 const email = (loc: Location) => location[loc]('email')
@@ -26,9 +26,9 @@ const last = (loc: Location) => location[loc]('last')
 export default {
   body: {
     email: () => email('body'),
-    password: () => password('body'),
     first: () => first('body'),
     last: () => last('body'),
+    password: () => password('body'),
   },
 
   query: {
@@ -37,5 +37,5 @@ export default {
 
   param: {
 
-  }
+  },
 }

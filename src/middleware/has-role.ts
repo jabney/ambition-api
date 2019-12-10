@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express'
-import { createError } from '../lib/errors'
 import { isValidRole, RoleType } from '../config/roles'
+import { createError } from '../lib/errors'
 
 /**
  * Allow request if the user has the given role.

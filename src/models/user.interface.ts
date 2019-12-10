@@ -1,6 +1,6 @@
 import { Types } from 'mongoose'
-import { RoleType } from '../config/roles'
 import { GrantType } from '../config/grants'
+import { RoleType } from '../config/roles'
 
 export interface IUser {
   _id: Types.ObjectId

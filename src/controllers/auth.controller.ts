@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express'
+import { createError } from '../lib/errors'
 import { Token } from '../models/token.model'
 import { User } from '../models/user.model'
-import { createError } from '../lib/errors'
 
 /**
  *

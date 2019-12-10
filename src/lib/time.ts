@@ -6,7 +6,7 @@ const WEEK_MS = 7 * DAY_MS
 const MONTH_MS = 30 * DAY_MS
 const YEAR_MS = 365 * DAY_MS
 
-export interface TimeOptions {
+export interface ITimeOptions {
   ms?: number
   seconds?: number
   minutes?: number
@@ -22,7 +22,7 @@ export interface TimeOptions {
  *
  * Example: timeMs({minutes: 1}) // 3600
  */
-export function timeMs(opts: TimeOptions) {
+export function timeMs(opts: ITimeOptions) {
   return (opts.ms || 0)
     + (opts.seconds || 0) * SEC_MS
     + (opts.minutes || 0) * MIN_MS
@@ -38,6 +38,6 @@ export function timeMs(opts: TimeOptions) {
  *
  * Example: timeSec({hours: 24}) // 86400
  */
-export function timeSec(opts: TimeOptions) {
+export function timeSec(opts: ITimeOptions) {
   return timeMs(opts) / 1000
 }

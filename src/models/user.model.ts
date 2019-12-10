@@ -1,10 +1,10 @@
+import bcrypt from 'bcrypt'
 import mongoose, { Document, Schema, Types } from 'mongoose'
-import { IUser } from './user.interface'
+import { GrantType, isValidGrant } from '../config/grants'
+import { isValidRole, roles, RoleType } from '../config/roles'
 import schemaOptions from '../config/schema-options'
 import env from '../environment'
-import bcrypt from 'bcrypt'
-import { roles, isValidRole, RoleType } from '../config/roles'
-import { isValidGrant, GrantType } from '../config/grants'
+import { IUser } from './user.interface'
 
 export interface IUserDocument extends IUser, Document {
   _id: Types.ObjectId
@@ -41,7 +41,7 @@ userSchema.index({ email: 1 }, { unique: true })
 /**
  *
  */
-userSchema.pre('save', async function (this: IUserDocument, next) {
+userSchema.pre('save', async function(this: IUserDocument, next) {
   if (this.isModified('passwordInfo.password')) {
     const password = this.passwordInfo.password
     const cost = env.PASSWORD_COST_FACTOR
@@ -57,18 +57,18 @@ userSchema.pre('save', async function (this: IUserDocument, next) {
 /**
  * Verify that the given password matches the stored one.
  */
-userSchema.methods.verifyPassword = function (this: IUserDocument, password: string) {
+userSchema.methods.verifyPassword = function(this: IUserDocument, password: string) {
     return bcrypt.compare(password, this.passwordInfo.password)
 }
 
 /**
  * Return true if the user has the given role.
  */
-userSchema.methods.hasRole = async function (this: IUserDocument, role: RoleType) {
-  const roles = this.roles.filter(isValidRole)
+userSchema.methods.hasRole = async function(this: IUserDocument, role: RoleType) {
+  const userRoles = this.roles.filter(isValidRole)
 
-  if (roles.length !== this.roles.length) {
-    this.roles = roles
+  if (userRoles.length !== this.roles.length) {
+    this.roles = userRoles
     await this.save()
   }
 
@@ -78,7 +78,7 @@ userSchema.methods.hasRole = async function (this: IUserDocument, role: RoleType
 /**
  * Return true if the user has the given role.
  */
-userSchema.methods.grantsPermission = async function (this: IUserDocument, grant: GrantType) {
+userSchema.methods.grantsPermission = async function(this: IUserDocument, grant: GrantType) {
   const grants = this.grants.filter(isValidGrant)
 
   if (grants.length !== this.grants.length) {
@@ -96,4 +96,4 @@ userSchema.methods.grantsPermission = async function (this: IUserDocument, grant
 //
 // }
 
-export const User = <UserModel>mongoose.model<IUserDocument>('User', userSchema)
+export const User = mongoose.model<IUserDocument>('User', userSchema) as UserModel

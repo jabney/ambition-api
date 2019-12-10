@@ -1,5 +1,5 @@
-import { HttpError } from './http-error'
 import { getStatusText } from 'http-status-codes'
+import { HttpError } from './http-error'
 
 /**
  * Flexibly create an HttpError.

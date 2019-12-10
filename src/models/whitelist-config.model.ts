@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema, Types } from 'mongoose'
 import schemaOptions from '../config/schema-options'
-import { IConfigDocument, Config } from './config.model'
+import { Config, IConfigDocument } from './config.model'
 
 export interface IWhitelistDocument extends IConfigDocument {
   allowed: string[]
@@ -10,7 +10,7 @@ export interface IWhitelistDocument extends IConfigDocument {
 
 type WhitelistModel = mongoose.Model<IWhitelistDocument> & {
 
-  isWhitelisted: (email: string) => Promise<boolean>
+  isWhitelisted: (email: string) => Promise<boolean>,
   /* whitelistSchema.statics */
 }
 
@@ -18,12 +18,12 @@ type WhitelistModel = mongoose.Model<IWhitelistDocument> & {
  *
  */
 const whitelistSchema = new Schema({
-  allowed: [String]
+  allowed: [String],
 }, schemaOptions())
 
-whitelistSchema.statics.isWhitelisted = async function (this: WhitelistModel, email: string) {
+whitelistSchema.statics.isWhitelisted = async function(this: WhitelistModel, email: string) {
   const whitelist = await this.findOne({ allowed: email })
   return whitelist != null
 }
 
-export const Whitelist = <WhitelistModel>Config.discriminator<IWhitelistDocument>('Whitelist', whitelistSchema)
+export const Whitelist = Config.discriminator<IWhitelistDocument>('Whitelist', whitelistSchema) as WhitelistModel

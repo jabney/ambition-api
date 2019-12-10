@@ -5,6 +5,7 @@ import { HttpError } from './lib/errors'
  * Main application error handler.
  */
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+  /* tslint:disable-next-line */
   console.log(err)
 
   if (err instanceof HttpError) {

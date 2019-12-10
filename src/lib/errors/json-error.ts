@@ -1,4 +1,4 @@
-export interface JSONError {
+export interface IJSonError {
   status: number
   message: string
   errors?: string[]

@@ -33,7 +33,7 @@
  */
 import { RequestHandler } from 'express'
 
-type KeyVals<T=any> = {[key: string]: T}
+type KeyVals<T= any> = {[key: string]: T}
 
 type SanitizeName = 'toString'|'trim'|'toInt'|'toNum'|'noEmpty'|'noNull'
 
@@ -58,12 +58,12 @@ function callIfDefined(value: any, fn: SanitizeFn) {
  * Value sanitizers by name.
  */
 const sanitizers: {[K in SanitizeName]: SanitizeFn} = {
-  toString: (arg: any) => callIfDefined(arg, v => v.toString()),
-  trim: (arg: any) => callIfDefined(arg, v => v.trim()),
-  toInt: (arg: string) => callIfDefined(arg, v => parseInt(v)),
-  toNum: (arg: string) => callIfDefined(arg, v => parseFloat(v)),
-  noEmpty: (arg: string) => callIfDefined(arg, v => v.length === 0 ? undefined : v),
-  noNull: (arg: string) => callIfDefined(arg, v => v === null ? undefined : v),
+  toString: (arg: any) => callIfDefined(arg, (v) => v.toString()),
+  trim: (arg: any) => callIfDefined(arg, (v) => v.trim()),
+  toInt: (arg: string) => callIfDefined(arg, (v) => parseInt(v, 10)),
+  toNum: (arg: string) => callIfDefined(arg, (v) => parseFloat(v)),
+  noEmpty: (arg: string) => callIfDefined(arg, (v) => v.length === 0 ? undefined : v),
+  noNull: (arg: string) => callIfDefined(arg, (v) => v === null ? undefined : v),
 }
 
 /**

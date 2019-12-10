@@ -23,7 +23,7 @@ export function integerize(value: string|undefined, onUndefined: number|'throw' 
   }
 
   try {
-    return parseInt(value)
+    return parseInt(value, 10)
   } catch (e) {
     throw new Error(`<integerize> cannot parse "${value}" as integer`)
   }

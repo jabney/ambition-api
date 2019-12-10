@@ -1,12 +1,13 @@
 import { RequestHandler } from 'express'
 import { createError } from '../lib/errors'
-import { User, IUserDocument } from '../models/user.model'
-import { Token, ITokenDocument } from '../models/token.model'
-import * as tokens from '../lib/tokens'
 import getBearer from '../lib/get-bearer'
+import * as tokens from '../lib/tokens'
+import { ITokenDocument, Token } from '../models/token.model'
+import { IUserDocument, User } from '../models/user.model'
 
 declare global {
   namespace Express {
+    /* tslint:disable-next-line */
     interface Request {
       token: ITokenDocument
       user: IUserDocument
@@ -23,13 +24,13 @@ export const defaultFields = 'email roles grants'
  * token will not be present on the request. If `user` is `false`, the user
  * will not be on the request object.
  *
- * @param tokenRequired a token is required to fulfill this request.
+ * @param requireToken a token is required to fulfill this request.
  * @param user if a string or an object, consider this argument to be a
  * mongoose projection. If `null`, return all fields for the user. If `false`,
  * don't deserialize the user on the request object.
  */
 export function authorize(
-  tokenRequired: boolean = false,
+  requireToken: boolean = false,
   user: string|object|null|false = defaultFields,
 ): RequestHandler {
 
@@ -37,7 +38,7 @@ export function authorize(
     const token = getBearer(req)
 
     if (!token) {
-      if (tokenRequired) {
+      if (requireToken) {
         return next(createError(401))
       } else {
         return next()
@@ -50,7 +51,7 @@ export function authorize(
       // Check that the token is valid.
       decoded = await tokens.verify(token)
     } catch (e) {
-      if (tokenRequired) {
+      if (requireToken) {
         return next(createError(401))
       } else {
         return next()
@@ -61,7 +62,7 @@ export function authorize(
     const tokenDoc = await Token.findById(tokenId)
 
     if (tokenDoc == null) {
-      if (tokenRequired) {
+      if (requireToken) {
         return next(createError(401))
       } else {
         return next()

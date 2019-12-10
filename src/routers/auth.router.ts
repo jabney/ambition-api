@@ -1,9 +1,9 @@
 import { Router } from 'express'
+import { signin, signout, signoutAll, signup } from '../controllers/auth.controller'
 import { apiKey } from '../middleware/api-key'
-import { signup, signin, signout, signoutAll } from '../controllers/auth.controller'
 import { tokenOptional, tokenRequired } from '../middleware/authorize'
 import { requireWhitelisted } from '../middleware/require-whitelisted'
-import { signupValidator, signinValidator } from '../validators/auth.validator'
+import { signinValidator, signupValidator } from '../validators/auth.validator'
 
 const router = Router()
 

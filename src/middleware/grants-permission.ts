@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express'
+import { GrantType, isValidGrant } from '../config/grants'
 import { createError } from '../lib/errors'
-import { isValidGrant, GrantType } from '../config/grants'
 
 /**
  * Allow request if the user has the given grant.

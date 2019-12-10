@@ -11,7 +11,7 @@
  *   ```
  */
 export function defaultOptions<T>(defaults: T) {
-  const optionsFn = (options?: T) => <T>Object.assign({}, defaults, options)
+  const optionsFn = (options?: T) => Object.assign({}, defaults, options) as T
   return optionsFn
 }
 

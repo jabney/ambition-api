@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema, Types } from 'mongoose'
-import { IToken } from './token.interface'
 import schemaOptions from '../config/schema-options'
 import * as tokens from '../lib/tokens'
+import { IToken } from './token.interface'
 
 export interface ITokenDocument extends IToken, Document {
   _id: Types.ObjectId
@@ -10,7 +10,7 @@ export interface ITokenDocument extends IToken, Document {
 }
 
 type TokenModel = mongoose.Model<ITokenDocument> & {
-  createToken: (userId: Types.ObjectId) => string
+  createToken: (userId: Types.ObjectId) => string,
 
   /* tokenSchema.statics */
 }
@@ -30,7 +30,7 @@ tokenSchema.index({ userId: 1 })
 /**
  * Create and return a json web token.
  */
-tokenSchema.statics.createToken = async function (this: TokenModel, userId: Types.ObjectId) {
+tokenSchema.statics.createToken = async function(this: TokenModel, userId: Types.ObjectId) {
   const token = await tokens.sign(userId.toHexString())
 
   const {
@@ -45,4 +45,4 @@ tokenSchema.statics.createToken = async function (this: TokenModel, userId: Type
   return token
 }
 
-export const Token = <TokenModel>mongoose.model<ITokenDocument>('Token', tokenSchema)
+export const Token = mongoose.model<ITokenDocument>('Token', tokenSchema) as TokenModel

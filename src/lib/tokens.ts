@@ -1,7 +1,7 @@
-import { Types } from 'mongoose'
 import jwt from 'jsonwebtoken'
-import { timeSec } from './time'
+import { Types } from 'mongoose'
 import env from '../environment'
+import { timeSec } from './time'
 
 /**
  * The contents of a decoded token.
@@ -33,7 +33,7 @@ export function sign(userId: string): Promise<string> {
     iss: env.JWT_ISSUER,
     aud: env.JWT_AUDIENCE,
     sub: userId,
-    jti: new Types.ObjectId().toHexString()
+    jti: new Types.ObjectId().toHexString(),
   }
 
   const options: jwt.SignOptions = {
@@ -66,9 +66,9 @@ export function verify(token: string): Promise<IToken> {
   }
 
   return new Promise((resolve, reject) => {
-    jwt.verify(token, env.JWT_SECRET, options, (err, token) => {
+    jwt.verify(token, env.JWT_SECRET, options, (err, decoded) => {
       if (err) { return reject(err) }
-      resolve(token as IToken)
+      resolve(decoded as IToken)
     })
   })
 }

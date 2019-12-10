@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { fetch, update, remove } from '../controllers/user.controller'
+import { fetch, remove, update } from '../controllers/user.controller'
 import { deserializeUser } from '../middleware/authorize'
 import { updateValidator } from '../validators/user.validator'
 

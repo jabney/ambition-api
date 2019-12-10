@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express'
-import { createError } from '../lib/errors'
 import env from '../environment'
+import { createError } from '../lib/errors'
 import getBearer from '../lib/get-bearer'
 
 /**

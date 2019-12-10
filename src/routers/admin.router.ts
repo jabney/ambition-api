@@ -1,8 +1,8 @@
 import { Router } from 'express'
-import { addToWhtelist, removeFromWhitelist, fetchWhitelist } from '../controllers/admin.controller'
+import { addToWhtelist, fetchWhitelist, removeFromWhitelist } from '../controllers/admin.controller'
 import { deserializeUser } from '../middleware/authorize'
-import { addValidator, removeValidator } from '../validators/admin.validator'
 import hasRole from '../middleware/has-role'
+import { addValidator, removeValidator } from '../validators/admin.validator'
 
 const router = Router()
 
