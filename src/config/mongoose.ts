@@ -1,6 +1,7 @@
 import { MongoError } from 'mongodb'
 import { connect as _connect, ConnectionOptions } from 'mongoose'
 import util from 'util'
+import env from '../environment'
 
 const debug = util.debuglog('ambition:app')
 
@@ -20,7 +21,7 @@ export type ConnectCallback = (err: MongoError) => void
  * Connect to MongoDB.
  */
 export const connect = (onConnectOrError: ConnectCallback) => {
-  _connect(process.env.MONGODB_URI as string, connectionOptions, onConnectOrError)
+  _connect(env.MONGODB_URI as string, connectionOptions, onConnectOrError)
 }
 
 /**
