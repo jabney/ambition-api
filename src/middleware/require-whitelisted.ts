@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express'
 import { createError } from '../lib/errors'
-import { Whitelist } from '../models/whitelist-config.model'
+import { Whitelist } from '../models/whitelist.model'
 
 /**
  * Require that the email address in the request body be whitelisted.
