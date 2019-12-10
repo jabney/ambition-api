@@ -1,7 +1,6 @@
 import { RequestHandler } from 'express'
 import { createError } from '../lib/errors'
 import { Token } from '../models/token.model'
-import { isValidGrant } from '../config/grants'
 
 /**
  *
@@ -19,7 +18,7 @@ export const updateUser: RequestHandler = async (req, res, next) => {
 
   try {
     // Update the user with the given fields.
-    await user.updateOne(fields)
+    await user.updateOne(fields, { runValidators: true })
 
     /**
      * Check if we should update the password.
@@ -67,14 +66,10 @@ export const fetchGrants: RequestHandler = async (req, res, next) => {
 export const addGrant: RequestHandler = async (req, res, next) => {
   const { grant } = req.body
 
-  if (!isValidGrant(grant)) {
-    return next(createError(400))
-  }
-
   try {
     const user = req.user
 
-    await user.updateOne({ $addToSet: { grants: grant }})
+    await user.updateOne({ $addToSet: { grants: grant }}, { runValidators: true })
     res.json({ data: `added grant "${grant}"` })
 
   } catch (e) {
@@ -87,10 +82,6 @@ export const addGrant: RequestHandler = async (req, res, next) => {
  */
 export const removeGrant: RequestHandler = async (req, res, next) => {
   const { grant } = req.body
-
-  if (!isValidGrant(grant)) {
-    return next(createError(400))
-  }
 
   try {
     const user = req.user

@@ -24,7 +24,10 @@ export const addToWhtelist: RequestHandler = async (req, res, next) => {
   const { email } = req.body
 
   try {
-    await Whitelist.updateOne({}, { $addToSet: { allowed: email }}, { upsert: true })
+    await Whitelist.updateOne({}, { $addToSet: { allowed: email }}, {
+      upsert: true,
+      runValidators: true,
+    })
 
     res.json({ data: 'email added' })
 
