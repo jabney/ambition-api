@@ -8,7 +8,7 @@ export NODE_DEBUG=ambition:*
 export PORT=4500
 export TRUST_PROXY=1
 export ALLOW_UNSECURE=false
-export MONGODB_URL='mongodb://localhost:27017/ambition'
+export MONGODB_URI='mongodb://localhost:27017/ambition'
 
 export JWT_SECRET='racecar red'
 export JTW_ISSUER=http://localhost

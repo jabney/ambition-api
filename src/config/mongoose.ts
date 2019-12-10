@@ -20,7 +20,7 @@ export type ConnectCallback = (err: MongoError) => void
  * Connect to MongoDB.
  */
 export const connect = (onConnectOrError: ConnectCallback) => {
-  _connect(process.env.MONGODB_URL as string, connectionOptions, onConnectOrError)
+  _connect(process.env.MONGODB_URI as string, connectionOptions, onConnectOrError)
 }
 
 /**
