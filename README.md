@@ -32,7 +32,9 @@ authorization: Bearer <api key>
 
 request body:
 
-`Content-Type` : `application/json`
+```
+Content-Type: application/json
+```
 
 ```typescript
 {
@@ -65,7 +67,9 @@ authorization: Bearer <api key>
 
 request body:
 
-`Content-Type` : `application/json`
+```
+Content-Type: application/json
+```
 
 ```typescript
 {
@@ -136,7 +140,9 @@ authorization: Bearer <access token>
 
 request body:
 
-`Content-Type` : `application/json`
+```
+Content-Type: application/json
+```
 
 ```typescript
 {
@@ -189,7 +195,9 @@ authorization: Bearer <access token>
 
 request body:
 
-`Content-Type` : `application/json`
+```
+Content-Type: application/json
+```
 
 ```typescript
 {
@@ -210,7 +218,9 @@ authorization: Bearer <access token>
 
 request body:
 
-`Content-Type` : `application/json`
+```
+Content-Type: application/json
+```
 
 ```typescript
 {
@@ -268,16 +278,18 @@ authorization: Bearer <access token>
 
 request body:
 
-`Content-Type` : `application/json`
+```
+Content-Type: application/json
+```
+
+```typescript
+{
+  email: string
+}
+```
 
 Responses:
 - 200 Successful
-
-  ```typescript
-  {
-    email: string
-  }
-  ```
 
 #### `/admin/whitelist DELETE` remove an email address from the whitelist
 
@@ -289,7 +301,15 @@ authorization: Bearer <access token>
 
 request body:
 
-`Content-Type` : `application/json`
+```
+Content-Type: application/json
+```
+
+```typescript
+{
+  email: string
+}
+```
 
 Responses:
 - 200 Successful
