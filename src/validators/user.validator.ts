@@ -2,10 +2,7 @@ import sanitize from '../lib/sanitize'
 import validationErrors from '../middleware/validation-errors'
 import defs from './definitions'
 
-export const updateValidator = [
-  /**
-   * Optional fields.
-   */
+export const updateUserValidator = [
   defs.body.email().optional(),
   defs.body.password().optional(),
   defs.body.first().optional(),
@@ -15,3 +12,11 @@ export const updateValidator = [
 
   sanitize('body', ['email', 'password', 'first', 'last']),
 ]
+
+export const addGrantValidator = [
+  defs.body.grant(),
+
+  validationErrors,
+]
+
+export const removeGrantValidator = addGrantValidator

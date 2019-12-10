@@ -1,6 +1,11 @@
 import { Router } from 'express'
 import { deserializeUser } from '../middleware/authorize'
-import { updateValidator } from '../validators/user.validator'
+
+import {
+  updateUserValidator,
+  addGrantValidator,
+  removeGrantValidator,
+} from '../validators/user.validator'
 
 import {
   fetchUser,
@@ -20,12 +25,12 @@ const deserializeStd = deserializeUser('grants')
 
 router.route('/')
   .get(deserializeProfile, fetchUser)
-  .patch(deserializeMin, updateValidator, updateUser)
+  .patch(deserializeMin, updateUserValidator, updateUser)
   .delete(deserializeMin, deleteUser)
 
 router.route('/grants')
   .get(deserializeStd, fetchGrants)
-  .post(deserializeStd, addGrant)
-  .delete(deserializeStd, removeGrant)
+  .post(deserializeStd, addGrantValidator, addGrant)
+  .delete(deserializeStd, removeGrantValidator, removeGrant)
 
 export default router
