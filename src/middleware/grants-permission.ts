@@ -1,13 +1,13 @@
 import { RequestHandler } from 'express'
 import { createError } from '../lib/errors'
-import { isValidGrant } from '../config/grants'
+import { isValidGrant, GrantType } from '../config/grants'
 
 /**
  * Allow request if the user has the given grant.
  *
  * This middleware requires the user to be deserialized with 'grants'.
  */
-export function grantsPermission(grant: string): RequestHandler {
+export function grantsPermission(grant: GrantType): RequestHandler {
   if (!isValidGrant(grant)) {
     throw new Error(`<grantsPermission> grant "${grant}" is not valid`)
   }

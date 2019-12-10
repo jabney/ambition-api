@@ -3,8 +3,8 @@ import { IUser } from './user.interface'
 import schemaOptions from '../config/schema-options'
 import env from '../environment'
 import bcrypt from 'bcrypt'
-import { roles, isValidRole } from '../config/roles'
-import { isValidGrant } from '../config/grants'
+import { roles, isValidRole, RoleType } from '../config/roles'
+import { isValidGrant, GrantType } from '../config/grants'
 
 export interface IUserDocument extends IUser, Document {
   _id: Types.ObjectId
@@ -64,7 +64,7 @@ userSchema.methods.verifyPassword = function (this: IUserDocument, password: str
 /**
  * Return true if the user has the given role.
  */
-userSchema.methods.hasRole = async function (this: IUserDocument, role: string) {
+userSchema.methods.hasRole = async function (this: IUserDocument, role: RoleType) {
   const roles = this.roles.filter(isValidRole)
 
   if (roles.length !== this.roles.length) {
@@ -78,7 +78,7 @@ userSchema.methods.hasRole = async function (this: IUserDocument, role: string) 
 /**
  * Return true if the user has the given role.
  */
-userSchema.methods.grantsPermission = async function (this: IUserDocument, grant: string) {
+userSchema.methods.grantsPermission = async function (this: IUserDocument, grant: GrantType) {
   const grants = this.grants.filter(isValidGrant)
 
   if (grants.length !== this.grants.length) {

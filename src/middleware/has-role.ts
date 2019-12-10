@@ -1,13 +1,13 @@
 import { RequestHandler } from 'express'
 import { createError } from '../lib/errors'
-import { isValidRole } from '../config/roles'
+import { isValidRole, RoleType } from '../config/roles'
 
 /**
  * Allow request if the user has the given role.
  *
  * This middleware requires the user to be deserialized with 'roles'.
  */
-export function hasRole(role: string): RequestHandler {
+export function hasRole(role: RoleType): RequestHandler {
   if (!isValidRole(role)) {
     throw new Error(`<hasRole> role "${role}" is not valid`)
   }

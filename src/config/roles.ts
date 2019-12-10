@@ -1,12 +1,13 @@
+export type RoleType = 'super'|'admin'
 
-export const roles = Object.freeze([
+export const roles: ReadonlyArray<RoleType> = Object.freeze([
   'super',
   'admin',
 ])
 
-const set = new Set(roles)
+const set: ReadonlySet<RoleType> = new Set(roles)
 
-export function isValidRole(role: string) {
+export function isValidRole(role: RoleType) {
   return set.has(role)
 }
 
