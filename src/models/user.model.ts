@@ -3,11 +3,11 @@ import { IUser } from './user.interface'
 import schemaOptions from '../config/schema-options'
 import env from '../environment'
 import bcrypt from 'bcrypt'
-import * as tokens from '../lib/tokens'
+import { roles, isValidRole } from '../config/roles'
 
 export interface IUserDocument extends IUser, Document {
   _id: Types.ObjectId
-  hasRole: (role: string) => boolean
+  hasRole: (role: string) => Promise<boolean>
   verifyPassword: (password: string) => Promise<boolean>
 }
 
@@ -28,7 +28,7 @@ export const userSchema = new Schema({
   email: { $type: String, required: true },
   first: String,
   last: String,
-  roles: { $type: [String], enum: ['admin'] },
+  roles: { $type: [String], enum: roles },
   grants: { $type: [String], enum: ['track-location'] },
   passwordInfo: { $type: passwordInfoSchema, required: true },
 }, schemaOptions({ timestamps: true }))
@@ -62,7 +62,14 @@ userSchema.methods.verifyPassword = function (this: IUserDocument, password: str
 /**
  * Return true if the user has the given role.
  */
-userSchema.methods.hasRole = function (this: IUserDocument, role: string) {
+userSchema.methods.hasRole = async function (this: IUserDocument, role: string) {
+  const roles = this.roles.filter(isValidRole)
+
+  if (roles.length !== this.roles.length) {
+    this.roles = roles
+    await this.save()
+  }
+
   return this.roles.includes(role)
 }
 
