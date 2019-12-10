@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { fetch, remove, update } from '../controllers/user.controller'
-import { deserializeUser } from '../middleware/authorize'
+import { fetch, remove, update, fetchGrants } from '../controllers/user.controller'
+import { deserializeUser, tokenRequired } from '../middleware/authorize'
 import { updateValidator } from '../validators/user.validator'
 
 const router = Router()
@@ -12,5 +12,8 @@ router.route('/')
   .get(deserializeProfile, fetch)
   .patch(deserializeMin, updateValidator, update)
   .delete(deserializeMin, remove)
+
+router.route('/grants')
+  .get(tokenRequired, fetchGrants)
 
 export default router

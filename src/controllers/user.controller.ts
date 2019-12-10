@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express'
 import { createError } from '../lib/errors'
 import { Token } from '../models/token.model'
+import { grantList } from '../config/grants'
 
 /**
  *
@@ -51,4 +52,11 @@ export const remove: RequestHandler = async (req, res, next) => {
   } catch (e) {
     next(createError(e))
   }
+}
+
+/**
+ *
+ */
+export const fetchGrants: RequestHandler = async (req, res, next) => {
+  res.json({ grants: grantList })
 }
