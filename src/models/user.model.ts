@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import mongoose, { Document, Schema, Types } from 'mongoose'
-import { GrantType, isValidGrant } from '../config/grants'
+import { grants, GrantType, isValidGrant } from '../config/grants'
 import { isValidRole, roles, RoleType } from '../config/roles'
 import schemaOptions from '../config/schema-options'
 import env from '../environment'
@@ -31,7 +31,7 @@ export const userSchema = new Schema({
   first: String,
   last: String,
   roles: { $type: [String], enum: roles },
-  grants: { $type: [String], enum: ['track-location'] },
+  grants: { $type: [String], enum: grants },
   passwordInfo: { $type: passwordInfoSchema, required: true },
 }, schemaOptions({ timestamps: true }))
 
