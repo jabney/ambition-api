@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express'
+import { GrantType } from '../config/grants'
 import { createError } from '../lib/errors'
 
 /**
@@ -6,7 +7,7 @@ import { createError } from '../lib/errors'
  *
  * This middleware requires the user to be deserialized with 'grants'.
  */
-export function grants(permission: string): RequestHandler {
+export function grants(permission: GrantType): RequestHandler {
   return (req, res, next) => {
     const user = req.user
 
