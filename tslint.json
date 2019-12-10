@@ -7,11 +7,12 @@
   "rules": {
     "arrow-parens": false,
     "interface-over-type-literal": false,
+    "no-console": [true, "log"],
+    "object-literal-sort-keys": false,
+    "ordered-imports": false,
     "quotemark": [true, "single"],
     "semicolon": [true, "never"],
-    "variable-name": [true, "allow-leading-underscore", "allow-pascal-case"],
-    "object-literal-sort-keys": false,
-    "no-console": [true, "log"]
+    "variable-name": [true, "allow-leading-underscore", "allow-pascal-case"]
   },
   "rulesDirectory": []
 }
