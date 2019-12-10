@@ -4,10 +4,12 @@ import schemaOptions from '../config/schema-options'
 import env from '../environment'
 import bcrypt from 'bcrypt'
 import { roles, isValidRole } from '../config/roles'
+import { isValidGrant } from '../config/grants'
 
 export interface IUserDocument extends IUser, Document {
   _id: Types.ObjectId
   hasRole: (role: string) => Promise<boolean>
+  grantsPermission: (grant: string) => Promise<boolean>
   verifyPassword: (password: string) => Promise<boolean>
 }
 
@@ -71,6 +73,20 @@ userSchema.methods.hasRole = async function (this: IUserDocument, role: string) 
   }
 
   return this.roles.includes(role)
+}
+
+/**
+ * Return true if the user has the given role.
+ */
+userSchema.methods.grantsPermission = async function (this: IUserDocument, grant: string) {
+  const grants = this.grants.filter(isValidGrant)
+
+  if (grants.length !== this.grants.length) {
+    this.grants = grants
+    await this.save()
+  }
+
+  return this.grants.includes(grant)
 }
 
 // /**
