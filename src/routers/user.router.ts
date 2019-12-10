@@ -1,7 +1,16 @@
 import { Router } from 'express'
-import { fetchUser, deleteUser, updateUser, fetchGrants } from '../controllers/user.controller'
 import { deserializeUser } from '../middleware/authorize'
 import { updateValidator } from '../validators/user.validator'
+
+import {
+  fetchUser,
+  updateUser,
+  deleteUser,
+
+  fetchGrants,
+  addGrant,
+  removeGrant,
+} from '../controllers/user.controller'
 
 const router = Router()
 
@@ -16,7 +25,7 @@ router.route('/')
 
 router.route('/grants')
   .get(deserializeStd, fetchGrants)
-  // .post(deserializeStd, addGrant)
-  // .post(deserializeStd, removegrant)
+  .post(deserializeStd, addGrant)
+  .delete(deserializeStd, removeGrant)
 
 export default router

@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express'
 import { createError } from '../lib/errors'
 import { Token } from '../models/token.model'
-import { grantList } from '../config/grants'
+import { isValidGrant } from '../config/grants'
 
 /**
  *
@@ -59,4 +59,46 @@ export const deleteUser: RequestHandler = async (req, res, next) => {
  */
 export const fetchGrants: RequestHandler = async (req, res, next) => {
   res.json({ grants: req.user.grants })
+}
+
+/**
+ *
+ */
+export const addGrant: RequestHandler = async (req, res, next) => {
+  const { grant } = req.body
+
+  if (!isValidGrant(grant)) {
+    return next(createError(400))
+  }
+
+  try {
+    const user = req.user
+
+    await user.updateOne({ $addToSet: { grants: grant }})
+    res.json({ data: `added grant "${grant}"` })
+
+  } catch (e) {
+    return next(createError(e))
+  }
+}
+
+/**
+ *
+ */
+export const removeGrant: RequestHandler = async (req, res, next) => {
+  const { grant } = req.body
+
+  if (!isValidGrant(grant)) {
+    return next(createError(400))
+  }
+
+  try {
+    const user = req.user
+
+    await user.updateOne({ $pull: { grants: grant } })
+    res.json({ data: `removed grant "${grant}"` })
+
+  } catch (e) {
+    return next(createError(e))
+  }
 }
