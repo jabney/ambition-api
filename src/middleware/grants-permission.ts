@@ -19,7 +19,7 @@ export function grantsPermission(grant: string): RequestHandler {
       return next(createError(500, 'user grants unavailable'))
     }
 
-    if (user.grants.includes(grant)) {
+    if (user.grantsPermission(grant)) {
       next()
     } else {
       next(createError(403))

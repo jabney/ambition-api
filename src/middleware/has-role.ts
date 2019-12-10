@@ -19,7 +19,7 @@ export function hasRole(role: string): RequestHandler {
       return next(createError(500, 'user roles unavailable'))
     }
 
-    if (user.roles.includes(role)) {
+    if (user.hasRole(role)) {
       next()
     } else {
       next(createError(403))
