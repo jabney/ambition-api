@@ -5,6 +5,7 @@
   ],
   "jsRules": {},
   "rules": {
+    "arrow-parens": false,
     "interface-over-type-literal": false,
     "quotemark": [true, "single"],
     "semicolon": [true, "never"],
