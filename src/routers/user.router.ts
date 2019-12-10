@@ -1,12 +1,13 @@
 import { Router } from 'express'
 import { fetchUser, deleteUser, updateUser, fetchGrants } from '../controllers/user.controller'
-import { deserializeUser, tokenRequired } from '../middleware/authorize'
+import { deserializeUser } from '../middleware/authorize'
 import { updateValidator } from '../validators/user.validator'
 
 const router = Router()
 
 const deserializeProfile = deserializeUser('email first last grants roles')
 const deserializeMin = deserializeUser('_id')
+const deserializeStd = deserializeUser('grants')
 
 router.route('/')
   .get(deserializeProfile, fetchUser)
@@ -14,6 +15,8 @@ router.route('/')
   .delete(deserializeMin, deleteUser)
 
 router.route('/grants')
-  .get(tokenRequired, fetchGrants)
+  .get(deserializeStd, fetchGrants)
+  // .post(deserializeStd, addGrant)
+  // .post(deserializeStd, removegrant)
 
 export default router

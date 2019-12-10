@@ -58,5 +58,5 @@ export const deleteUser: RequestHandler = async (req, res, next) => {
  *
  */
 export const fetchGrants: RequestHandler = async (req, res, next) => {
-  res.json({ grants: grantList })
+  res.json({ grants: req.user.grants })
 }
