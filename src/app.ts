@@ -4,9 +4,10 @@ import { mongooseConnect } from './config/mongoose'
 import errorHandler from './error-handler'
 import { createError } from './lib/errors'
 
-import adminRouter from './routers/admin.router'
 import authRouter from './routers/auth.router'
 import userRouter from './routers/user.router'
+import grantsRouter from './routers/grants.router'
+import adminRouter from './routers/admin.router'
 
 // Connect to MongoDB.
 mongooseConnect()
@@ -19,6 +20,7 @@ const app = configureApp(express())
  */
 app.use('/auth', authRouter)
 app.use('/user', userRouter)
+app.use('/grants', grantsRouter)
 app.use('/admin', adminRouter)
 
 /**
