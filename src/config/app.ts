@@ -14,10 +14,10 @@ function configureApp(app: Application) {
     app.set('trust proxy', env.TRUST_PROXY)
   }
 
+  app.use(rejectHttp())
+
   app.use(logger('dev'))
   app.use(express.json({ limit: '1kb'}))
-
-  app.use(rejectHttp())
 
   return app
 }
