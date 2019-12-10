@@ -5,12 +5,12 @@ import { ICache } from './cache.interface'
 export interface ICacheDocument extends ICache, Document {
   _id: string
 
-  /* configSchema.methods */
+  /* cacheSchema.methods */
 }
 
 type CacheModel = mongoose.Model<ICacheDocument> & {
 
-  /* configSchema.statics */
+  /* cacheSchema.statics */
 }
 
 /**
@@ -21,4 +21,4 @@ const cacheSchema = new Schema({
   data: { $type: String, required: true },
 }, schemaOptions({ collection: 'cache', timestamps: true }))
 
-export const Cache = mongoose.model<ICacheDocument>('Config', cacheSchema) as CacheModel
+export const Cache = mongoose.model<ICacheDocument>('Cache', cacheSchema) as CacheModel
