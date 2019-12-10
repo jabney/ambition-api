@@ -79,10 +79,10 @@ userSchema.methods.hasRole = async function(this: IUserDocument, role: RoleType)
  * Return true if the user has the given role.
  */
 userSchema.methods.grantsPermission = async function(this: IUserDocument, grant: GrantType) {
-  const grants = this.grants.filter(isValidGrant)
+  const userGrants = this.grants.filter(isValidGrant)
 
-  if (grants.length !== this.grants.length) {
-    this.grants = grants
+  if (userGrants.length !== this.grants.length) {
+    this.grants = userGrants
     await this.save()
   }
 
