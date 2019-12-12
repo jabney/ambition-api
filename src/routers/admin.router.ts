@@ -29,10 +29,10 @@ router.route('/whitelist')
   .post(hasAdmin, addToWhitelistValidator, addToWhtelist)
   .delete(hasAdmin, removeFromWhitelistValidator, removeFromWhitelist)
 
-router.route('/tokens/revoke')
+router.route('/tokens')
   .delete(hasAdmin, revokeTokensValidator, revokeTokens)
 
-router.route('/tokens/revoke/all')
+router.route('/tokens/all')
   .delete(hasSuper, revokeAllTokensValidator, revokeAllTokens)
 
 export default router
