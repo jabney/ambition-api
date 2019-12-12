@@ -21,7 +21,7 @@ export function grantsPermission(grant: GrantType): RequestHandler {
     }
 
     if (!await user.grantsPermission(grant)) {
-      return next(createError(403, `user has not authorized "${grant}"`))
+      return next(createError(403, 'user has not granted permission for this operation'))
     }
 
     next()
