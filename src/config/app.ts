@@ -7,6 +7,7 @@ import rejectHttp from '../middleware/reject-http'
  * Set up application middleware and misc.
  */
 function configureApp(app: Application) {
+  // Obfuscate server software.
   app.set('x-powered-by', null)
 
   // Set trust proxy for heroku, etc.
@@ -14,9 +15,13 @@ function configureApp(app: Application) {
     app.set('trust proxy', env.TRUST_PROXY)
   }
 
+  // Allow https only.
   app.use(rejectHttp())
 
+  // Log requests.
   app.use(logger('dev'))
+
+  // Parse json bodies (expect 1kb or less payload size).
   app.use(express.json({ limit: '1kb'}))
 
   return app

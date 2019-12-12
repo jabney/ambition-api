@@ -1,3 +1,6 @@
+/**
+ * Grants are permissions items that the user must explicitly grant.
+ */
 export type GrantType = 'track-location'
 
 export interface IGrantItem {

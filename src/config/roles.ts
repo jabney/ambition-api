@@ -1,3 +1,6 @@
+/**
+ * Define user roles.
+ */
 export type RoleType = 'super'|'admin'
 
 export const roles: ReadonlyArray<RoleType> = Object.freeze([
