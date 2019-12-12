@@ -39,7 +39,7 @@ export const userSchema = new Schema({
 userSchema.index({ email: 1 }, { unique: true })
 
 /**
- *
+ * Update the password if it has been modified.
  */
 userSchema.pre('save', async function(this: IUserDocument, next) {
   if (this.isModified('passwordInfo.password')) {
@@ -67,26 +67,32 @@ userSchema.methods.verifyPassword = function(this: IUserDocument, password: stri
 userSchema.methods.hasRole = async function(this: IUserDocument, role: RoleType) {
   const userRoles = this.roles.filter(isValidRole)
 
+  /**
+   * Remove any invalid roles from the user object.
+   */
   if (userRoles.length !== this.roles.length) {
     this.roles = userRoles
     await this.save()
   }
 
-  return this.roles.includes(role)
+  return userRoles.includes(role)
 }
 
 /**
- * Return true if the user has the given role.
+ * Return true if the user has the given grant.
  */
 userSchema.methods.grantsPermission = async function(this: IUserDocument, grant: GrantType) {
   const userGrants = this.grants.filter(isValidGrant)
 
+  /**
+   * Remove any invalid grants from the user object.
+   */
   if (userGrants.length !== this.grants.length) {
     this.grants = userGrants
     await this.save()
   }
 
-  return this.grants.includes(grant)
+  return userGrants.includes(grant)
 }
 
 // /**
