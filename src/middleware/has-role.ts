@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express'
 import { isValidRole, RoleType } from '../config/roles'
 import { createError } from '../lib/errors'
+import { expectUser } from './helpers/expect-user'
 
 /**
  * Allow request if the user has the given role.
@@ -12,19 +13,17 @@ export function hasRole(role: RoleType): RequestHandler {
     throw new Error(`<hasRole> role "${role}" is not valid`)
   }
 
-  return async (req, res, next) => {
+  return expectUser(async (req, res, next) => {
     const user = req.user
 
-    if (!user || !user.roles) {
+    if (!Array.isArray(user.roles)) {
       return next(createError(500, 'user roles unavailable'))
     }
 
-    if (await user.hasRole(role)) {
-      next()
-    } else {
-      next(createError(403))
+    if (!await user.hasRole(role)) {
+      return next(createError(403, 'user does not have required role'))
     }
-  }
+  })
 }
 
 export default hasRole
