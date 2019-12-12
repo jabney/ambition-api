@@ -10,21 +10,26 @@ const location: {[K in Location]: (field: string) => ValidationChain} = {
 }
 
 const email = (loc: Location, name: string) => location[loc](name)
+  .trim()
   .isEmail().withMessage('must be a valid email')
 
 const password = (loc: Location, name: string) => location[loc](name)
   .isString().withMessage('must be a string')
+  .trim()
   .isLength({ min: 1, max: 72 }).withMessage('must be between 1 and 72 characters')
 
 const str = (loc: Location, name: string, max: number) => location[loc](name)
   .isString().withMessage('must be a string')
+  .trim()
   .isLength({ min: 1, max }).withMessage(`must be between 1 and ${max} characters`)
 
 const grant = (loc: Location, name: string) => location[loc](name)
   .isString().withMessage('must be a string')
+  .trim()
   .isIn(grants).withMessage('must be a valid grant')
 
 const mongoId = (loc: Location, name: string) => location[loc](name)
+  .trim()
   .isMongoId().withMessage('must be a MongoID')
 
 const boolean = (loc: Location, name: string) => location[loc](name)
