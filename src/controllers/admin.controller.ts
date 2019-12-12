@@ -63,7 +63,7 @@ export const removeFromWhitelist: RequestHandler = async (req, res, next) => {
  */
 
 export const revokeTokens: RequestHandler = async (req, res, next) => {
-  const { userId, email } = req.body
+  const { userId, email } = req.query
 
   try {
     // Delete all tokens associated with a user id.
@@ -101,7 +101,7 @@ export const revokeTokens: RequestHandler = async (req, res, next) => {
 }
 
 export const revokeAllTokens: RequestHandler = async (req, res, next) => {
-  const { confirm } = req.body
+  const { confirm } = req.query
 
   try {
     if (!confirm)  {

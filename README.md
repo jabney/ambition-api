@@ -330,11 +330,7 @@ request headers:
 authorization: Bearer <access token>
 ```
 
-request body:
-
-```
-Content-Type: application/json
-```
+query params:
 
 ```typescript
 {
@@ -359,11 +355,7 @@ request headers:
 authorization: Bearer <access token>
 ```
 
-request body:
-
-```
-Content-Type: application/json
-```
+query params:
 
 ```typescript
 {
