@@ -20,11 +20,11 @@ export function grantsPermission(grant: GrantType): RequestHandler {
       return next(createError(500, 'user grants unavailable'))
     }
 
-    if (!await user.grantsPermission(grant)) {
-      return next(createError(403, 'user has not granted permission for this operation'))
+    if (await user.grantsPermission(grant)) {
+      return next()
     }
 
-    next()
+    return next(createError(403, 'user has not granted permission for this operation'))
   })
 }
 
