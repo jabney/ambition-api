@@ -7,7 +7,7 @@ import {
   addToWhtelist,
   fetchWhitelist,
   removeFromWhitelist,
-  revokeToken,
+  revokeTokens,
   revokeAllTokens,
 } from '../controllers/admin.controller'
 
@@ -24,7 +24,7 @@ router.route('/whitelist')
   .delete(hasAdmin, removeValidator, removeFromWhitelist)
 
 router.route('/tokens/revoke')
-  .delete(hasAdmin, revokeToken)
+  .delete(hasAdmin, revokeTokens)
 
 router.route('/tokens/revoke/all')
   .delete(hasSuper, revokeAllTokens)
