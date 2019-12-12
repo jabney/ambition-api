@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express'
 import { GrantType, isValidGrant } from '../config/grants'
 import { createError } from '../lib/errors'
+import { expectUser } from './helpers/expect-user'
 
 /**
  * Allow request if the user has the given grant.
@@ -12,18 +13,18 @@ export function grantsPermission(grant: GrantType): RequestHandler {
     throw new Error(`<grantsPermission> grant "${grant}" is not valid`)
   }
 
-  return (req, res, next) => {
+  return async (req, res, next) => {
     const user = req.user
 
     if (!user || !user.grants) {
       return next(createError(500, 'user grants unavailable'))
     }
 
-    if (user.grantsPermission(grant)) {
-      next()
-    } else {
-      next(createError(403))
+    if (!await user.grantsPermission(grant)) {
+      return next(createError(403, `user has not authorized "${grant}"`))
     }
+
+    next()
   }
 }
 
