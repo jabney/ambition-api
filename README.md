@@ -319,3 +319,58 @@ Responses:
     email: string
   }
   ```
+
+#### `/admin/tokens/revoke DELETE` delete tokens for a user.
+
+This action logs a user out across all devices.
+
+request headers:
+
+```
+authorization: Bearer <access token>
+```
+
+request body:
+
+```
+Content-Type: application/json
+```
+
+```typescript
+{
+  email: string
+  // or
+  userId: string
+}
+```
+
+Responses:
+- 200 Successful
+- 400 email or userId not specified
+- 404 user not found
+
+#### `/admin/tokens/revoke/all DELETE` delete all tokens from the db.
+
+This action logs all users out accross all devices.
+
+request headers:
+
+```
+authorization: Bearer <access token>
+```
+
+request body:
+
+```
+Content-Type: application/json
+```
+
+```typescript
+{
+  confirm: boolean // true to delete all tokens
+}
+```
+
+Responses:
+- 200 Successful
+- 400 could not confirm
