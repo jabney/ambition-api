@@ -105,7 +105,7 @@ export const revokeAllTokens: RequestHandler = async (req, res, next) => {
 
   try {
     if (!confirm)  {
-      return res.json({ data: 'cannot confirm delete all tokens'})
+      return next(createError(400, 'could not confirm delete all tokens'))
     }
 
     const result = await Token.deleteMany({})
