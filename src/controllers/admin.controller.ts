@@ -9,7 +9,7 @@ import { User } from '../models/user.model'
  */
 
 /**
- *
+ * Return the application whitelist (email addresses allowed to sign up).
  */
 export const fetchWhitelist: RequestHandler = async (req, res, next) => {
   try {
@@ -24,7 +24,7 @@ export const fetchWhitelist: RequestHandler = async (req, res, next) => {
 }
 
 /**
- *
+ * Add a user to the whitelist.
  */
 export const addToWhtelist: RequestHandler = async (req, res, next) => {
   const { email } = req.body
@@ -43,7 +43,7 @@ export const addToWhtelist: RequestHandler = async (req, res, next) => {
 }
 
 /**
- *
+ * Remove a user from the whitelist.
  */
 export const removeFromWhitelist: RequestHandler = async (req, res, next) => {
   const { email } = req.body
@@ -62,6 +62,9 @@ export const removeFromWhitelist: RequestHandler = async (req, res, next) => {
  * Tokens
  */
 
+/**
+ * Delete all access tokens for a given user.
+ */
 export const revokeTokens: RequestHandler = async (req, res, next) => {
   const { userId, email } = req.query
 
@@ -92,6 +95,9 @@ export const revokeTokens: RequestHandler = async (req, res, next) => {
   }
 }
 
+/**
+ * Delete all access tokens in the tokens collection.
+ */
 export const revokeAllTokens: RequestHandler = async (req, res, next) => {
   const { confirm } = req.query
 
