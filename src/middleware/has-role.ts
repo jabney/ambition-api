@@ -23,6 +23,8 @@ export function hasRole(role: RoleType): RequestHandler {
     if (!await user.hasRole(role)) {
       return next(createError(403, 'user does not have required role'))
     }
+
+    next()
   })
 }
 
