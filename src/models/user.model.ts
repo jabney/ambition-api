@@ -41,7 +41,7 @@ userSchema.index({ email: 1 }, { unique: true })
 /**
  * Update the password if it has been modified.
  */
-userSchema.pre('save', async function(this: IUserDocument, next) {
+userSchema.pre('save', async function(this: IUserDocument) {
   if (this.isModified('passwordInfo.password')) {
     const password = this.passwordInfo.password
     const cost = env.PASSWORD_COST_FACTOR
@@ -50,8 +50,6 @@ userSchema.pre('save', async function(this: IUserDocument, next) {
     this.passwordInfo.password = hash
     this.passwordInfo.updatedAt = new Date()
   }
-
-  next()
 })
 
 /**
