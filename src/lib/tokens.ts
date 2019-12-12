@@ -1,3 +1,6 @@
+/**
+ * A helper library for this app's json web tokens.
+ */
 import jwt from 'jsonwebtoken'
 import { Types } from 'mongoose'
 import env from '../environment'

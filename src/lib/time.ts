@@ -1,3 +1,16 @@
+/**
+ * Convert a time object into milliseconds.
+ *
+ * Example:
+ *
+ * ```
+ * const ms = timeMs({ seconds: 1 })
+ * assert(ms === 1000)
+ *
+ * const sec = timeSec({ minutes: 1, seconds: 30 })
+ * assert (sec === 90)
+ * ```
+ */
 const SEC_MS = 1000
 const MIN_MS = 60 * SEC_MS
 const HOUR_MS = 60 * MIN_MS
