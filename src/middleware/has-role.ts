@@ -12,14 +12,14 @@ export function hasRole(role: RoleType): RequestHandler {
     throw new Error(`<hasRole> role "${role}" is not valid`)
   }
 
-  return (req, res, next) => {
+  return async (req, res, next) => {
     const user = req.user
 
     if (!user || !user.roles) {
       return next(createError(500, 'user roles unavailable'))
     }
 
-    if (user.hasRole(role)) {
+    if (await user.hasRole(role)) {
       next()
     } else {
       next(createError(403))
