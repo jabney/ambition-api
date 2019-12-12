@@ -39,8 +39,8 @@ const boolean = (loc: Location, name: string) => location[loc](name)
 export default {
   email: (name = 'email', where: Location = 'body') => email(where, name),
   strShort: (name: string, where: Location = 'body') => str(where, name, 64),
-  strMed: (name: string, where: Location = 'body') => str(where, name, 128),
-  strLong: (name: string, where: Location = 'body') => str(where, name, 256),
+  strMed: (name: string, where: Location = 'body') => str(where, name, 256),
+  strLong: (name: string, where: Location = 'body') => str(where, name, 1024),
   password: (name = 'password', where: Location = 'body') => password(where, name),
   grant: (name = 'grant', where: Location = 'body') => grant(where, name),
   mongoId: (name: string, where: Location = 'body') => mongoId(where, name),
