@@ -2,69 +2,27 @@ import { getStatusText } from 'http-status-codes'
 import { HttpError } from './http-error'
 
 /**
- * Flexibly create an HttpError.
+ * Create an HttpError.
  */
-export function createError(...args: any[]) {
-  let status: number|null = null
-  let message: string|null = null
-  let error: any
+export function createError(status: number, message?: string): HttpError
+export function createError(error: object): HttpError
+export function createError(arg1: number|object, arg2?: string): HttpError {
 
-  // Loop through arguments.
-  for (let i = 0; i < args.length; i++) {
-    const arg = args[i]
-
-    // If any arg is an HttpError, return it outright.
-    if (arg instanceof HttpError) {
-      if (args.length > 1) {
-        console.warn(`<createError> arg ${i} is an HttpError. All other args ignored.`)
-      }
-      return arg
-    }
-
-    // If error type, set the stack.
-    if (arg instanceof Error) {
-      error = arg
-      continue
-    }
-
-    // Check for numbers and strings for setting status and message.
-    switch (typeof arg) {
-      case 'number':
-        status = arg
-        continue
-      case 'string':
-        message = arg
-        continue
-    }
-
-    /**
-     * Plain object types.
-     */
-
-    // Check for presence of a status code.
-    if (status == null) {
-      const { status: _status, code, statusCode } = arg
-      const s = _status || code || statusCode
-
-      if (typeof s === 'number') {
-        status = s
-      }
-    }
-
-    // Check for the presence of a message.
-    if (message == null) {
-      const { message: _message } = arg
-      if (typeof _message === 'string') {
-        message = _message
-      }
-    }
+  // Handle status and message arguments.
+  if (typeof arg1 === 'number') {
+    const status = arg1
+    const message = arg2 || getStatusText(status)
+    return new HttpError(status, message)
   }
 
-  // Set fallback defaults.
-  status = status == null ? 500 : status
-  message = message == null ? getStatusText(status) : message
-
-  return new HttpError(status, message, error)
+  // Handle error arguments.
+  if (arg1 instanceof HttpError) {
+    return arg1
+  } else {
+    const status = 500
+    // Pass the error object to HttpError.
+    return new HttpError(status, getStatusText(status), arg1)
+  }
 }
 
 export default createError
