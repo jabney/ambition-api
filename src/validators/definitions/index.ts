@@ -34,6 +34,7 @@ const mongoId = (loc: Location, name: string) => location[loc](name)
 
 const boolean = (loc: Location, name: string) => location[loc](name)
   .isBoolean().withMessage('must be a boolean')
+  .toBoolean(true)
 
 export default {
   email: (name = 'email', where: Location = 'body') => email(where, name),
