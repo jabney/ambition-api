@@ -14,14 +14,14 @@ export const removeFromWhitelistValidator = [
 ]
 
 export const revokeTokensValidator = [
-  defs.body.userId().optional(),
+  defs.body.mongoId('userId').optional(),
   defs.body.email().optional(),
 
   validationErrors,
 ]
 
 export const revokeAllTokensValidator = [
-  defs.body.confirm().optional(),
+  defs.body.boolean('confirm').optional(),
 
   validationErrors,
 ]
