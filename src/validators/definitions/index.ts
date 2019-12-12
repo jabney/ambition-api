@@ -9,7 +9,7 @@ const location: {[K in Location]: (field: string) => ValidationChain} = {
   query,
 }
 
-const email = (loc: Location) => location[loc]('email')
+const email = (loc: Location, name: string) => location[loc](name)
   .trim()
   .isEmail().withMessage('must be a valid email')
 
@@ -32,22 +32,22 @@ const grant = (loc: Location) => location[loc]('grant')
   .isString().withMessage('must be a string')
   .isIn(grants).withMessage('must be a valid grant')
 
-const userId = (loc: Location) => location[loc]('userId')
+const mongoId = (loc: Location, name: string) => location[loc](name)
   .trim()
   .isMongoId().withMessage('must be a MongoID')
 
-const confirm = (loc: Location) => location[loc]('confirm')
+const boolean = (loc: Location, name: string) => location[loc](name)
   .isBoolean().withMessage('must be a boolean')
 
 export default {
   body: {
-    email: () => email('body'),
+    email: (name = 'email') => email('body', name),
     first: () => first('body'),
     last: () => last('body'),
     password: () => password('body'),
     grant: () => grant('body'),
-    userId: () => userId('body'),
-    confirm: () => confirm('body'),
+    mongoId: (name: string) => mongoId('body', name),
+    boolean: (name: string) => boolean('body', name),
   },
 
   query: {
