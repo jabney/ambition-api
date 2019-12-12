@@ -70,10 +70,6 @@ export const revokeTokens: RequestHandler = async (req, res, next) => {
     if (userId) {
       const result = await Token.deleteMany({ userId })
 
-      if (result.deletedCount === 0) {
-        return res.json({ data: `no tokens found for user with id "${userId}"`})
-      }
-
       return res.json({ data: `deleted ${result.deletedCount} tokens for user "${userId}"`})
 
     // Delete a token by user email.
@@ -85,10 +81,6 @@ export const revokeTokens: RequestHandler = async (req, res, next) => {
       }
 
       const result = await Token.deleteMany({ userId: user._id })
-
-      if (result.deletedCount === 0) {
-        return res.json({ data: `no tokens found for user with email "${user.email}"`})
-      }
 
       return res.json({ data: `deleted ${result.deletedCount} tokens for user "${user.email}"`})
     }
@@ -110,11 +102,7 @@ export const revokeAllTokens: RequestHandler = async (req, res, next) => {
 
     const result = await Token.deleteMany({})
 
-    if (result.deletedCount === 0) {
-      return res.json({ data: `no tokens found for deletion`})
-    }
-
-    return res.json({ data: `deleted all ${result.deletedCount} tokens`})
+    return res.json({ data: `deleted ${result.deletedCount} tokens`})
 
   } catch (e) {
     return next(createError(e))
