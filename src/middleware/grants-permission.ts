@@ -13,10 +13,10 @@ export function grantsPermission(grant: GrantType): RequestHandler {
     throw new Error(`<grantsPermission> grant "${grant}" is not valid`)
   }
 
-  return async (req, res, next) => {
+  return expectUser(async (req, res, next) => {
     const user = req.user
 
-    if (!user || !user.grants) {
+    if (!Array.isArray(user.grants)) {
       return next(createError(500, 'user grants unavailable'))
     }
 
@@ -25,7 +25,7 @@ export function grantsPermission(grant: GrantType): RequestHandler {
     }
 
     next()
-  }
+  })
 }
 
 export default grantsPermission
