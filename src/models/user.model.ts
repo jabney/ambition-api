@@ -32,6 +32,7 @@ const userSchema = new Schema({
   last: String,
   roles: { $type: [String], enum: roles },
   grants: { $type: [String], enum: grants },
+  settings: { $type: String, default: '{}' },
   passwordInfo: { $type: passwordInfoSchema, required: true },
 }, schemaOptions({ timestamps: true }))
 
@@ -56,7 +57,7 @@ userSchema.pre('save', async function(this: IUserDocument) {
  * Verify that the given password matches the stored one.
  */
 userSchema.methods.verifyPassword = function(this: IUserDocument, password: string) {
-    return bcrypt.compare(password, this.passwordInfo.password)
+  return bcrypt.compare(password, this.passwordInfo.password)
 }
 
 /**

@@ -9,6 +9,7 @@ export interface IUser {
   last?: string
   roles: RoleType[]
   grants: GrantType[]
+  settings: string
 
   passwordInfo: { password: string, updatedAt?: Date }
 }
