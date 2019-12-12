@@ -32,6 +32,13 @@ const grant = (loc: Location) => location[loc]('grant')
   .isString().withMessage('must be a string')
   .isIn(grants).withMessage('must be a valid grant')
 
+const userId = (loc: Location) => location[loc]('userId')
+  .trim()
+  .isMongoId().withMessage('must be a MongoID')
+
+const confirm = (loc: Location) => location[loc]('confirm')
+  .isBoolean().withMessage('must be a boolean')
+
 export default {
   body: {
     email: () => email('body'),
@@ -39,6 +46,8 @@ export default {
     last: () => last('body'),
     password: () => password('body'),
     grant: () => grant('body'),
+    userId: () => userId('body'),
+    confirm: () => confirm('body'),
   },
 
   query: {
