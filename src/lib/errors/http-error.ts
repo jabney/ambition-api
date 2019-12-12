@@ -1,15 +1,21 @@
 import { IJSonError } from './json-error'
 
+/**
+ * The canonical error class used for request handlers.
+ */
 export class HttpError extends Error {
   public name: string
   public status: number
-  public wrapped: any
+  public wrapped: object|undefined
 
-  constructor(status= 500, message= 'internal server error', error?: string) {
+  constructor(status= 500, message= 'internal server error', error?: object) {
     super(message)
     this.name = 'HttpError'
     this.status = status
-    this.wrapped = error
+
+    if (error != null) {
+      this.wrapped = error
+    }
   }
 
   public toJSON(): IJSonError {
