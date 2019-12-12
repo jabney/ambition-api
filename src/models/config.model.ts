@@ -19,7 +19,7 @@ const configOptions = schemaOptions({
 })
 
 /**
- *
+ * Store mutable configuration in the db.
  */
 const configSchema = new Schema({}, configOptions)
 

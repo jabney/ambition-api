@@ -14,7 +14,7 @@ type CacheModel = mongoose.Model<ICacheDocument> & {
 }
 
 /**
- *
+ * A schema for caching data in the db.
  */
 const cacheSchema = new Schema({
   _id: { $type: String, required: true },

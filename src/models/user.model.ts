@@ -26,7 +26,7 @@ const passwordInfoSchema = new Schema({
 /**
  * Define the schema for a user record.
  */
-export const userSchema = new Schema({
+const userSchema = new Schema({
   email: { $type: String, required: true },
   first: String,
   last: String,

@@ -20,7 +20,10 @@ type TokenModel = mongoose.Model<ITokenDocument> & {
   /* tokenSchema.statics */
 }
 
-export const tokenSchema = new Schema({
+/**
+ * Store access token references in the db.
+ */
+const tokenSchema = new Schema({
   _id: { $type: Schema.Types.ObjectId, required: true },
   // The owner of the token.
   userId: { $type: Schema.Types.ObjectId, required: true },

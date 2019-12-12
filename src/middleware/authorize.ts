@@ -58,6 +58,10 @@ export function authorize(
       }
     }
 
+    /**
+     * Verify that the token is in the database.
+     */
+
     const { jti: tokenId } = decoded
     const tokenDoc = await Token.findById(tokenId)
 
@@ -69,21 +73,24 @@ export function authorize(
       }
     }
 
+    // Add token to the request object.
     req.token = tokenDoc
+
+    /**
+     * Verify that the token matches a user in the db.
+     */
 
     const { sub: userId } = decoded
     const projection = user === false ? '_id' : user
     const lean = user === false
     const userDoc = await User.findById(userId, projection, { lean })
 
-    /**
-     * If there is no user associated with the token, then
-     * consider the token as invalid.
-     */
+    // If there is no associated user, the token is invalid.
     if (userDoc == null) {
       return next(createError(401))
     }
 
+    // Unless directed otherwise, add the user to the request object.
     if (user !== false) {
       req.user = userDoc
     }
