@@ -2,26 +2,26 @@ import validationErrors from '../middleware/validation-errors'
 import defs from './definitions'
 
 export const addToWhitelistValidator = [
-  defs.body.email(),
+  defs.email(),
 
   validationErrors,
 ]
 
 export const removeFromWhitelistValidator = [
-  defs.body.email(),
+  defs.email(),
 
   validationErrors,
 ]
 
 export const revokeTokensValidator = [
-  defs.body.mongoId('userId').optional(),
-  defs.body.email().optional(),
+  defs.mongoId('userId').optional(),
+  defs.email().optional(),
 
   validationErrors,
 ]
 
 export const revokeAllTokensValidator = [
-  defs.body.boolean('confirm').optional(),
+  defs.boolean('confirm').optional(),
 
   validationErrors,
 ]

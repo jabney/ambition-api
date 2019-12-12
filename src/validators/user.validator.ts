@@ -3,10 +3,10 @@ import validationErrors from '../middleware/validation-errors'
 import defs from './definitions'
 
 export const updateUserValidator = [
-  defs.body.email().optional(),
-  defs.body.password().optional(),
-  defs.body.first().optional(),
-  defs.body.last().optional(),
+  defs.email().optional(),
+  defs.password().optional(),
+  defs.strShort('first').optional(),
+  defs.strShort('last').optional(),
 
   validationErrors,
 
@@ -14,7 +14,7 @@ export const updateUserValidator = [
 ]
 
 export const addGrantValidator = [
-  defs.body.grant(),
+  defs.grant(),
 
   validationErrors,
 ]

@@ -3,10 +3,10 @@ import defs from './definitions'
 import sanitize from '../lib/sanitize'
 
 export const signupValidator = [
-  defs.body.email(),
-  defs.body.password(),
-  defs.body.first().optional(),
-  defs.body.last().optional(),
+  defs.email(),
+  defs.password(),
+  defs.strShort('first').optional(),
+  defs.strShort('last').optional(),
 
   validationErrors,
 
@@ -14,8 +14,8 @@ export const signupValidator = [
 ]
 
 export const signinValidator = [
-  defs.body.email(),
-  defs.body.password(),
+  defs.email(),
+  defs.password(),
 
   validationErrors,
 ]
