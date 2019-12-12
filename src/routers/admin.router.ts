@@ -1,16 +1,32 @@
 import { Router } from 'express'
-import { addToWhtelist, fetchWhitelist, removeFromWhitelist } from '../controllers/admin.controller'
 import { deserializeUser } from '../middleware/authorize'
 import hasRole from '../middleware/has-role'
 import { addValidator, removeValidator } from '../validators/admin.validator'
 
+import {
+  addToWhtelist,
+  fetchWhitelist,
+  removeFromWhitelist,
+  revokeToken,
+  revokeAllTokens,
+} from '../controllers/admin.controller'
+
 const router = Router()
 
-router.use(deserializeUser('roles'), hasRole('admin'))
+const hasSuper = hasRole('super')
+const hasAdmin = hasRole('admin')
+
+router.use(deserializeUser('roles'))
 
 router.route('/whitelist')
-  .get(fetchWhitelist)
-  .post(addValidator, addToWhtelist)
-  .delete(removeValidator, removeFromWhitelist)
+  .get(hasAdmin, fetchWhitelist)
+  .post(hasAdmin, addValidator, addToWhtelist)
+  .delete(hasAdmin, removeValidator, removeFromWhitelist)
+
+router.route('/tokens/revoke')
+  .delete(hasAdmin, revokeToken)
+
+router.route('/tokens/revoke/all')
+  .delete(hasSuper, revokeAllTokens)
 
 export default router

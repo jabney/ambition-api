@@ -20,11 +20,11 @@ export function hasRole(role: RoleType): RequestHandler {
       return next(createError(500, 'user roles unavailable'))
     }
 
-    if (!await user.hasRole(role)) {
-      return next(createError(403, 'user does not have required role'))
+    if (await user.hasRole(role)) {
+      return next()
     }
 
-    next()
+    return next(createError(403, 'user does not have required role'))
   })
 }
 
