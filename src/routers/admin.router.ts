@@ -28,8 +28,6 @@ const hasAdmin = hasRole('admin')
 
 const  deserializeRoles = deserializeUser('roles')
 
-router.use(deserializeUser('roles'))
-
 router.route('/whitelist')
   .get(deserializeRoles, hasAdmin, fetchWhitelist)
   .post(deserializeRoles, hasAdmin, addToWhitelistValidator, addToWhtelist)
@@ -37,11 +35,16 @@ router.route('/whitelist')
 
 router.route('/users')
   .get(deserializeRoles, hasAdmin, getUsersValidator, fetchUsers)
+  .delete(deserializeRoles, hasSuper)
+
+router.route('/user/role')
+  .post(deserializeRoles, hasAdmin)
+  .delete(deserializeRoles, hasSuper)
 
 router.route('/tokens')
-  .delete(hasAdmin, revokeTokensValidator, revokeTokens)
+  .delete(deserializeRoles, hasAdmin, revokeTokensValidator, revokeTokens)
 
 router.route('/tokens/all')
-  .delete(hasSuper, revokeAllTokensValidator, revokeAllTokens)
+  .delete(deserializeRoles, hasSuper, revokeAllTokensValidator, revokeAllTokens)
 
 export default router
