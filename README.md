@@ -42,6 +42,7 @@ export PASSWORD_COST_FACTOR=10
   - [`/admin/whitelist POST`](#adminwhitelist-post)
   - [`/admin/whitelist DELETE`](#adminwhitelist-delete)
   - [`/admin/users GET`](#adminusers-get)
+  - [`/admin/users DELETE`](#adminusers-delete)
   - [`/admin/users/roles POST`](#adminusersroles-post)
   - [`/admin/users/roles DELETE`](#adminusersroles-post)
   - [`/admin/tokens DELETE`](#admintokens-delete)
