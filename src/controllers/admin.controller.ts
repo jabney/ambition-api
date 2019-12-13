@@ -127,7 +127,7 @@ export const addUserRole: RequestHandler = async (req, res, next) => {
       runValidators: true,
     })
 
-    res.json({ data: `role ${role} added` })
+    res.json({ data: `role "${role}" added` })
 
   } catch (e) {
     return next(createError(e))
@@ -177,7 +177,7 @@ export const removeUserRole: RequestHandler = async (req, res, next) => {
     // Remove the role.
     await User.findByIdAndUpdate(userId, { $pull: { roles: role } })
 
-    res.json({ data: `role ${role} removed` })
+    res.json({ data: `role "${role}" removed` })
 
   } catch (e) {
     return next(createError(e))
