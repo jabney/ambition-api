@@ -2,6 +2,10 @@ import { RequestHandler } from 'express'
 import { createError } from '../lib/errors'
 import { Token } from '../models/token.model'
 
+/*****************************************************************
+ * Profile
+ */
+
 /**
  *
  */
@@ -41,8 +45,9 @@ export const updateUser: RequestHandler = async (req, res, next) => {
  *
  */
 export const deleteUser: RequestHandler = async (req, res, next) => {
+  const { _id: userId } = req.user
+
   try {
-    const { _id: userId } = req.user
     await Token.deleteMany({ userId })
     await req.user.remove()
 
@@ -52,6 +57,58 @@ export const deleteUser: RequestHandler = async (req, res, next) => {
     next(createError(e))
   }
 }
+
+/*****************************************************************
+ * Settings
+ */
+
+/**
+ *
+ */
+export const fetchSettings: RequestHandler = async (req, res, next) => {
+  const user = req.user
+
+  res.set('Content-Type', 'application/json').send(user.settings)
+}
+
+/**
+ *
+ */
+export const updateSettings: RequestHandler = async (req, res, next) => {
+  const { settings } = req.body
+
+  try {
+    const user = req.user
+    user.settings = JSON.stringify(settings)
+    await user.save()
+
+    res.json({ data: 'settings updated' })
+
+  } catch (e) {
+    return next(createError(e))
+  }
+}
+
+/**
+ *
+ */
+export const deleteSettings: RequestHandler = async (req, res, next) => {
+  const user = req.user
+
+  try {
+    user.settings = JSON.stringify({})
+    await user.save()
+
+    res.json({ data: 'settings deleted' })
+
+  } catch (e) {
+    return next(createError(e))
+  }
+}
+
+/*****************************************************************
+ * Grants
+ */
 
 /**
  *
