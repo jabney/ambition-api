@@ -25,3 +25,11 @@ export const revokeAllTokensValidator = [
 
   validationErrors,
 ]
+
+export const getUsersValidator = [
+  defs.strShort('sortBy', 'query').optional(),
+  defs.integer('skip', 'query').optional(),
+  defs.integer('limit', 'query').optional(),
+
+  validationErrors,
+]

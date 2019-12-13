@@ -59,6 +59,30 @@ export const removeFromWhitelist: RequestHandler = async (req, res, next) => {
 }
 
 /*****************************************************************
+ * Users
+ */
+
+/**
+ * Fetch a list of users.
+ */
+export const fetchUsers: RequestHandler = async  (req, res, next) => {
+  const { limit = 20, skip = 0, sortBy = 'last first' } = req.query
+
+  try {
+    const users = await User.find({})
+      .select('email first last roles')
+      .skip(skip)
+      .limit(limit)
+      .sort(sortBy)
+
+    res.json({ users })
+
+  } catch (e) {
+    return next(createError(e))
+  }
+}
+
+/*****************************************************************
  * Tokens
  */
 
