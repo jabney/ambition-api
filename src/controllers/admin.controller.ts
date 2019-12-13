@@ -124,7 +124,7 @@ export const removeUserRole: RequestHandler = async (req, res, next) => {
  * Delete all access tokens for a given user.
  */
 export const revokeTokens: RequestHandler = async (req, res, next) => {
-  const { userId, email } = req.query
+  const { userId, email } = req.body
 
   try {
     // Delete all tokens associated with a user id.
@@ -157,7 +157,7 @@ export const revokeTokens: RequestHandler = async (req, res, next) => {
  * Delete all access tokens in the tokens collection.
  */
 export const revokeAllTokens: RequestHandler = async (req, res, next) => {
-  const { confirm } = req.query
+  const { confirm } = req.body
 
   try {
     if (!confirm)  {
