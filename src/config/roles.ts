@@ -1,12 +1,11 @@
 /**
  * Define user roles.
  */
-export type RoleType = 'super'|'admin'|'lead'
+export type RoleType = 'super'|'admin'
 
 export const roles: ReadonlyArray<RoleType> = Object.freeze([
   'super',
   'admin',
-  'lead',
 ])
 
 const set: ReadonlySet<RoleType> = new Set(roles)
