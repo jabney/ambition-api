@@ -168,6 +168,57 @@ authorization: Bearer <access token>
 Responses:
 - 200 Successful
 
+#### `/user/settings GET` get the current user's settings
+
+request headers:
+
+```
+authorization: Bearer <access token>
+```
+
+Responses:
+- 200 Successful
+
+  ```typescript
+  {
+    settings: {...} // A plain old javascript object
+  }
+  ```
+
+Responses:
+- 200 Successful
+
+#### `/user/settings DELETE` delete the current user's settings
+
+request headers:
+
+```
+authorization: Bearer <access token>
+```
+
+#### `/user/settings POST` update the current user's settings
+
+request headers:
+
+```
+authorization: Bearer <access token>
+```
+
+request body:
+
+```
+Content-Type: application/json
+```
+
+```typescript
+{
+  settings: {...} // A plain old javascript object
+}
+```
+
+Responses:
+- 200 Successful
+
 #### `/user/grants GET` get the current user's grants
 
 request headers:
