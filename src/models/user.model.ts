@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import mongoose, { Document, Schema, Types } from 'mongoose'
 import { grants, GrantType, isValidGrant } from '../config/grants'
-import { isValidRole, roles, RoleType } from '../config/roles'
+import { isValidRole, roles, RoleType, roleRank } from '../config/roles'
 import schemaOptions from '../config/schema-options'
 import env from '../environment'
 import { IUser } from './user.interface'
@@ -74,7 +74,12 @@ userSchema.methods.hasRole = async function(this: IUserDocument, role: RoleType)
     await this.save()
   }
 
-  return userRoles.includes(role)
+  /**
+   * Roles are a simple hierarchy. If a user has a role with a
+   * rank <= the given role, then they have the role.
+   */
+  const rank = userRoles.reduce((rnk, rle) => Math.min(rnk, roleRank(rle)), 1e6)
+  return rank <= roleRank(role)
 }
 
 /**
