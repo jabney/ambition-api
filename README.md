@@ -452,6 +452,32 @@ Responses:
   }
   ```
 
+#### `/admin/users DELETE`
+
+View this application's users (email, first, last, roles).
+
+_request headers:_
+
+```
+authorization: Bearer <access token>
+```
+
+_request body:_
+
+```
+Content-Type: application/json
+```
+
+```typescript
+{
+  userId: string
+}
+```
+
+Responses:
+- 200 Successful
+- 404 User not found
+
 #### `/admin/users/roles POST`
 
 Add a role to a user.

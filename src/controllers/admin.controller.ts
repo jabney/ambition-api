@@ -83,6 +83,29 @@ export const fetchUsers: RequestHandler = async  (req, res, next) => {
 }
 
 /**
+ * Delete a user and associated data.
+ */
+export const deleteUser: RequestHandler = async (req, res, next) => {
+  const { userId } = req.body
+
+  try {
+    const userDoc = await User.findById(userId)
+
+    if (userDoc == null) {
+      return next(createError(404, 'user not found'))
+    }
+
+    await Token.deleteMany({ userId })
+    await userDoc.remove()
+
+    res.json({ data: `user "${userId}" and associated data removed`})
+
+  } catch (e) {
+    return next(createError(e))
+  }
+}
+
+/**
  * Add a role to a user.
  */
 export const addUserRole: RequestHandler = async (req, res, next) => {

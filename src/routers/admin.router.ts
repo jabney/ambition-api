@@ -10,6 +10,7 @@ import {
   getUsersValidator,
   addUserRoleValidator,
   removeUserRoleValidator,
+  deleteUserValidator,
 } from '../validators/admin.validator'
 
 import {
@@ -24,6 +25,7 @@ import {
   removeUserRole,
 
   fetchUsers,
+  deleteUser,
 } from '../controllers/admin.controller'
 
 const router = Router()
@@ -40,7 +42,7 @@ router.route('/whitelist')
 
 router.route('/users')
   .get(deserializeRoles, hasAdmin, getUsersValidator, fetchUsers)
-  // .delete(deserializeRoles, hasSuper, deleteUserValidator, deleteUser)
+  .delete(deserializeRoles, hasSuper, deleteUserValidator, deleteUser)
 
 router.route('/users/roles')
   .post(deserializeRoles, hasAdmin, addUserRoleValidator, addUserRole)
