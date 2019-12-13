@@ -37,7 +37,7 @@ router.route('/users')
   .get(deserializeRoles, hasAdmin, getUsersValidator, fetchUsers)
   .delete(deserializeRoles, hasSuper)
 
-router.route('/user/role')
+router.route('/users/role')
   .post(deserializeRoles, hasAdmin)
   .delete(deserializeRoles, hasSuper)
 
