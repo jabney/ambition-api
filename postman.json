@@ -39,7 +39,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\": \"jimmy@example.com\",\n\t\"password\": \"asdf\",\n\t\"first\": \"Jimmy\",\n\t\"last\": \"Jimmerton\",\n\t\"deleteMe\": \"delete me\"\n}",
+							"raw": "{\n\t\"email\": \"jimbo@example.com\",\n\t\"password\": \"asdf\",\n\t\"first\": \"Jimmy\",\n\t\"last\": \"Jimmerton\",\n\t\"deleteMe\": \"delete me\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -270,7 +270,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"first\": \"Jimbo\",\n\t\"last\": \"Jimbotron\",\n\t\"unknown\": \"delete  me\"\n}",
+							"raw": "{\n\t\"first\": \"James\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -412,15 +412,9 @@
 						}
 					},
 					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "admin",
-			"item": [
+				},
 				{
-					"name": "/whitelist",
+					"name": "/settings",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -435,22 +429,22 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:4500/admin/whitelist",
+							"raw": "http://localhost:4500/user/settings",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "4500",
 							"path": [
-								"admin",
-								"whitelist"
+								"user",
+								"settings"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "/whitelist",
+					"name": "/settings",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -463,40 +457,24 @@
 							]
 						},
 						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"email\": \"james@example.com\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
+						"header": [],
 						"url": {
-							"raw": "http://localhost:4500/admin/whitelist",
+							"raw": "http://localhost:4500/user/settings",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "4500",
 							"path": [
-								"admin",
-								"whitelist"
+								"user",
+								"settings"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "/whitelist",
+					"name": "/settings",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -517,29 +495,480 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"email\": \"jimbo@example.com\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:4500/admin/whitelist",
+							"raw": "http://localhost:4500/user/settings",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "4500",
 							"path": [
-								"admin",
-								"whitelist"
+								"user",
+								"settings"
 							]
 						}
 					},
 					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "whitelist",
+					"item": [
+						{
+							"name": "/whitelist",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4500/admin/whitelist",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4500",
+									"path": [
+										"admin",
+										"whitelist"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/whitelist",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\": \"james@example.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4500/admin/whitelist",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4500",
+									"path": [
+										"admin",
+										"whitelist"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/whitelist",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\": \"jimbo@example.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4500/admin/whitelist",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4500",
+									"path": [
+										"admin",
+										"whitelist"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "/users",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4500/admin/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4500",
+									"path": [
+										"admin",
+										"users"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "skip",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/users",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"userId\": \"5df3c83fc28ae319c655cd43\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4500/admin/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4500",
+									"path": [
+										"admin",
+										"users"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "skip",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/users/roles",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"userId\": \"5df3c83fc28ae319c655cd43\",\n\t\"role\": \"lead\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4500/admin/users/roles",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4500",
+									"path": [
+										"admin",
+										"users",
+										"roles"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "skip",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/users/roles",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"userId\": \"5df2d145cc3465a86c9749d2\",\n\t\"role\": \"admin\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4500/admin/users/roles",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4500",
+									"path": [
+										"admin",
+										"users",
+										"roles"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "skip",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "tokens",
+					"item": [
+						{
+							"name": "/tokens",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\": \"jimmy@example.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4500/admin/tokens",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4500",
+									"path": [
+										"admin",
+										"tokens"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/tokens/all",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"confirm\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4500/admin/tokens/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4500",
+									"path": [
+										"admin",
+										"tokens",
+										"all"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -582,7 +1011,7 @@
 	],
 	"variable": [
 		{
-			"id": "eb06ba12-a25e-46f1-867c-4ff14aece091",
+			"id": "d5f58c45-908d-4787-af67-4dc9d0ab7d81",
 			"key": "token",
 			"value": "",
 			"type": "string"
