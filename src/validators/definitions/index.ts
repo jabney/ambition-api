@@ -9,6 +9,18 @@ const location: {[K in Location]: (field: string) => ValidationChain} = {
   query,
 }
 
+/**
+ * Return true if the value is not a known json type, except object.
+ */
+const isJsonObject = (value: any) => {
+  const isObject = value != null
+    && typeof value !== 'boolean'
+    && typeof value !== 'number'
+    && typeof value !== 'string'
+    && !Array.isArray(value)
+  return isObject
+}
+
 const email = (loc: Location, name: string) => location[loc](name)
   .trim()
   .isEmail().withMessage('must be a valid email')
@@ -36,6 +48,11 @@ const boolean = (loc: Location, name: string) => location[loc](name)
   .isBoolean().withMessage('must be a boolean')
   .toBoolean(true)
 
+const jsonObj = (loc: Location, name: string) => location[loc](name)
+  .custom((value) => {
+    return isJsonObject(value)
+  }).withMessage('must be a json object')
+
 export default {
   email: (name = 'email', where: Location = 'body') => email(where, name),
   strShort: (name: string, where: Location = 'body') => str(where, name, 64),
@@ -45,4 +62,5 @@ export default {
   grant: (name = 'grant', where: Location = 'body') => grant(where, name),
   mongoId: (name: string, where: Location = 'body') => mongoId(where, name),
   boolean: (name: string, where: Location = 'body') => boolean(where, name),
+  jsonObj: (name: string, where: Location = 'body') => jsonObj(where, name),
 }
