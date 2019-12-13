@@ -442,7 +442,11 @@ _request headers:_
 authorization: Bearer <access token>
 ```
 
-_query params:_
+_request body:_
+
+```
+Content-Type: application/json
+```
 
 ```typescript
 {
@@ -469,7 +473,11 @@ _request headers:_
 authorization: Bearer <access token>
 ```
 
-_query params:_
+_request body:_
+
+```
+Content-Type: application/json
+```
 
 ```typescript
 {
