@@ -8,6 +8,8 @@ import {
   revokeTokensValidator,
   revokeAllTokensValidator,
   getUsersValidator,
+  addUserRoleValidator,
+  removeUserRoleValidator,
 } from '../validators/admin.validator'
 
 import {
@@ -17,6 +19,9 @@ import {
 
   revokeTokens,
   revokeAllTokens,
+
+  addUserRole,
+  removeUserRole,
 
   fetchUsers,
 } from '../controllers/admin.controller'
@@ -38,8 +43,8 @@ router.route('/users')
   .delete(deserializeRoles, hasSuper)
 
 router.route('/users/role')
-  .post(deserializeRoles, hasAdmin)
-  .delete(deserializeRoles, hasSuper)
+  .post(deserializeRoles, hasAdmin, addUserRoleValidator, addUserRole)
+  .delete(deserializeRoles, hasSuper, removeUserRoleValidator, removeUserRole)
 
 router.route('/tokens')
   .delete(deserializeRoles, hasAdmin, revokeTokensValidator, revokeTokens)
