@@ -314,6 +314,7 @@ Content-Type: application/json
 
 Responses:
 - 200 Successful
+- 422 Input validation error
 
 #### `/user/grants DELETE`
 
@@ -339,6 +340,7 @@ Content-Type: application/json
 
 Responses:
 - 200 Successful
+- 422 Input validation error
 
 ### `/grants`
 
@@ -405,6 +407,7 @@ Content-Type: application/json
 
 Responses:
 - 200 Successful
+- 422 Input validation error
 
 #### `/admin/whitelist DELETE`
 
@@ -436,6 +439,7 @@ Responses:
     email: string
   }
   ```
+- 422 Input validation error
 
 #### `/admin/users GET`
 
@@ -481,6 +485,7 @@ Content-Type: application/json
 Responses:
 - 200 Successful
 - 404 User not found
+- 422 Input validation error
 
 #### `/admin/users/roles POST`
 
@@ -508,9 +513,9 @@ Content-Type: application/json
 Responses:
 - 200 Successful
 - 400 Bad request
-- 422 Input validation error
 - 403 Unauthorized
 - 404 User not found
+- 422 Input validation error
 
 #### `/admin/users/roles DELETE`
 
@@ -538,9 +543,9 @@ Content-Type: application/json
 Responses:
 - 200 Successful
 - 400 Bad request
-- 422 Input validation error
 - 403 Unauthorized
 - 404 User not found
+- 422 Input validation error
 
 #### `/admin/tokens DELETE`
 
@@ -572,6 +577,7 @@ Responses:
 - 200 Successful
 - 400 email or userId not specified
 - 404 user not found
+- 422 Input validation error
 
 #### `/admin/tokens/all DELETE`
 
@@ -600,3 +606,4 @@ Content-Type: application/json
 Responses:
 - 200 Successful
 - 400 could not confirm
+- 422 Input validation error
