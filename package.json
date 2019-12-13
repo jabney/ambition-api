@@ -1,16 +1,18 @@
 {
   "name": "ambition-api",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "build": "tsc",
+    "clean": "rm -rf lib",
     "db": "mongod --dbpath=./db",
     "lint": "tslint --project .",
     "start": "node ./lib/server",
     "server": "source .env && npm run build && npm run start",
     "tunnel": "source .env && ngrok http $PORT",
     "watch": "nodemon -e ts --watch src --watch .env --exec 'npm run server'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run build && mocha",
+    "test-local": "source .env.test && npm run test"
   },
   "dependencies": {
     "@types/bcrypt": "^3.0.0",
@@ -30,7 +32,10 @@
     "typescript": "^3.7.3"
   },
   "devDependencies": {
+    "mocha": "^6.2.2",
     "ngrok": "^3.2.5",
-    "nodemon": "^2.0.1"
+    "nodemon": "^2.0.1",
+    "source-map-support": "^0.5.16",
+    "ts-node": "^8.5.4"
   }
 }
