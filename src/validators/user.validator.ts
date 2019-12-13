@@ -1,6 +1,7 @@
 import sanitize from '../lib/sanitize'
 import validationErrors from '../middleware/validation-errors'
 import defs from './definitions'
+import { RequestHandler } from 'express'
 
 export const updateUserValidator = [
   defs.email().optional(),
@@ -20,3 +21,9 @@ export const addGrantValidator = [
 ]
 
 export const removeGrantValidator = addGrantValidator
+
+export const updateSettingsValidator = [
+  defs.jsonObj('settings'),
+
+  validationErrors,
+]
