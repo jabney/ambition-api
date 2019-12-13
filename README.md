@@ -37,6 +37,9 @@ export PASSWORD_COST_FACTOR=10
   - [`/user/grants POST`](#usergrants-post)
   - [`/user/grants DELETE`](#usergrants-delete)
 
+- [`/grants`](#grants)
+  - [`/grants GET`](#grants-get)
+
 - [`/admin`](#admin)
   - [`/admin/whitelist GET`](#adminwhitelist-get)
   - [`/admin/whitelist POST`](#adminwhitelist-post)
