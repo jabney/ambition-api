@@ -86,9 +86,43 @@ export const fetchUsers: RequestHandler = async  (req, res, next) => {
  * Add a role to a user.
  */
 export const addUserRole: RequestHandler = async (req, res, next) => {
+  const user = req.user
   const { userId, role } = req.body
 
+  // The 'super' role cannot be granted by anyone, ever.
+  if (role === 'super') {
+    return next(createError(403, 'cannot grant super role'))
+  }
+
+  // Current user has 'super' role.
+  const isSuper = await user.hasRole('super')
+
+  // Only a 'super' can grant admin role.
+  if (role === 'admin') {
+    // Make sure the current user is super.
+    if (!isSuper) {
+      return next(createError(403, 'cannot grant admin role'))
+    }
+  }
+
   try {
+    const targetUser = await User.findById(userId)
+
+    if (targetUser == null) {
+      return next(createError(404, 'user not found'))
+    }
+
+    // Nobody can modify a super user.
+    if (await targetUser.hasRole('super')) {
+      return next(createError(400, 'cannot modify a super user'))
+    }
+
+    // Only a super user can modify an admin.
+    if (await targetUser.hasRole('admin') && !isSuper) {
+      return next(createError(403, 'cannot modify admin user'))
+    }
+
+    // Add the role.
     await User.findByIdAndUpdate(userId, { $addToSet: { roles: role }}, {
       runValidators: true,
     })
@@ -104,12 +138,46 @@ export const addUserRole: RequestHandler = async (req, res, next) => {
  * Remove a role from a user.
  */
 export const removeUserRole: RequestHandler = async (req, res, next) => {
+  const user = req.user
   const { userId, role } = req.body
 
+  // The 'super' role cannot be revoked by anyone, ever.
+  if (role === 'super') {
+    return next(createError(403, 'cannot revoke super role'))
+  }
+
+  // Current user has 'super' role.
+  const isSuper = await user.hasRole('super')
+
+  // Only a 'super' can revoke admin role.
+  if (role === 'admin') {
+    // Make sure the current user is super.
+    if (!isSuper) {
+      return next(createError(403, 'cannot revoke admin role'))
+    }
+  }
+
   try {
+    const targetUser = await User.findById(userId)
+
+    if (targetUser == null) {
+      return next(createError(404, 'user not found'))
+    }
+
+    // Nobody can modify a super user.
+    if (await targetUser.hasRole('super')) {
+      return next(createError(400, 'cannot modify a super user'))
+    }
+
+    // Only a super user can modify an admin.
+    if (await targetUser.hasRole('admin') && !isSuper) {
+      return next(createError(403, 'cannot modify admin user'))
+    }
+
+    // Remove the role.
     await User.findByIdAndUpdate(userId, { $pull: { roles: role } })
 
-    res.json({ data: `role ${role} added` })
+    res.json({ data: `role ${role} removed` })
 
   } catch (e) {
     return next(createError(e))

@@ -41,6 +41,9 @@ export PASSWORD_COST_FACTOR=10
   - [`/admin/whitelist GET`](#adminwhitelist-get)
   - [`/admin/whitelist POST`](#adminwhitelist-post)
   - [`/admin/whitelist DELETE`](#adminwhitelist-delete)
+  - [`/admin/users GET`](#adminusers-get)
+  - [`/admin/users/roles POST`](#adminusersroles-post)
+  - [`/admin/users/roles DELETE`](#adminusersroles-post)
   - [`/admin/tokens DELETE`](#admintokens-delete)
   - [`/admin/tokens/all DELETE`](#admintokensall-delete)
 
@@ -429,6 +432,85 @@ Responses:
     email: string
   }
   ```
+
+#### `/admin/users GET`
+
+View this application's users (email, first, last, roles).
+
+_request headers:_
+
+```
+authorization: Bearer <access token>
+```
+
+Responses:
+- 200 Successful
+
+  ```typescript
+  {
+    users: [...]
+  }
+  ```
+
+#### `/admin/users/roles POST`
+
+Add a role to a user.
+
+_request headers:_
+
+```
+authorization: Bearer <access token>
+```
+
+_request body:_
+
+```
+Content-Type: application/json
+```
+
+```typescript
+{
+  userId: string
+  role: string
+}
+```
+
+Responses:
+- 200 Successful
+- 400 Bad request
+- 422 Input validation error
+- 403 Unauthorized
+- 404 User not found
+
+#### `/admin/users/roles DELETE`
+
+Remove a role from a user.
+
+_request headers:_
+
+```
+authorization: Bearer <access token>
+```
+
+_request body:_
+
+```
+Content-Type: application/json
+```
+
+```typescript
+{
+  userId: string
+  role: string
+}
+```
+
+Responses:
+- 200 Successful
+- 400 Bad request
+- 422 Input validation error
+- 403 Unauthorized
+- 404 User not found
 
 #### `/admin/tokens DELETE`
 

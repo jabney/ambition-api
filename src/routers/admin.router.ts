@@ -40,9 +40,9 @@ router.route('/whitelist')
 
 router.route('/users')
   .get(deserializeRoles, hasAdmin, getUsersValidator, fetchUsers)
-  .delete(deserializeRoles, hasSuper)
+  // .delete(deserializeRoles, hasSuper, deleteUserValidator, deleteUser)
 
-router.route('/users/role')
+router.route('/users/roles')
   .post(deserializeRoles, hasAdmin, addUserRoleValidator, addUserRole)
   .delete(deserializeRoles, hasSuper, removeUserRoleValidator, removeUserRole)
 
