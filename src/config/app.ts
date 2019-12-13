@@ -21,8 +21,8 @@ function configureApp(app: Application) {
   // Log requests.
   app.use(logger('dev'))
 
-  // Parse json bodies (expect 1kb or less payload size).
-  app.use(express.json({ limit: '1kb'}))
+  // Parse json bodies (expect 2kb or less payload size).
+  app.use(express.json({ limit: '2kb'}))
 
   return app
 }
