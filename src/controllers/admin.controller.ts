@@ -82,6 +82,21 @@ export const fetchUsers: RequestHandler = async  (req, res, next) => {
   }
 }
 
+/**
+ * Add a role to a user.
+ */
+export const addRole: RequestHandler = async (req, res, next) => {
+  const { userId, role } = req.body
+
+  try {
+    await User.findByIdAndUpdate(userId, { $addToSet: { roles: role } })
+
+    res.json({ data: `role ${role} added` })
+  } catch (e) {
+    return next(createError(e))
+  }
+}
+
 /*****************************************************************
  * Tokens
  */
