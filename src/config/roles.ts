@@ -14,4 +14,4 @@ export function isValidRole(role: RoleType) {
   return set.has(role)
 }
 
-export default roles
+export default [...roles]
