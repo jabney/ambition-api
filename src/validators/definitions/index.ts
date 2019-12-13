@@ -1,6 +1,6 @@
 import { body, param, query, ValidationChain } from 'express-validator'
 import { grants } from '../../config/grants'
-import { roles } from '../../config/roles'
+import roles from '../../config/roles'
 
 type Location = 'body'|'query'|'param'
 
