@@ -53,6 +53,10 @@ const jsonObj = (loc: Location, name: string) => location[loc](name)
     return isJsonObject(value)
   }).withMessage('must be a json object')
 
+const integer = (loc: Location, name: string) => location[loc](name)
+  .isInt().withMessage('must be an integer')
+  .toInt()
+
 export default {
   email: (name = 'email', where: Location = 'body') => email(where, name),
   strShort: (name: string, where: Location = 'body') => str(where, name, 64),
@@ -63,4 +67,5 @@ export default {
   mongoId: (name: string, where: Location = 'body') => mongoId(where, name),
   boolean: (name: string, where: Location = 'body') => boolean(where, name),
   jsonObj: (name: string, where: Location = 'body') => jsonObj(where, name),
+  integer: (name: string, where: Location = 'body') => integer(where, name),
 }
