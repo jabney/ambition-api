@@ -20,17 +20,43 @@ export PASSWORD_COST_FACTOR=10
 
 ## Routes
 
+- [`/auth`](#auth)
+  - [`/auth/signup POST`](#authsignup-post)
+  - [`/auth/signin POST`](#authsignin-post)
+  - [`/auth/signout GET`](#authsignout-get)
+  - [`/auth/signout/all GET`](#authsignoutall-get)
+
+- [`/user`](#user)
+  - [`/user GET`](#user-get)
+  - [`/user PATCH`](#user-get)
+  - [`/user DELETE`](#user-get)
+  - [`/user/settings GET`](#usersettings-get)
+  - [`/user/settings POST`](#usersettings-post)
+  - [`/user/settings DELETE`](#usersettings-delete)
+  - [`/user/grants GET`](#usergrants-get)
+  - [`/user/grants POST`](#usergrants-post)
+  - [`/user/grants DELETE`](#usergrants-delete)
+
+- [`/admin`](#admin)
+  - [`/admin/whitelist GET`](#adminwhitelist-get)
+  - [`/admin/whitelist POST`](#adminwhitelist-post)
+  - [`/admin/whitelist DELETE`](#adminwhitelist-delete)
+  - [`/admin/tokens DELETE`](#admintokens-delete)
+  - [`/admin/tokens/all DELETE`](#admintokensall-delete)
+
 ### `/auth`
 
-#### `/auth/signup POST`: register a new user
+#### `/auth/signup POST`
 
-request headers:
+Register a new user.
+
+_request headers:_
 
 ```
 authorization: Bearer <api key>
 ```
 
-request body:
+_request body:_
 
 ```
 Content-Type: application/json
@@ -57,15 +83,17 @@ Responses:
 - 409 User already exists
 - 422 Input validation error
 
-#### `/auth/signin POST`: log a user in
+#### `/auth/signin POST`
 
-request headers:
+Log a user in.
+
+_request headers:_
 
 ```
 authorization: Bearer <api key>
 ```
 
-request body:
+_request body:_
 
 ```
 Content-Type: application/json
@@ -90,9 +118,11 @@ Responses:
 - 404 User not found
 - 422 Input validation error
 
-#### `/auth/signout GET`: log a user out (revoke token)
+#### `/auth/signout GET`
 
-request headers:
+Log a user out (revoke token).
+
+_request headers:_
 
 ```
 authorization: Bearer <access token>
@@ -101,16 +131,20 @@ authorization: Bearer <access token>
 Responses:
 - 200 Successful
 
-#### `/auth/signout/all GET`: log a user out of all devices (revoke all tokens)
+#### `/auth/signout/all GET`
+
+Log a user out of all devices (revoke all tokens)
 
 Responses:
 - 200 Successful
 
 ### `/user`
 
-#### `/user GET` fetch the user profile
+#### `/user GET`
 
-request headers:
+Fetch the user profile.
+
+_request headers:_
 
 ```
 authorization: Bearer <access token>
@@ -130,15 +164,17 @@ Responses:
   }
   ```
 
-#### `/user PATCH` update user profile
+#### `/user PATCH`
 
-request headers:
+Update the user profile.
+
+_request headers:_
 
 ```
 authorization: Bearer <access token>
 ```
 
-request body:
+_request body:_
 
 ```
 Content-Type: application/json
@@ -157,9 +193,11 @@ Responses:
 - 200 Successful
 - 422 Input validation error
 
-#### `/user DELETE` delete a user and all associated data
+#### `/user DELETE`
 
-request headers:
+Delete a user and all associated data.
+
+_request headers:_
 
 ```
 authorization: Bearer <access token>
@@ -168,9 +206,11 @@ authorization: Bearer <access token>
 Responses:
 - 200 Successful
 
-#### `/user/settings GET` get the current user's settings
+#### `/user/settings GET`
 
-request headers:
+Get the current user's settings.
+
+_request headers:_
 
 ```
 authorization: Bearer <access token>
@@ -181,30 +221,21 @@ Responses:
 
   ```typescript
   {
-    settings: {...} // A plain old javascript object
+    ... // A plain old javascript object
   }
   ```
 
-Responses:
-- 200 Successful
+#### `/user/settings POST`
 
-#### `/user/settings DELETE` delete the current user's settings
+Update the current user's settings.
 
-request headers:
-
-```
-authorization: Bearer <access token>
-```
-
-#### `/user/settings POST` update the current user's settings
-
-request headers:
+_request headers:_
 
 ```
 authorization: Bearer <access token>
 ```
 
-request body:
+_request body:_
 
 ```
 Content-Type: application/json
@@ -218,10 +249,26 @@ Content-Type: application/json
 
 Responses:
 - 200 Successful
+- 422 Input validation error
 
-#### `/user/grants GET` get the current user's grants
+#### `/user/settings DELETE`
 
-request headers:
+Delete the current user's settings.
+
+_request headers:_
+
+```
+authorization: Bearer <access token>
+```
+
+Responses:
+- 200 Successful
+
+#### `/user/grants GET`
+
+Get the current user's grants.
+
+_request headers:_
 
 ```
 authorization: Bearer <access token>
@@ -236,15 +283,17 @@ Responses:
   }
   ```
 
-#### `/user/grants POST` add a grant to the current user
+#### `/user/grants POST`
 
-request headers:
+Add a grant to the current user.
+
+_request headers:_
 
 ```
 authorization: Bearer <access token>
 ```
 
-request body:
+_request body:_
 
 ```
 Content-Type: application/json
@@ -259,15 +308,17 @@ Content-Type: application/json
 Responses:
 - 200 Successful
 
-#### `/user/grants DELETE` remove a grant from the current user
+#### `/user/grants DELETE`
 
-request headers:
+Remove a grant from the current user.
+
+_request headers:_
 
 ```
 authorization: Bearer <access token>
 ```
 
-request body:
+_request body:_
 
 ```
 Content-Type: application/json
@@ -284,9 +335,11 @@ Responses:
 
 ### `/grants`
 
-#### `/grants GET` fetch a list of available grants and their descriptions
+#### `/grants GET`
 
-request headers:
+Fetch a list of available grants and their descriptions.
+
+_request headers:_
 
 ```
 authorization: Bearer <access token>
@@ -308,9 +361,11 @@ Responses:
 
 ### `/admin`
 
-#### `/admin/whitelist GET` get a list of whitelisted email addresses
+#### `/admin/whitelist GET`
 
-request headers:
+Get a list of whitelisted email addresses.
+
+_request headers:_
 
 ```
 authorization: Bearer <access token>
@@ -319,15 +374,17 @@ authorization: Bearer <access token>
 Responses:
 - 200 Successful
 
-#### `/admin/whitelist POST` add an email address to the whitelist
+#### `/admin/whitelist POST`
 
-request headers:
+Add an email address to the whitelist.
+
+_request headers:_
 
 ```
 authorization: Bearer <access token>
 ```
 
-request body:
+_request body:_
 
 ```
 Content-Type: application/json
@@ -342,15 +399,17 @@ Content-Type: application/json
 Responses:
 - 200 Successful
 
-#### `/admin/whitelist DELETE` remove an email address from the whitelist
+#### `/admin/whitelist DELETE`
 
-request headers:
+Remove an email address from the whitelist.
+
+_request headers:_
 
 ```
 authorization: Bearer <access token>
 ```
 
-request body:
+_request body:_
 
 ```
 Content-Type: application/json
@@ -371,17 +430,19 @@ Responses:
   }
   ```
 
-#### `/admin/tokens/revoke DELETE` delete tokens for a user.
+#### `/admin/tokens DELETE`
+
+Delete tokens for a user.
 
 This action logs a user out across all devices.
 
-request headers:
+_request headers:_
 
 ```
 authorization: Bearer <access token>
 ```
 
-query params:
+_query params:_
 
 ```typescript
 {
@@ -396,17 +457,19 @@ Responses:
 - 400 email or userId not specified
 - 404 user not found
 
-#### `/admin/tokens/revoke/all DELETE` delete all tokens from the db.
+#### `/admin/tokens/all DELETE`
+
+Delete all tokens from the db.
 
 This action logs all users out accross all devices.
 
-request headers:
+_request headers:_
 
 ```
 authorization: Bearer <access token>
 ```
 
-query params:
+_query params:_
 
 ```typescript
 {
