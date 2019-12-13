@@ -33,3 +33,10 @@ export const getUsersValidator = [
 
   validationErrors,
 ]
+
+export const addRoleValidator = [
+  defs.mongoId('userId'),
+  defs.role(),
+
+  validationErrors,
+]
