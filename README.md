@@ -1,5 +1,5 @@
 # ambition-api
-A JWT-based NodeJS/Express/MongoDB API written in TypeScript using Mongoose
+A JWT-based NodeJS/Express/Mongoose API written in TypeScript
 
 ## Environment
 
