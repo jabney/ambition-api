@@ -51,7 +51,7 @@ export const deleteUser: RequestHandler = async (req, res, next) => {
     await Token.deleteMany({ userId })
     await req.user.remove()
 
-    res.json({ data: 'user data deleted '})
+    res.json({ data: 'user and associated data deleted '})
 
   } catch (e) {
     next(createError(e))
