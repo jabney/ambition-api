@@ -10,6 +10,7 @@ export class ValidationError extends HttpError {
 
   constructor(errors: VErrorObject[]) {
     super(422, 'A validation error has occurred')
+    this.name = 'ValidationError'
 
     // Return a formatted error list.
     this.errors = () => errors.map((e) => `${e.param}: ${e.msg}`)
