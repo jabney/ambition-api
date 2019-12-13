@@ -1,5 +1,6 @@
 import { body, param, query, ValidationChain } from 'express-validator'
 import { grants } from '../../config/grants'
+import { roles } from '../../config/roles'
 
 type Location = 'body'|'query'|'param'
 
@@ -35,6 +36,11 @@ const str = (loc: Location, name: string, max: number) => location[loc](name)
   .trim()
   .isLength({ min: 1, max }).withMessage(`must be between 1 and ${max} characters`)
 
+const role = (loc: Location, name: string) => location[loc](name)
+  .isString().withMessage('must be a string')
+  .trim()
+  .isIn(roles).withMessage('must be a valid role')
+
 const grant = (loc: Location, name: string) => location[loc](name)
   .isString().withMessage('must be a string')
   .trim()
@@ -64,6 +70,7 @@ export default {
   strLong: (name: string, where: Location = 'body') => str(where, name, 1024),
   password: (name = 'password', where: Location = 'body') => password(where, name),
   grant: (name = 'grant', where: Location = 'body') => grant(where, name),
+  role: (name = 'role', where: Location = 'body') => role(where, name),
   mongoId: (name: string, where: Location = 'body') => mongoId(where, name),
   boolean: (name: string, where: Location = 'body') => boolean(where, name),
   jsonObj: (name: string, where: Location = 'body') => jsonObj(where, name),
