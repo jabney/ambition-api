@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express'
 import { createError } from '../lib/errors'
 import { Token } from '../models/token.model'
+import { IProfileInfo } from '../models/profile-info.interface'
 
 /*****************************************************************
  * Profile
@@ -18,16 +19,16 @@ export const fetchUser: RequestHandler = async (req, res, next) => {
  */
 export const updateUser: RequestHandler = async (req, res, next) => {
   const user = req.user
-  const fields = req.body
+  const info: IProfileInfo = req.body
 
   try {
     // Update the user with the given fields.
-    await user.updateOne(fields, { runValidators: true })
+    await user.updateOne(info, { runValidators: true })
 
     /**
      * Check if we should update the password.
      */
-    const { password } = fields
+    const { password } = info
 
     if (password) {
       user.passwordInfo = { password }

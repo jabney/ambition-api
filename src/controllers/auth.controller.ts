@@ -2,12 +2,13 @@ import { RequestHandler } from 'express'
 import { createError } from '../lib/errors'
 import { Token } from '../models/token.model'
 import { User } from '../models/user.model'
+import { IProfileInfo } from '../models/profile-info.interface'
 
 /**
  *
  */
 export const signup: RequestHandler = async (req, res, next) => {
-  const info = req.body
+  const info: IProfileInfo = req.body
 
   try {
     const { password } = info
