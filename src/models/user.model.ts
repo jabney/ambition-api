@@ -106,4 +106,9 @@ userSchema.methods.grantsPermission = async function(this: IUserDocument, grant:
 //
 // }
 
-export const User = mongoose.model<IUserDocument>('User', userSchema) as UserModel
+/**
+ * Prevent duplicate model compiling during unit test watching by
+ * compiling only if model doesn't already exist.
+ */
+export const User = (mongoose.models.User
+  || mongoose.model<IUserDocument>('User', userSchema)) as UserModel

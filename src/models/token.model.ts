@@ -56,4 +56,9 @@ tokenSchema.statics.createToken = async function(this: TokenModel, userId: Types
   return token
 }
 
-export const Token = mongoose.model<ITokenDocument>('Token', tokenSchema) as TokenModel
+/**
+ * Prevent duplicate model compiling during unit test watching by
+ * compiling only if model doesn't already exist.
+ */
+export const Token = (mongoose.models.Token ||
+  mongoose.model<ITokenDocument>('Token', tokenSchema)) as TokenModel

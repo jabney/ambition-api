@@ -26,4 +26,9 @@ whitelistSchema.statics.isWhitelisted = async function(this: WhitelistModel, ema
   return whitelist != null
 }
 
-export const Whitelist = Config.discriminator<IWhitelistDocument>('Whitelist', whitelistSchema) as WhitelistModel
+/**
+ * Prevent duplicate model compiling during unit test watching by
+ * compiling only if model doesn't already exist.
+ */
+export const Whitelist = (mongoose.models.Whitelist
+  || Config.discriminator<IWhitelistDocument>('Whitelist', whitelistSchema)) as WhitelistModel

@@ -25,4 +25,9 @@ const configSchema = new Schema({}, configOptions)
 
 configSchema.index({ type: 1 }, { unique: true })
 
-export const Config = mongoose.model<IConfigDocument>('Config', configSchema) as ConfigModel
+/**
+ * Prevent duplicate model compiling during unit test watching by
+ * compiling only if model doesn't already exist.
+ */
+export const Config = (mongoose.models.Config
+  || mongoose.model<IConfigDocument>('Config', configSchema)) as ConfigModel
