@@ -53,10 +53,10 @@ describe('Auth Routes', () => {
     await authSignup(userProfile())
       .expect(200)
 
-    await authSignin(userProfile())
+    await authSignin(userCredentials())
       .expect(200)
 
-    const token = await authSignin(userProfile())
+    const token = await authSignin(userCredentials())
       .expect(200)
       .then(expectTokenCount(3))
       .then(getToken)
