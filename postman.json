@@ -39,7 +39,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\": \"jimbo@example.com\",\n\t\"password\": \"asdf\",\n\t\"first\": \"Jimmy\",\n\t\"last\": \"Jimmerton\",\n\t\"deleteMe\": \"delete me\"\n}",
+							"raw": "{\n\t\"email\": \"jimmy@example.com\",\n\t\"password\": \"asdf\",\n\t\"first\": \"Jimmy\",\n\t\"last\": \"Jimmerton\",\n\t\"deleteMe\": \"delete me\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -47,12 +47,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:4500/auth/signup",
-							"protocol": "http",
+							"raw": "{{host}}/auth/signup",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "4500",
 							"path": [
 								"auth",
 								"signup"
@@ -107,12 +105,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:4500/auth/signin",
-							"protocol": "http",
+							"raw": "{{host}}/auth/signin",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "4500",
 							"path": [
 								"auth",
 								"signin"
@@ -137,12 +133,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:4500/auth/signout",
-							"protocol": "http",
+							"raw": "{{host}}/auth/signout",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "4500",
 							"path": [
 								"auth",
 								"signout"
@@ -167,12 +161,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:4500/auth/signout/all",
-							"protocol": "http",
+							"raw": "{{host}}/auth/signout/all",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "4500",
 							"path": [
 								"auth",
 								"signout",
@@ -204,12 +196,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:4500/user",
-							"protocol": "http",
+							"raw": "{{host}}/user",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "4500",
 							"path": [
 								"user"
 							]
@@ -233,12 +223,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:4500/user",
-							"protocol": "http",
+							"raw": "{{host}}/user",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "4500",
 							"path": [
 								"user"
 							]
@@ -278,12 +266,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:4500/user",
-							"protocol": "http",
+							"raw": "{{host}}/user",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "4500",
 							"path": [
 								"user"
 							]
@@ -307,12 +293,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:4500/user/grants",
-							"protocol": "http",
+							"raw": "{{host}}/user/grants",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "4500",
 							"path": [
 								"user",
 								"grants"
@@ -353,12 +337,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:4500/user/grants",
-							"protocol": "http",
+							"raw": "{{host}}/user/grants",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "4500",
 							"path": [
 								"user",
 								"grants"
@@ -399,12 +381,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:4500/user/grants",
-							"protocol": "http",
+							"raw": "{{host}}/user/grants",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "4500",
 							"path": [
 								"user",
 								"grants"
@@ -429,12 +409,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:4500/user/settings",
-							"protocol": "http",
+							"raw": "{{host}}/user/settings",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "4500",
 							"path": [
 								"user",
 								"settings"
@@ -459,12 +437,10 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:4500/user/settings",
-							"protocol": "http",
+							"raw": "{{host}}/user/settings",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "4500",
 							"path": [
 								"user",
 								"settings"
@@ -496,12 +472,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:4500/user/settings",
-							"protocol": "http",
+							"raw": "{{host}}/user/settings",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "4500",
 							"path": [
 								"user",
 								"settings"
@@ -535,12 +509,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:4500/admin/whitelist",
-									"protocol": "http",
+									"raw": "{{host}}/admin/whitelist",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4500",
 									"path": [
 										"admin",
 										"whitelist"
@@ -581,12 +553,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4500/admin/whitelist",
-									"protocol": "http",
+									"raw": "{{host}}/admin/whitelist",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4500",
 									"path": [
 										"admin",
 										"whitelist"
@@ -627,12 +597,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4500/admin/whitelist",
-									"protocol": "http",
+									"raw": "{{host}}/admin/whitelist",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4500",
 									"path": [
 										"admin",
 										"whitelist"
@@ -664,12 +632,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:4500/admin/users",
-									"protocol": "http",
+									"raw": "{{host}}/admin/users",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4500",
 									"path": [
 										"admin",
 										"users"
@@ -722,12 +688,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4500/admin/users",
-									"protocol": "http",
+									"raw": "{{host}}/admin/users",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4500",
 									"path": [
 										"admin",
 										"users"
@@ -780,12 +744,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4500/admin/users/roles",
-									"protocol": "http",
+									"raw": "{{host}}/admin/users/roles",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4500",
 									"path": [
 										"admin",
 										"users",
@@ -839,12 +801,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4500/admin/users/roles",
-									"protocol": "http",
+									"raw": "{{host}}/admin/users/roles",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4500",
 									"path": [
 										"admin",
 										"users",
@@ -905,12 +865,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4500/admin/tokens",
-									"protocol": "http",
+									"raw": "{{host}}/admin/tokens",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4500",
 									"path": [
 										"admin",
 										"tokens"
@@ -951,12 +909,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4500/admin/tokens/all",
-									"protocol": "http",
+									"raw": "{{host}}/admin/tokens/all",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4500",
 									"path": [
 										"admin",
 										"tokens",
@@ -992,12 +948,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:4500/grants",
-							"protocol": "http",
+							"raw": "{{host}}/grants",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "4500",
 							"path": [
 								"grants"
 							]
@@ -1009,9 +963,31 @@
 			"protocolProfileBehavior": {}
 		}
 	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "12e00719-6c26-47d1-88f7-82dd819d76ae",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "6f199501-560c-485a-9ede-a01f8bb1cda3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
 	"variable": [
 		{
-			"id": "d5f58c45-908d-4787-af67-4dc9d0ab7d81",
+			"id": "47792dd0-47dc-4301-afc0-6ed38aded5a6",
 			"key": "token",
 			"value": "",
 			"type": "string"
