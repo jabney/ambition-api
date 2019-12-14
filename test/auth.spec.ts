@@ -1,5 +1,4 @@
-import assert from 'assert'
-import { signupUser, signinUser, signoutUser } from './helpers/auth'
+import { signupUser, signinUser, signoutUser, signoutAll } from './helpers/auth'
 import { users, userProfile, userCredentials } from './helpers/user-profile'
 import { validToken, expectTokenCount } from './expect'
 import { addToWhitelist } from './helpers/db-utils'
@@ -50,5 +49,20 @@ describe('Auth Routes', () => {
 
   it('revokes all tokens for a user', async () => {
     await addToWhitelist(users.rando.email)
+
+    await signupUser(userProfile())
+      .expect(200)
+
+    await signinUser(userProfile())
+      .expect(200)
+
+    const token = await signinUser(userProfile())
+      .expect(200)
+      .then(expectTokenCount(3))
+      .then(getToken)
+
+    await signoutAll(token)
+      .expect(200)
+      .then(expectTokenCount(0))
   })
 })
