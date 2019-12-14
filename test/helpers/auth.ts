@@ -34,3 +34,12 @@ export function signoutUser(token: string) {
     .get('/auth/signout')
     .set(...authHeader(token))
 }
+
+/**
+ *
+ */
+export function signoutAll(token: string) {
+  return request(app)
+    .get('/auth/signout/all')
+    .set(...authHeader(token))
+}
