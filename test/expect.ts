@@ -23,5 +23,6 @@ export const expectTokenCount = (expected: number, query: any = {}) => {
   return async (res: Response) => {
     const actual = await countTokens(query)
     assert.strictEqual(actual, expected, `expected ${expected} tokens but found ${actual}`)
+    return res
   }
 }
