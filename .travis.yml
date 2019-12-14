@@ -6,3 +6,9 @@ services:
 - mongodb
 env:
 - MONGODB_URI=mongodb://localhost:27017/test
+- JWT_SECRET=lmnop
+- JTW_ISSUER=http://ambition@travis-ci
+- JWT_AUDIENCE=http://ambition@travis-ci/users
+- JWT_EXPIRES_IN_DAYS=7
+- PASSWORD_COST_FACTOR=1
+- ALLOW_UNSECURE=true
