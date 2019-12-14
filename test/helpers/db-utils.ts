@@ -68,10 +68,6 @@ export const removeGrant = async (user: IUserDocument, grant: GrantType) => {
 /**
  *
  */
-export const countTokens = async (userId?: string) => {
-  if (userId) {
-    return Token.find({ userId })
-  } else {
-    return Token.find({})
-  }
+export const countTokens = async (query: any = {}) => {
+  return await Token.countDocuments(query)
 }
