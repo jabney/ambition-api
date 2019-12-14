@@ -44,7 +44,7 @@ describe('Auth Routes', () => {
     // Our token should be invalid...
     await signoutUser(token)
       .expect(401)
-      // ...and all tokens gone.
+      // ...and all tokens should be removed.
       .then(expectTokenCount(0))
   })
 })
