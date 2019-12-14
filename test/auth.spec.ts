@@ -1,8 +1,8 @@
 import assert from 'assert'
 import { signupUser, signinUser, signoutUser } from './helpers/auth'
-import { userEmails, userProfile, userCredentials } from './helpers/user-profile'
+import { users, userProfile, userCredentials } from './helpers/user-profile'
 import { validToken, expectTokenCount } from './expect'
-import { addToWhitelist, countTokens } from './helpers/db-utils'
+import { addToWhitelist } from './helpers/db-utils'
 import { getToken } from './helpers/get-token'
 
 describe('Auth Routes', () => {
@@ -13,7 +13,7 @@ describe('Auth Routes', () => {
   })
 
   it('signs up a user', async () => {
-    await addToWhitelist(userEmails)
+    await addToWhitelist(users.rando.email)
 
     await signupUser(userProfile())
       .expect(200)
@@ -21,7 +21,7 @@ describe('Auth Routes', () => {
   })
 
   it('signs in a user', async () => {
-    await addToWhitelist(userEmails)
+    await addToWhitelist(users.rando.email)
 
     await signupUser(userProfile())
       .expect(200)
@@ -32,7 +32,7 @@ describe('Auth Routes', () => {
   })
 
   it('signs out a user', async () => {
-    await addToWhitelist(userEmails)
+    await addToWhitelist(users.rando.email)
 
     const token = await signupUser(userProfile())
       .expect(200)
@@ -46,5 +46,9 @@ describe('Auth Routes', () => {
       .expect(401)
       // ...and all tokens should be removed.
       .then(expectTokenCount(0))
+  })
+
+  it('revokes all tokens for a user', async () => {
+    await addToWhitelist(users.rando.email)
   })
 })
