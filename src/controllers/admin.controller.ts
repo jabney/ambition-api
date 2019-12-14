@@ -13,8 +13,7 @@ import { User } from '../models/user.model'
  */
 export const fetchWhitelist: RequestHandler = async (req, res, next) => {
   try {
-    const doc = await Whitelist.findOne()
-    const whitelist = doc && doc.allowed || []
+    const whitelist = await Whitelist.allowed()
 
     res.json({ whitelist })
 
@@ -30,10 +29,7 @@ export const addToWhtelist: RequestHandler = async (req, res, next) => {
   const { email } = req.body
 
   try {
-    await Whitelist.updateOne({}, { $addToSet: { allowed: email }}, {
-      upsert: true,
-      runValidators: true,
-    })
+    await Whitelist.addToWhitelist(email)
 
     res.json({ data: 'email added' })
 
@@ -49,7 +45,7 @@ export const removeFromWhitelist: RequestHandler = async (req, res, next) => {
   const { email } = req.body
 
   try {
-    await Whitelist.updateOne({}, { $pull: { allowed: email }}, { upsert: true })
+    await Whitelist.removeFromWhitelist(email)
 
     res.json({ data: 'email removed' })
 
