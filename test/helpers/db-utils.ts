@@ -17,9 +17,13 @@ export const deleteTestData = async () => {
 /**
  *
  */
-export const addToWhitelist = async (emails: readonly string[]) => {
-  for (const email of emails) {
-    await Whitelist.updateOne({}, { $push: { allowed: email } }, { upsert: true })
+export const addToWhitelist = async (emails: string|string[]) => {
+  if (Array.isArray(emails)) {
+    for (const email of emails) {
+      await Whitelist.updateOne({}, { $push: { allowed: email } }, { upsert: true })
+    }
+  } else {
+    await Whitelist.updateOne({}, { $push: { allowed: emails } }, { upsert: true })
   }
 }
 
