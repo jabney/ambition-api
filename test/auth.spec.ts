@@ -1,7 +1,7 @@
 import { authSignup, authSignin, authSignout, authSignoutAll } from './helpers/auth'
 import { users, signupInfo, signinCredentials } from './helpers/user-profile'
 import { validToken, expectTokenCount } from './expect'
-import { addToWhitelist } from './helpers/db-utils'
+import { addToWhitelist } from './helpers/db'
 import { getToken } from './helpers/get-token'
 
 describe('Auth Routes', () => {
