@@ -17,6 +17,10 @@ describe('Auth Routes', () => {
     await authSignup(userProfile())
       .expect(200)
       .expect(validToken())
+
+    // Try to sign up the same user again.
+    await authSignup(userProfile())
+      .expect(409)
   })
 
   it('signs in a user', async () => {
@@ -49,20 +53,29 @@ describe('Auth Routes', () => {
 
   it('revokes all tokens for a user', async () => {
     await addToWhitelist(users.rando.email)
+    await addToWhitelist(users.jabroni.email)
 
-    await authSignup(userProfile())
+    // Sign up a user.
+    await authSignup(userProfile('rando'))
       .expect(200)
 
-    await authSignin(userCredentials())
+    // Sign up a different user.
+    await authSignup(userProfile('jabroni'))
       .expect(200)
 
-    const token = await authSignin(userCredentials())
+    // Sign in (2 tokens for this user now).
+    await authSignin(userCredentials('rando'))
+    .expect(200)
+
+    // Sign in (2 tokens for this user now).
+    const token = await authSignin(userCredentials('jabroni'))
       .expect(200)
-      .then(expectTokenCount(3))
+      .then(expectTokenCount(4))
       .then(getToken)
 
+    // Removes 2 tokens, leaves the other two.
     await authSignoutAll(token)
       .expect(200)
-      .then(expectTokenCount(0))
+      .then(expectTokenCount(2))
   })
 })
