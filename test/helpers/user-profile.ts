@@ -2,25 +2,25 @@ import { IProfileInfo } from '../../src/models/profile-info.interface'
 
 type UserData = {[key: string]: IProfileInfo}
 
-const userData: UserData = {
+const userData = {
   rando: {
     email: 'rando@ambition.example.com',
     password: 'asdf',
     first: 'Rando',
     last: 'Calrissian',
-  },
+  } as IProfileInfo,
   admin: {
     email: 'admin@ambition.example.com',
     password: 'asdf',
     first: 'Admin',
     last: 'Smith',
-  },
+  } as IProfileInfo,
   super: {
     email: 'super@ambition.example.com',
     password: 'asdf',
     first: 'Super',
     last: 'Guy',
-  },
+  } as IProfileInfo,
 }
 
 /**
