@@ -1,5 +1,5 @@
 import { authSignup, authSignin, authSignout, authSignoutAll } from './helpers/auth'
-import { users, userProfile, userCredentials } from './helpers/user-profile'
+import { users, signupInfo, signinCredentials } from './helpers/user-profile'
 import { validToken, expectTokenCount } from './expect'
 import { addToWhitelist } from './helpers/db-utils'
 import { getToken } from './helpers/get-token'
@@ -7,29 +7,29 @@ import { getToken } from './helpers/get-token'
 describe('Auth Routes', () => {
 
   it ('refuses unwhitelisted emails', async () => {
-    await authSignup(userProfile())
+    await authSignup(signupInfo())
       .expect(403)
   })
 
   it('signs up a user', async () => {
     await addToWhitelist(users.rando.email)
 
-    await authSignup(userProfile())
+    await authSignup(signupInfo())
       .expect(200)
       .expect(validToken())
 
     // Try to sign up the same user again.
-    await authSignup(userProfile())
+    await authSignup(signupInfo())
       .expect(409)
   })
 
   it('signs in a user', async () => {
     await addToWhitelist(users.rando.email)
 
-    await authSignup(userProfile())
+    await authSignup(signupInfo())
       .expect(200)
 
-    await authSignin(userCredentials())
+    await authSignin(signinCredentials())
       .expect(200)
       .expect(validToken())
   })
@@ -37,7 +37,7 @@ describe('Auth Routes', () => {
   it('signs out a user', async () => {
     await addToWhitelist(users.rando.email)
 
-    const token = await authSignup(userProfile())
+    const token = await authSignup(signupInfo())
       .expect(200)
       .then(getToken)
 
@@ -56,19 +56,19 @@ describe('Auth Routes', () => {
     await addToWhitelist(users.jabroni.email)
 
     // Sign up a user.
-    await authSignup(userProfile('rando'))
+    await authSignup(signupInfo('rando'))
       .expect(200)
 
     // Sign up a different user.
-    await authSignup(userProfile('jabroni'))
+    await authSignup(signupInfo('jabroni'))
       .expect(200)
 
     // Sign in (2 tokens for this user now).
-    await authSignin(userCredentials('rando'))
+    await authSignin(signinCredentials('rando'))
     .expect(200)
 
     // Sign in (2 tokens for this user now).
-    const token = await authSignin(userCredentials('jabroni'))
+    const token = await authSignin(signinCredentials('jabroni'))
       .expect(200)
       .then(expectTokenCount(4))
       .then(getToken)
