@@ -2,7 +2,7 @@ import assert from 'assert'
 import { Response } from 'supertest'
 import { decode as decodeToken } from '../src/lib/tokens'
 import env from '../src/environment'
-import { countTokens } from './helpers/db-utils'
+import { countTokens } from './helpers/db'
 
 /**
  * Expect a valid token.
@@ -14,6 +14,7 @@ export const validToken = () => (res: Response) => {
   const { iss: issuer, aud: audience } = decodeToken(token)
   assert.strictEqual(issuer, env.JWT_ISSUER, `expected ${env.JWT_ISSUER} tokens but found ${issuer}`)
   assert.strictEqual(audience, env.JWT_AUDIENCE, `expected ${env.JWT_AUDIENCE} tokens but found ${audience}`)
+  return res
 }
 
 /**
