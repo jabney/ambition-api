@@ -6,7 +6,8 @@ import {
 } from './lib/env-helpers'
 
 const PRODUCTION = booleanize(process.env.NODE_ENV, 'production')
-const DEVELOPMENT = !PRODUCTION
+const TEST = booleanize(process.env.NODE_ENV, 'test')
+const DEVELOPMENT = !PRODUCTION && !TEST
 
 const MONGODB_URI = process.env.MONGODB_URI
 const ALLOW_UNSECURE = booleanize(process.env.ALLOW_UNSECURE)
@@ -23,6 +24,7 @@ const PASSWORD_COST_FACTOR = integerize(process.env.PASSWORD_COST_FACTOR, 10)
 export default Object.freeze({
   DEVELOPMENT,
   PRODUCTION,
+  TEST,
   MONGODB_URI,
   /**
    * Don't reject non-https requests.
