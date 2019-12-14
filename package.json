@@ -12,7 +12,8 @@
     "tunnel": "source .env && ngrok http $PORT",
     "watch": "nodemon -e ts --watch src --watch .env --exec 'npm run server'",
     "test": "npm run build && mocha",
-    "test-local": "source .env && source .env.test && npm run test"
+    "test-local": "source .env && source .env.test && npm run test",
+    "test-watch": "source .env && source .env.test && mocha --watch --watch-extensions ts,js"
   },
   "dependencies": {
     "@types/bcrypt": "^3.0.0",
