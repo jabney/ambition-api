@@ -9,6 +9,12 @@ const userData = {
     first: 'Rando',
     last: 'Calrissian',
   } as IProfileInfo,
+  jabroni: {
+    email: 'jabroni@ambition.example.com',
+    password: 'asdf',
+    first: 'Jabroni',
+    last: 'Jackpot',
+  } as IProfileInfo,
   admin: {
     email: 'admin@ambition.example.com',
     password: 'asdf',
