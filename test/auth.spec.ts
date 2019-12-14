@@ -1,7 +1,9 @@
-import { signupUser, signinUser } from './helpers/auth'
+import assert from 'assert'
+import { signupUser, signinUser, signoutUser } from './helpers/auth'
 import { userEmails, userProfile, userCredentials } from './helpers/user-profile'
-import { expectToken } from './expect'
-import { addToWhitelist } from './helpers/db-utils'
+import { validToken, expectTokenCount } from './expect'
+import { addToWhitelist, countTokens } from './helpers/db-utils'
+import { getToken } from './helpers/get-token'
 
 describe('Auth Routes', () => {
 
@@ -15,7 +17,7 @@ describe('Auth Routes', () => {
 
     await signupUser(userProfile())
       .expect(200)
-      .expect(expectToken())
+      .expect(validToken())
   })
 
   it('signs in a user', async () => {
@@ -26,6 +28,23 @@ describe('Auth Routes', () => {
 
     await signinUser(userCredentials())
       .expect(200)
-      .expect(expectToken())
+      .expect(validToken())
+  })
+
+  it('signs out a user', async () => {
+    await addToWhitelist(userEmails)
+
+    const token = await signupUser(userProfile())
+      .expect(200)
+      .then(getToken)
+
+    await signoutUser(token)
+      .expect(200)
+
+    // Our token should be invalid...
+    await signoutUser(token)
+      .expect(401)
+      // ...and all tokens gone.
+      .then(expectTokenCount(0))
   })
 })
