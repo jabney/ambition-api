@@ -6,7 +6,7 @@ import { authHeader } from './auth-header'
 /**
  *
  */
-export function signupUser(profile: IProfileInfo) {
+export function authSignup(profile: IProfileInfo) {
   return request(app)
     .post('/auth/signup')
     .send(profile)
@@ -15,7 +15,7 @@ export function signupUser(profile: IProfileInfo) {
 /**
  *
  */
-export function signinUser(credentials: IProfileInfo, token?: string) {
+export function authSignin(credentials: IProfileInfo, token?: string) {
   const req = request(app)
     .post('/auth/signin')
 
@@ -29,7 +29,7 @@ export function signinUser(credentials: IProfileInfo, token?: string) {
 /**
  *
  */
-export function signoutUser(token: string) {
+export function authSignout(token: string) {
   return request(app)
     .get('/auth/signout')
     .set(...authHeader(token))
@@ -38,7 +38,7 @@ export function signoutUser(token: string) {
 /**
  *
  */
-export function signoutAll(token: string) {
+export function authSignoutAll(token: string) {
   return request(app)
     .get('/auth/signout/all')
     .set(...authHeader(token))
