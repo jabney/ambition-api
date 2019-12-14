@@ -2,6 +2,7 @@ import express, { Application } from 'express'
 import logger from 'morgan'
 import env from '../environment'
 import rejectHttp from '../middleware/reject-http'
+import compression from 'compression'
 
 /**
  * Set up application middleware and misc.
@@ -25,6 +26,9 @@ function configureApp(app: Application) {
 
   // Parse json bodies (expect 2kb or less payload size).
   app.use(express.json({ limit: '2kb'}))
+
+  // Compress responses.
+  app.use(compression({ threshold: '1kb' }))
 
   return app
 }
