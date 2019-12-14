@@ -46,7 +46,7 @@ export function getOrThrow(key: string) {
   const value = process.env[key]
 
   if (value == null) {
-    throw new Error(`environment veriable "${key}" not set`)
+    throw new Error(`environment variable "${key}" not set`)
   }
 
   return value
