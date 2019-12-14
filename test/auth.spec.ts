@@ -5,8 +5,14 @@ import { addToWhitelist } from './helpers/db-utils'
 
 describe('Auth Routes', () => {
 
+  it ('refuses unwhitelisted emails', async () => {
+    await signupUser(userProfile())
+      .expect(403)
+  })
+
   it('signs up a user', async () => {
     await addToWhitelist(userEmails)
+
     await signupUser(userProfile())
       .expect(200)
       .expect(expectToken())
@@ -14,6 +20,7 @@ describe('Auth Routes', () => {
 
   it('signs in a user', async () => {
     await addToWhitelist(userEmails)
+
     await signupUser(userProfile())
       .expect(200)
 
