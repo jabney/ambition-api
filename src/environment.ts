@@ -13,6 +13,7 @@ const MONGODB_URI = process.env.MONGODB_URI
 const ALLOW_UNSECURE = booleanize(process.env.ALLOW_UNSECURE)
 const TRUST_PROXY = integerize(process.env.TRUST_PROXY, 0)
 const API_KEY = process.env.API_KEY
+const REQUIRE_WHITELISTED = booleanize(process.env.REQUIRE_WHITELISTED, 'true')
 
 const JWT_SECRET = getOrRandom(process.env.JWT_SECRET)
 const JWT_ISSUER = getOrThrow('JTW_ISSUER')
@@ -38,6 +39,10 @@ export default Object.freeze({
    * Api key for protecting some auth routes.
    */
   API_KEY,
+  /**
+   * Enforce whitelist compliance on user signup and signin.
+   */
+  REQUIRE_WHITELISTED,
   /**
    * Secret for encoding tokens.
    */
