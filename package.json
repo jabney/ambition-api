@@ -12,7 +12,7 @@
     "tunnel": "source .env && ngrok http $PORT",
     "watch": "nodemon -e ts --watch src --watch .env --exec 'npm run server'",
     "test": "npm run build && mocha",
-    "test-local": "source .env.test && npm run test"
+    "test-local": "source .env && source .env.test && npm run test"
   },
   "dependencies": {
     "@types/bcrypt": "^3.0.0",
@@ -32,10 +32,13 @@
     "typescript": "^3.7.3"
   },
   "devDependencies": {
+    "@types/mocha": "^5.2.7",
+    "@types/supertest": "^2.0.8",
     "mocha": "^6.2.2",
     "ngrok": "^3.2.5",
     "nodemon": "^2.0.1",
     "source-map-support": "^0.5.16",
+    "supertest": "^4.0.2",
     "ts-node": "^8.5.4"
   }
 }
