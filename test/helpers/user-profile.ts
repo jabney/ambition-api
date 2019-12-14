@@ -1,8 +1,8 @@
 import { IProfileInfo } from '../../src/models/profile-info.interface'
 
-type Users = {[key: string]: IProfileInfo}
+type UserData = {[key: string]: IProfileInfo}
 
-const users: Users = {
+const userData: UserData = {
   rando: {
     email: 'rando@ambition.example.com',
     password: 'asdf',
@@ -26,17 +26,20 @@ const users: Users = {
 /**
  *
  */
-export const userCredentials = (userKey: keyof typeof users = 'rando') => {
-  const { email, password } = users[userKey]
+export const userCredentials = (userKey: keyof typeof userData = 'rando') => {
+  const { email, password } = userData[userKey]
   return { email, password }
 }
 
 /**
  *
  */
-export const userProfile = (userKey: keyof typeof users = 'rando') => {
-  const user = users[userKey]
+export const userProfile = (userKey: keyof typeof userData = 'rando') => {
+  const user = userData[userKey]
   return JSON.parse(JSON.stringify(user)) as IProfileInfo
 }
 
-export default JSON.parse(JSON.stringify(users)) as typeof users
+export const users = JSON.parse(JSON.stringify(userData)) as typeof userData
+export const userEmails = Object.values(userData).map(user => user.email)
+
+export default userData
