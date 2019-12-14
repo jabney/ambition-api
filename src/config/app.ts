@@ -19,7 +19,9 @@ function configureApp(app: Application) {
   app.use(rejectHttp())
 
   // Log requests.
-  app.use(logger('dev'))
+  app.use(logger('dev', {
+    skip: () => env.TEST,
+  }))
 
   // Parse json bodies (expect 2kb or less payload size).
   app.use(express.json({ limit: '2kb'}))
