@@ -22,7 +22,7 @@ const JWT_EXPIRES_IN_DAYS = integerize(process.env.JWT_EXPIRES_IN_DAYS, 7)
 
 const PASSWORD_COST_FACTOR = integerize(process.env.PASSWORD_COST_FACTOR, 10)
 
-export default Object.freeze({
+const env = Object.freeze({
   DEVELOPMENT,
   PRODUCTION,
   TEST,
@@ -64,3 +64,5 @@ export default Object.freeze({
    */
   PASSWORD_COST_FACTOR,
 })
+
+export default env
