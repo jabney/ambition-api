@@ -6,7 +6,7 @@ import env from './environment'
  * Main application error handler.
  */
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  if (!env.TEST) {
+  if (env.DEVELOPMENT) {
     /* tslint:disable-next-line */
     console.log(err)
   }
