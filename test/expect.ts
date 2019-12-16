@@ -2,7 +2,7 @@ import assert from 'assert'
 import { Response } from 'supertest'
 import { decode as decodeToken } from '../src/lib/tokens'
 import env from '../src/environment'
-import { countTokens } from './helpers/db'
+import { countTokens, fetchProfileById } from './helpers/db'
 
 /**
  * Expect a valid token.
@@ -25,5 +25,21 @@ export const expectTokenCount = (expected: number, query: any = {}) => {
     const actual = await countTokens(query)
     assert.strictEqual(actual, expected, `expected ${expected} tokens but found ${actual}`)
     return res
+  }
+}
+
+/**
+ * Expect given profile values on the user specfied by the response token.
+ */
+export const expectProfile = (profile: any) => {
+  return async (res: Response) => {
+    const { token } = res.body
+    const { sub: userId } = decodeToken(token)
+    const user = await fetchProfileById(userId)
+
+    Object.entries(profile).forEach(([key, expected]) => {
+      const actual = (user as any)[key]
+      assert.strictEqual(actual, expected, `expected "${actual}" to equal "${expected}" for key "${key}"`)
+    })
   }
 }
