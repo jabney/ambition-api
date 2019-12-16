@@ -19,8 +19,8 @@ export const deleteTestData = async () => {
 /**
  *
  */
-export async function fetchProfileById(userId: string): Promise<IUser> {
-  const user = await User.findById(userId)
+export const fetchProfileById = async (userId: string): Promise<IUser> => {
+  const user = await User.findById(userId, 'email first last roles grants')
   return (user as IUserDocument).toJSON()
 }
 
