@@ -25,7 +25,7 @@ export const fetchWhitelist: RequestHandler = async (req, res, next) => {
 /**
  * Add a user to the whitelist.
  */
-export const addToWhtelist: RequestHandler = async (req, res, next) => {
+export const addToWhitelist: RequestHandler = async (req, res, next) => {
   const { email } = req.body
 
   try {

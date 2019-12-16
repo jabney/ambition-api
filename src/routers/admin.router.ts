@@ -14,7 +14,7 @@ import {
 } from '../validators/admin.validator'
 
 import {
-  addToWhtelist,
+  addToWhitelist,
   fetchWhitelist,
   removeFromWhitelist,
 
@@ -37,7 +37,7 @@ const  deserializeRoles = deserializeUser('roles')
 
 router.route('/whitelist')
   .get(deserializeRoles, hasAdmin, fetchWhitelist)
-  .post(deserializeRoles, hasAdmin, addToWhitelistValidator, addToWhtelist)
+  .post(deserializeRoles, hasAdmin, addToWhitelistValidator, addToWhitelist)
   .delete(deserializeRoles, hasAdmin, removeFromWhitelistValidator, removeFromWhitelist)
 
 router.route('/users')
