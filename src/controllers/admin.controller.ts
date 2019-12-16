@@ -82,7 +82,7 @@ export const fetchUsers: RequestHandler = async  (req, res, next) => {
  * Delete a user and associated data.
  */
 export const deleteUser: RequestHandler = async (req, res, next) => {
-  const { userId } = req.body
+  const { userId, confirm } = req.body
 
   try {
     const userDoc = await User.findById(userId)
@@ -97,6 +97,10 @@ export const deleteUser: RequestHandler = async (req, res, next) => {
 
     if (userDoc.hasRole('admin')) {
       return next(createError(400, 'cannot delete an admin user'))
+    }
+
+    if (confirm !== true) {
+      return next(createError(400, 'could not confirm delete user'))
     }
 
     await Token.deleteMany({ userId })
@@ -255,7 +259,7 @@ export const revokeAllTokens: RequestHandler = async (req, res, next) => {
   const { confirm } = req.body
 
   try {
-    if (!confirm)  {
+    if (confirm !== true)  {
       return next(createError(400, 'could not confirm delete all tokens'))
     }
 
