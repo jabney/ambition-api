@@ -45,6 +45,7 @@ export const removeUserRoleValidator = addUserRoleValidator
 
 export const deleteUserValidator = [
   defs.mongoId('userId'),
+  defs.boolean('confirm').optional(),
 
   validationErrors,
 ]
