@@ -6,6 +6,13 @@ import { getToken } from './helpers/get-token'
 
 describe('Auth Routes', () => {
 
+  it('fails signup on missing api key', async () => {
+    await autoWhitelist()
+
+    await authSignup(signupInfo(), false)
+      .expect(401)
+  })
+
   it('fails signup on bad info', async () => {
     await authSignup({ email: '', password: 'asdf' })
       .expect(422)
