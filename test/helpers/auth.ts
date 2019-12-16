@@ -1,7 +1,7 @@
 import request from 'supertest'
 import app from '../../src/app'
 import { IProfileInfo } from '../../src/models/profile-info.interface'
-import { authHeader } from './auth-header'
+import { authHeader } from './utils'
 
 /**
  *
