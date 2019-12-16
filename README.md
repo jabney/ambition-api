@@ -1,6 +1,19 @@
 # ambition-api
 A JWT-based NodeJS/Express/Mongoose API written in TypeScript
 
+## Features
+- Revokable auth tokens
+- Per-user application settings
+- User permission grants (e.g., allow track location)
+- Role-based route access
+- Optional whitelist for signup and signin
+- Optional API key protection for signup route
+- Admin/superuser control for:
+  - Whitelisting email addresses
+  - Granting/revoking user roles
+  - Revoking access tokens
+  - User management
+
 ## Environment
 
 ```bash
