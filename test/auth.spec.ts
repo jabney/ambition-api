@@ -34,9 +34,15 @@ describe('Auth Routes', () => {
   it('correctly sets profile info', async () => {
     await autoWhitelist()
 
+    // Sign up with full profile info.
     await authSignup(signupInfo())
       .expect(200)
       .then(expectProfile({ first: 'Rando', last: 'Calrissian' }))
+
+    // Sign up with only email/passwrod.
+    await authSignup(signinCredentials('jabroni'))
+      .expect(200)
+      .then(expectProfile({ first: undefined, last: undefined }))
   })
 
   it('signs in a user', async () => {
@@ -80,7 +86,7 @@ describe('Auth Routes', () => {
 
     // Sign in (2 tokens for this user now).
     await authSignin(signinCredentials('rando'))
-    .expect(200)
+      .expect(200)
 
     // Sign in (2 tokens for this user now).
     const token = await authSignin(signinCredentials('jabroni'))
