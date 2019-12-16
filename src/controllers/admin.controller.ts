@@ -91,6 +91,14 @@ export const deleteUser: RequestHandler = async (req, res, next) => {
       return next(createError(404, 'user not found'))
     }
 
+    if (userDoc.hasRole('super')) {
+      return next(createError(400, 'cannot delete a super user'))
+    }
+
+    if (userDoc.hasRole('admin')) {
+      return next(createError(400, 'cannot delete an admin user'))
+    }
+
     await Token.deleteMany({ userId })
     await userDoc.remove()
 
