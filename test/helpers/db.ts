@@ -1,3 +1,4 @@
+import { IUser } from '../../src/models/user.interface'
 import { User, IUserDocument } from '../../src/models/user.model'
 import { Token } from '../../src/models/token.model'
 import { RoleType } from '../../src/config/roles'
@@ -13,6 +14,14 @@ export const deleteTestData = async () => {
   await Config.deleteMany({})
   await User.deleteMany({})
   await Token.deleteMany({})
+}
+
+/**
+ *
+ */
+export async function fetchProfileById(userId: string): Promise<IUser> {
+  const user = await User.findById(userId)
+  return (user as IUserDocument).toJSON()
 }
 
 /**
