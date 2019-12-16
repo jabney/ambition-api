@@ -6,6 +6,14 @@ import { getToken } from './helpers/get-token'
 
 describe('Auth Routes', () => {
 
+  it('fails signup on bad info', async () => {
+    await authSignup({ email: '', password: 'asdf' })
+      .expect(422)
+
+    await authSignup({ email: 'someone@example.com', password: '' })
+      .expect(422)
+  })
+
   it ('refuses unwhitelisted emails', async () => {
     await authSignup(signupInfo())
       .expect(403)
