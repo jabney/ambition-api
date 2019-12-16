@@ -4,6 +4,7 @@ import { RoleType } from '../../src/config/roles'
 import { GrantType } from '../../src/config/grants'
 import { Config } from '../../src/models/config.model'
 import { Whitelist } from '../../src/models/whitelist.model'
+import { users } from './user-profile'
 
 /**
  *
@@ -17,13 +18,11 @@ export const deleteTestData = async () => {
 /**
  *
  */
-export const addToWhitelist = async (emails: string|string[]) => {
-  if (Array.isArray(emails)) {
-    for (const email of emails) {
-      await Whitelist.updateOne({}, { $push: { allowed: email } }, { upsert: true })
-    }
-  } else {
-    await Whitelist.updateOne({}, { $push: { allowed: emails } }, { upsert: true })
+export const autoWhitelist = async () => {
+const emails = Object.values(users).map(user => user.email)
+
+for (const email of emails) {
+    await Whitelist.updateOne({}, { $push: { allowed: email } }, { upsert: true })
   }
 }
 
