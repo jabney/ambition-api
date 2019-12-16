@@ -1,15 +1,20 @@
 import request from 'supertest'
 import app from '../../src/app'
 import { IProfileInfo } from '../../src/models/profile-info.interface'
-import { authHeader } from './utils'
+import { authHeader, apiKeyHeader } from './utils'
 
 /**
  *
  */
-export function authSignup(profile: IProfileInfo) {
-  return request(app)
+export function authSignup(profile: IProfileInfo, apiKey = true) {
+  const req = request(app)
     .post('/auth/signup')
-    .send(profile)
+
+  if (apiKey) {
+    req.set(...apiKeyHeader())
+  }
+
+  return req.send(profile)
 }
 
 /**
@@ -18,6 +23,7 @@ export function authSignup(profile: IProfileInfo) {
 export function authSignin(credentials: IProfileInfo, token?: string) {
   const req = request(app)
     .post('/auth/signin')
+    .set(...apiKeyHeader())
 
   if (token) {
     req.set(...authHeader(token))
