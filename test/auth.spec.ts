@@ -1,7 +1,7 @@
 import { authSignup, authSignin, authSignout, authSignoutAll } from './helpers/auth'
-import { users, signupInfo, signinCredentials } from './helpers/user-profile'
+import { signupInfo, signinCredentials } from './helpers/user-profile'
 import { validToken, expectTokenCount } from './expect'
-import { addToWhitelist } from './helpers/db'
+import { autoWhitelist } from './helpers/db'
 import { getToken } from './helpers/get-token'
 
 describe('Auth Routes', () => {
@@ -20,7 +20,7 @@ describe('Auth Routes', () => {
   })
 
   it('signs up a user', async () => {
-    await addToWhitelist(users.rando.email)
+    await autoWhitelist()
 
     await authSignup(signupInfo())
       .expect(200)
@@ -31,8 +31,13 @@ describe('Auth Routes', () => {
       .expect(409)
   })
 
+  it('correctly sets profile info', async () => {
+    await autoWhitelist()
+
+  })
+
   it('signs in a user', async () => {
-    await addToWhitelist(users.rando.email)
+    await autoWhitelist()
 
     await authSignup(signupInfo())
       .expect(200)
@@ -43,7 +48,7 @@ describe('Auth Routes', () => {
   })
 
   it('signs out a user', async () => {
-    await addToWhitelist(users.rando.email)
+    await autoWhitelist()
 
     const token = await authSignup(signupInfo())
       .expect(200)
@@ -60,8 +65,7 @@ describe('Auth Routes', () => {
   })
 
   it('revokes all tokens for a user', async () => {
-    await addToWhitelist(users.rando.email)
-    await addToWhitelist(users.jabroni.email)
+    await autoWhitelist()
 
     // Sign up a user.
     await authSignup(signupInfo('rando'))
