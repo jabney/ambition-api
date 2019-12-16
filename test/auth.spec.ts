@@ -14,7 +14,7 @@ describe('Auth Routes', () => {
       .expect(422)
   })
 
-  it ('refuses unwhitelisted emails', async () => {
+  it('refuses unwhitelisted emails', async () => {
     await authSignup(signupInfo())
       .expect(403)
   })
