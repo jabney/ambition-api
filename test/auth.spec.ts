@@ -1,6 +1,6 @@
 import { authSignup, authSignin, authSignout, authSignoutAll } from './helpers/auth'
 import { signupInfo, signinCredentials } from './helpers/user-profile'
-import { validToken, expectTokenCount } from './expect'
+import { validToken, expectTokenCount, expectProfile } from './expect'
 import { autoWhitelist } from './helpers/db'
 import { getToken } from './helpers/get-token'
 
@@ -34,6 +34,9 @@ describe('Auth Routes', () => {
   it('correctly sets profile info', async () => {
     await autoWhitelist()
 
+    await authSignup(signupInfo())
+      .expect(200)
+      .then(expectProfile({ first: 'Rando', last: 'Calrissian' }))
   })
 
   it('signs in a user', async () => {
