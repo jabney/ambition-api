@@ -11,7 +11,7 @@ router.route('/signup')
   .post(apiKey, signupValidator, requireWhitelisted, signup)
 
 router.route('/signin')
-  .post(apiKey, signinValidator, requireWhitelisted, tokenOptional, signin)
+  .post(signinValidator, requireWhitelisted, tokenOptional, signin)
 
 router.route('/signout')
   .get(tokenRequired, signout)
