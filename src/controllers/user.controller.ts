@@ -68,8 +68,8 @@ export const deleteUser: RequestHandler = async (req, res, next) => {
  */
 export const fetchSettings: RequestHandler = async (req, res, next) => {
   const user = req.user
-
-  res.set('Content-Type', 'application/json').send(user.settings)
+  const settings = `{"settings":${user.settings}}`
+  res.set('Content-Type', 'application/json').send(settings)
 }
 
 /**
