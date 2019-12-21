@@ -17,17 +17,26 @@ A JWT-based NodeJS/Express/Mongoose API written in TypeScript
 ## Environment
 
 ```bash
+# Logging.
 export NODE_DEBUG=ambition:*
+# Port.
 export PORT=4500
+# When running on reverse proxy, e.g., heroku, nginx.
 export TRUST_PROXY=1
+# Don't insist on https requests.
 export ALLOW_UNSECURE=false
+# MongoDB URI.
 export MONGODB_URI='mongodb://localhost:27017/ambition'
+# Require that an email be whitelisted for user registration.
+export REQUIRE_WHITELISTED=true
 
+# JSON Web Tokens.
 export JWT_SECRET='racecar red'
 export JTW_ISSUER=http://localhost
 export JWT_AUDIENCE=http://localhost/users
 export JWT_EXPIRES_IN_DAYS=7
 
+# Password hashing.
 export PASSWORD_COST_FACTOR=10
 ```
 
@@ -241,7 +250,7 @@ Responses:
 
   ```typescript
   {
-    ... // A plain old javascript object
+    settings: {...} // A plain old javascript object
   }
   ```
 
