@@ -8,6 +8,7 @@ A JWT-based NodeJS/Express/Mongoose API written in TypeScript
 - Role-based route access
 - Optional whitelist for signup and signin
 - Optional API key protection for signup route
+- Input validation for untrusted inputs.
 - Admin/superuser control for:
   - Whitelisting email addresses
   - Granting/revoking user roles
@@ -47,6 +48,7 @@ export PASSWORD_COST_FACTOR=10
   - [`/auth/signin POST`](#authsignin-post)
   - [`/auth/signout GET`](#authsignout-get)
   - [`/auth/signout/all GET`](#authsignoutall-get)
+  - [`/auth/token/info GET`](#authtokeninfo-get)
 
 - [`/user`](#user)
   - [`/user GET`](#user-get)
@@ -167,6 +169,27 @@ Log a user out of all devices (revoke all tokens)
 Responses:
 - 200 Successful
 
+Responses:
+- 200 Successful
+
+#### `/auth/token/info GET`
+
+Get information about a token.
+
+Responses:
+- 200 Successful
+
+  ```typescript
+  {
+    expires: {
+      seconds: number,
+      minutes: number,
+      hours: number,
+      days: number,
+    }
+  }
+  ```
+
 ### `/user`
 
 #### `/user GET`
@@ -184,12 +207,14 @@ Responses:
 
   ```typescript
   {
-    _id: string
-    email: string
-    first: string
-    last: string
-    roles: string[]
-    grants: string[]
+    user: {
+      _id: string
+      email: string
+      first: string
+      last: string
+      roles: string[]
+      grants: string[]
+    }
   }
   ```
 
