@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { signin, signout, signoutAll, signup } from '../controllers/auth.controller'
+import { signin, signout, signoutAll, signup, tokenInfo } from '../controllers/auth.controller'
 import { apiKey } from '../middleware/api-key'
 import { tokenOptional, tokenRequired } from '../middleware/authorize'
 import { requireWhitelisted } from '../middleware/require-whitelisted'
@@ -18,5 +18,8 @@ router.route('/signout')
 
 router.route('/signout/all')
   .get(tokenRequired, signoutAll)
+
+router.route('/token/info')
+  .get(tokenOptional, tokenInfo)
 
 export default router

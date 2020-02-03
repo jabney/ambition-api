@@ -85,3 +85,33 @@ export const signoutAll: RequestHandler = async (req, res, next) => {
     return next(createError(e))
   }
 }
+
+/**
+ *
+ */
+export const tokenInfo: RequestHandler = (req, res, next) => {
+  const token = req.token
+
+  if (token == null) {
+    return res.json({ expires: null })
+  }
+
+  // Convert now to seconds.
+  const now = Math.floor(Date.now() / 1000)
+
+  // Calculate expire time in seconds, inutes, hours, and days.
+  const expiresInSeconds = token.expiresAt - now
+  const expiresInMinutes = expiresInSeconds / 60
+  const expiresInHours = expiresInMinutes / 60
+  const expiresInDays = expiresInHours / 24
+
+  // Create the response object.
+  const expires = {
+    seconds: expiresInSeconds,
+    minutes: expiresInMinutes,
+    hours: expiresInHours,
+    days: expiresInDays,
+  }
+
+  res.json({ expires })
+}
