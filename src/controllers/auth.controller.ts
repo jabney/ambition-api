@@ -93,7 +93,14 @@ export const tokenInfo: RequestHandler = (req, res, next) => {
   const token = req.token
 
   if (token == null) {
-    return res.json({ expires: null })
+    return res.json({
+      expires: {
+        seconds: 0,
+        minutes: 0,
+        hours: 0,
+        days: 0,
+      }
+    })
   }
 
   // Convert now to seconds.
